@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Responsive Modal with Form Steps</title>
+
+        <link rel="stylesheet" href="../../../../public/css/style.css" />
+        <script
+            src="https://kit.fontawesome.com/b554f1d9a7.js"
+            crossorigin="anonymous"
+        ></script>
+    </head>
+    <style>
+        /* ... Styles for the button to open the modal ... */
+
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Button Styles */
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            /* width: 400px;  */
+            max-width: 90%; /* Limit the maximum width to 90% of the screen */
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Top Section */
+        .top-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            /* border-bottom: 1px solid #ccc; */
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .top-section h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        /* Steps */
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            position: relative;
+            gap: 50px;
+            text-align: center;
+        }
+
+        .step-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+            position: relative;
+            z-index: 1; /* Added to position the dividers below the step content */
+            font-size: 12px;
+            color: #727491;
+        }
+
+        .step-item.active {
+            color: #3a3a3a;
+            font-weight: 600;
+        }
+
+        .step-item.active > .step-circle {
+            background-color: #007bff;
+            color: #fff;
+            border: 2px solid #007bff;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+            border: 1px solid #dadada93;
+            color: #3a3a3a;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 7px;
+            font-size: 12px;
+            z-index: 1;
+        }
+
+        .step-circle:hover {
+            border: 1px solid #007bff;
+        }
+
+        /* Divider Lines */
+        .step-item::before {
+            content: "";
+            position: absolute;
+            top: 32%;
+            width: 190%;
+            height: 1px;
+            background-color: #cccccc71;
+            z-index: 0;
+            transform: translateX(70px);
+        }
+
+        .step-item:last-child::before {
+            display: none;
+        }
+
+        /* Divider Lines */
+        /* .st */
+
+        /* Middle Section */
+        .middle-section {
+            padding: 20px 0;
+        }
+
+        .middle-section h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        /* Footer Section */
+        .footer-section {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px;
+            /* border-top: 1px solid #ccc; */
+            margin-top: 40px;
+        }
+
+        .footer-section button {
+            margin-left: 10px;
+        }
+
+        /* Form Inputs */
+        input,
+        textarea {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* ... Other Custom CSS Styles ... */
+
+        .form-step {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-step.slct_proj {
+            display: flex;
+            gap: 30px;
+        }
+
+        .box_container {
+            width: 150px;
+            height: fit-content;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .box_container button {
+            background: transparent;
+            width: 100%;
+            height: 150px;
+            border: 1px solid #dadada;
+            border-radius: 40px;
+            position: relative;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box_container button.active {
+            background: #f7f9fd;
+            width: 100%;
+            height: 150px;
+            border: 1px solid #007bff;
+            border-radius: 40px;
+            position: relative;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box_container button .selected__check {
+            position: absolute;
+            top: -10px;
+            widh: 30px;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            border: 1px solid #007bff;
+            right: 0;
+            background-color: #fff;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
+            display: flex;
+        }
+
+        svg:not(:root) {
+            overflow: hidden;
+        }
+        .w-svg-sprite {
+            display: inline-block;
+            min-width: 1em;
+            max-width: 1em;
+            height: 1em;
+            vertical-align: -0.125em;
+        }
+
+        .form-step .contaier {
+            width: 100%;
+            background-color: #efefef;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .ppl {
+            display: flex;
+            gap: -5px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+
+        .ppl .p {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: green;
+            /* padding: 10px 15px; */
+            text-align: center;
+            box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
+            margin-left: -20px;
+            font-size: 26px;
+            overflow: hidden;
+            padding: 2px 5px;
+            color: #fff;
+        }
+
+        .search_ppl {
+            position: relative;
+        }
+
+        input#ppl_search {
+            width: 100%;
+            border-radius: 20px;
+            padding: 7px 10px 7px 30px;
+        }
+
+        .search_ppl label {
+            position: absolute;
+            left: 9px;
+            top: 5px;
+            color: #afafaf;
+        }
+
+        .tab_nav {
+            display: flex;
+            gap: 20px;
+            border-bottom: 1px solid #dadada;
+            padding-bottom: 7px;
+            margin-bottom: 15px;
+        }
+
+        .tab_nav .tab {
+            display: flex;
+            gap: 10px;
+            font-size: 12px;
+            cursor: pointer;
+            padding-bottom: 7px;
+        }
+
+        .tab_nav .tab.active{
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .accrodian.active{
+            transform: rotate(180deg);
+        }
+
+        .count_ppl {
+            width: 20px;
+            height: 20px;
+            background-color: green;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.6;
+            overflow: hidden;
+        }
+
+        .tab_c .top {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            padding: 5px 0;
+        }
+
+        .tab_c .top button {
+            background-color: transparent;
+            color: #dadada;
+            width: auto;
+            height: auto;
+            padding: 0;
+        }
+
+        .tab_c .content label {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            text-align: center;
+            align-self: center;
+            margin-bottom: 10px;
+        }
+
+        input.add_ppl {
+            width: auto;
+            padding: 0;
+            margin: 0;
+        }
+
+        .p {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: green;
+            /* padding: 10px 15px; */
+            text-align: center;
+            box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
+            /* margin-left: -20px; */
+            font-size: 17px;
+            overflow: hidden;
+            padding: 2px 5px;
+            color: #fff;
+        }
+        /* ... Other CSS styles ... */
+    </style>
+    <body>
+        <button id="openModalBtn">Open Modal</button>
+
+        <div class="modal" id="myModal">
+            <div class="modal-content">
+                <!-- Top Section: Title and Steps -->
+                <div class="top-section">
+                    <span class="close-btn" id="closeModalBtn">&times;</span>
+                    <h2>Add New Project</h2>
+                    <div class="steps">
+                        <div class="step-item active">
+                            <div class="step-circle">1</div>
+                            Project Options
+                        </div>
+                        <!-- <div class="step_divider"></div> -->
+                        <div class="step-item">
+                            <div class="step-circle">2</div>
+                            Details
+                        </div>
+                        <!-- <div class="step_divider"></div> -->
+                        <div class="step-item">
+                            <div class="step-circle">3</div>
+                            Add People
+                        </div>
+                        <!-- <div class="step_divider"></div> -->
+                        <div class="step-item">
+                            <div class="step-circle">4</div>
+                            Advanced options
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle Section: Form Inputs -->
+                <div class="middle-section">
+                    <form id="form">
+                        <div class="form-step slct_proj" data-step="1">
+                            <div class="box_container">
+                                <button type="button" class="active slct_prjct_btn" >
+                                    <span class="slct_prj_icon">
+                                        <div class="selected__check">
+                                            <!-- <i class="fa-solid fa-check"></i> -->
+                                            <svg width="15" height="15" viewBox="0 0 42 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0.307044 24.8107C3.83704 31.7207 7.36704 38.6408 10.897 45.5508C11.907 47.5408 14.877 46.9108 15.467 44.9508C20.097 29.5108 28.6971 15.4407 40.2871 4.25074C42.6071 2.01074 39.067 -1.51924 36.747 0.710761C24.547 12.4908 15.5171 27.3808 10.6371 43.6208L15.207 43.0208C11.677 36.1108 8.14704 29.1907 4.61704 22.2807C3.15704 19.4107 -1.16293 21.9408 0.297065 24.8008H0.307044V24.8107Z" fill="#138848"/>
+                                            </svg>
+                                        </div>
+                                        <div class="box">
+                                            <svg
+                                                data-v-3c1d4231=""
+                                                width="100"
+                                                height="100"
+                                                viewBox="0 0 100 100"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    data-v-3c1d4231=""
+                                                    opacity="0.3"
+                                                    d="M50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 77.6142 22.3858 100 50 100Z"
+                                                    fill="white"
+                                                ></path>
+                                                <path
+                                                    data-v-3c1d4231=""
+                                                    d="M50.0001 89.8178C71.9908 89.8178 89.8178 71.9908 89.8178 50.0001C89.8178 28.0094 71.9908 10.1824 50.0001 10.1824C28.0094 10.1824 10.1824 28.0094 10.1824 50.0001C10.1824 71.9908 28.0094 89.8178 50.0001 89.8178Z"
+                                                    fill="white"
+                                                ></path>
+                                                <path
+                                                    data-v-3c1d4231=""
+                                                    d="M67.5051 63.0275L51.1251 46.04C49.8426 44.735 45.8713 48.4025 46.9963 49.7863L62.7463 67.2913C63.9388 68.8213 68.9451 64.4788 67.5051 63.0275Z"
+                                                    fill="#A3E0FC"
+                                                ></path>
+                                                <path
+                                                    data-v-3c1d4231=""
+                                                    d="M43.9025 46.625C43.2296 45.9916 42.248 45.8111 41.3938 46.1637C40.325 46.6587 40.1225 47.7725 40.8313 48.9762C41.1238 49.4712 40.8875 49.82 39.0763 51.3837C37.5575 52.6662 31.0325 44.375 32.1238 43.3287C33.215 42.2825 33.395 41.8775 33.9013 42.2037C34.6973 42.5217 35.6022 42.3946 36.2798 41.8696C36.9574 41.3446 37.3065 40.5002 37.1975 39.65C37.1419 39.5168 37.1419 39.3669 37.1975 39.2337C37.2468 39.1157 37.324 39.0115 37.4225 38.93C38.75 37.715 39.875 36.5562 40.7075 35.825C45.8713 31.325 48.5825 32.5062 51.9575 35.5662C52.7563 36.2975 51.9575 37.22 50.8325 36.9275C46.04 35.5437 44.51 38.975 47.3113 42.125L50.5175 45.815C51.0688 46.5687 47.66 50.315 46.9963 49.7525L43.9025 46.625Z"
+                                                    fill="#D6DEE7"
+                                                ></path>
+                                                <path
+                                                    data-v-3c1d4231=""
+                                                    d="M47.9525 48.6275L33.5638 63.0725C32.3488 64.2987 31.0775 68.4613 33.0013 67.8988C34.5178 67.538 35.9479 66.8803 37.2088 65.9637C40.1113 63.0612 45.14 58.01 51.4176 51.3388C50.09 50 49.28 50 47.9525 48.6275Z"
+                                                    fill="#D6DEE7"
+                                                ></path>
+                                                <path
+                                                    data-v-3c1d4231=""
+                                                    d="M59 33.7888C56.0066 36.6661 53.1641 39.6964 50.4838 42.8675C52.025 44.3413 49.8313 46.7488 48.11 45.4438C47.3563 46.1413 46.1525 46.895 46.0738 47.4012C45.905 48.3913 50.9225 53.6675 52.61 53.7463C53.1521 53.297 53.6159 52.761 53.9825 52.16C52.7563 50.8775 54.4775 48.5263 56.1313 49.6625C59.5063 46.7038 62.8813 43.565 66.0763 40.325C71.51 34.8238 64.085 29.0863 59 33.7888Z"
+                                                    fill="#63C0F9"
+                                                ></path>
+                                            </svg>
+                                        </div>
+                                    </span>
+                                </button>
+
+                                <label>Start from scratch</label>
+                            </div>
+
+                            <div class="box_container">
+                                <button type="button" class="slct_prjct_btn">
+                                    <span class="slct_prj_icon">
+                                        <!-- <div data-v-3c1d4231="" class="selected__check"><svg data-v-3c1d4231="" class="w-svg-sprite"> <use xlink:href="#ci-check" fill=""></use></svg></div> -->
+                                        <div class="box">
+                                            <svg
+                                                data-v-3c1d4231=""
+                                                width="80"
+                                                height="80"
+                                                viewBox="0 0 80 80"
+                                                fill="none"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    data-v-3c1d4231=""
+                                                    d="M40.0001 79.8178C61.9908 79.8178 79.8178 61.9908 79.8178 40.0001C79.8178 18.0093 61.9908 0.182343 40.0001 0.182343C18.0094 0.182343 0.182373 18.0093 0.182373 40.0001C0.182373 61.9908 18.0094 79.8178 40.0001 79.8178Z"
+                                                    fill="white"
+                                                ></path>
+                                                <path
+                                                    data-v-3c1d4231=""
+                                                    d="M59.9337 42.601C59.9337 35.274 59.9834 31.3895 59.8922 30.701C59.9585 29.9785 59.7511 29.4855 59.0624 29.528C53.3451 29.0265 44.3171 29.426 41.7447 29.0775C41.3962 28.6015 41.0394 27.1905 40.6743 26.74C40.3092 26.2895 39.4296 25.176 39.0147 24.5725C38.4007 23.5525 37.8696 23.5015 35.7371 23.578C24.3358 23.9265 22.9251 23.2975 22.2364 23.7905C21.0664 26.57 22.0456 54.926 22.112 55.011C22.112 56.3625 22.643 56.3965 23.2488 56.3965C33.5962 56.3455 58.2824 56.864 58.8632 56.5325C59.0574 56.5308 59.2416 56.4442 59.3694 56.2945C59.5027 56.1328 59.5761 55.9281 59.5768 55.7165C60 51.39 59.942 46.987 59.9337 42.601Z"
+                                                    fill="#63C0F9"
+                                                ></path>
+                                            </svg>
+                                        </div>
+                                    </span>
+                                </button>
+
+                                <label>Select from template</label>
+                            </div>
+                        </div>
+                        <div class="form-step" data-step="2" style="flex-direction: column">
+                            <div class="input_group" style="width: 100%">
+                                <div class="input">
+                                    <div class="input">
+                                        <label for="project_name" >Choose a name</label>
+                                        <input type="text" name="project_name" id="project_name" placeholder="Give Your project a name" />
+                                    </div>
+                                </div>
+
+                                <div class="input">
+                                    <label for="company">Choose a company</label >
+                                    <select name="company" id="company">
+                                        <option value="Domain Bird"> Domain Bird </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="textarea" style="width: 100%">
+                                <textarea name="notes" id="notes"  cols=""  rows="5" placeholder="Add a description" style="width: 100%"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-step" data-step="3">
+                            <div class="contaier">
+                                <div class="ppl">
+                                    <div class="p">D</div>
+                                    <div class="p">NA</div>
+                                    <div class="p">Pl</div>
+                                </div>
+                                <div class="search_ppl">
+                                    <input type="search" name="ppl_search" id="ppl_search" placeholder="Search"/>
+                                    <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
+                                </div>
+
+                                <div class="ppl_show">
+                                    <div class="tab_nav">
+                                        <div class="tab active">
+                                            People
+                                            <div class="count_ppl">5</div>
+                                        </div>
+                                        <div class="tab">
+                                            Teams
+                                            <div class="count_ppl"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab_content">
+                                        <div class="tab_c" data-step="1">
+                                            <div class="top">
+                                                <p>Domain Bird</p>
+                                                <button class="accrodian">
+                                                    <i class="fa-solid fa-angle-up" ></i>
+                                                </button>
+                                            </div>
+                                            <div class="content">
+                                                <label>
+                                                    <input type="checkbox" name="add_ppl" id="" class="add_ppl" value="Mubashir Rehman"/>
+                                                    <div class="p">M</div>
+                                                    Mubashir Rehman
+                                                </label>
+
+                                                <label>
+                                                    <input type="checkbox" name="add_ppl" id="" class="add_ppl" value="Muhammad Ali"/>
+                                                    <div class="p">M</div>
+                                                    Muhammad Ali
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab_C">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-step" data-step="4">
+                            <div class="contaier">
+                                <div class="input" style="width: 100%;">
+                                    <label for="project_cat">Add project Category</label>
+                                    <select name="proj_category" id="proj_category">
+                                        <option value="No Category">No Category</option>
+                                        <option value="Category 1">Category 1</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Footer Section: Buttons -->
+                <div class="footer-section">
+                    <button type="button" class="prev-btn" id="prevBtn">
+                        Previous
+                    </button>
+                    <button type="button" class="next-btn" id="nextBtn">
+                        Next
+                    </button>
+                    <button type="button" class="cancel-btn" id="closeModalBtn">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                const modal = $("#myModal");
+                const openModalBtn = $("#openModalBtn");
+                const closeModalBtn = $("#closeModalBtn");
+                const formSteps = $(".form-step");
+                const stepItems = $(".step-item");
+                const prevBtn = $("#prevBtn");
+                const nextBtn = $("#nextBtn");
+                let currentStep = 0;
+
+                function showStep(stepIndex) {
+                    formSteps.each(function (index) {
+                        if (index === stepIndex) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                    currentStep = stepIndex;
+                    updateStepIndicators();
+                    updateButtonVisibility();
+                }
+
+                function handleNext(e) {
+                    if (currentStep < formSteps.length - 1) {
+                        currentStep++;
+                        showStep(currentStep);
+                    }
+                }
+
+                function handlePrevious() {
+                    if (currentStep > 0) {
+                        currentStep--;
+                        showStep(currentStep);
+                    }
+                }
+
+                function updateStepIndicators() {
+                    stepItems.each(function (index) {
+                        if (index === currentStep) {
+                            $(this).addClass("active");
+                        } else if([index + 1] === stepItems.length) {
+
+                            $(this).html("Create Project")
+                        } else {
+                            $(this).removeClass("active");
+                        }
+
+                        if (index < currentStep) {
+                            $(this).find(".step-circle")
+                                .html(`<svg width="15" height="15" viewBox="0 0 42 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0.307044 24.8107C3.83704 31.7207 7.36704 38.6408 10.897 45.5508C11.907 47.5408 14.877 46.9108 15.467 44.9508C20.097 29.5108 28.6971 15.4407 40.2871 4.25074C42.6071 2.01074 39.067 -1.51924 36.747 0.710761C24.547 12.4908 15.5171 27.3808 10.6371 43.6208L15.207 43.0208C11.677 36.1108 8.14704 29.1907 4.61704 22.2807C3.15704 19.4107 -1.16293 21.9408 0.297065 24.8008H0.307044V24.8107Z" fill="#138848"/>
+                            </svg>`);
+                        }
+                    });
+                }
+
+                function updateButtonVisibility() {
+                    prevBtn.toggleClass("hidden", currentStep === 0);
+                    nextBtn.toggleClass(
+                        "hidden",
+                        currentStep === formSteps.length - 1
+                    );
+                    if([currentStep + 1] == formSteps.length){
+                        nextBtn.html("Create Project")
+                        nextBtn.addClass("add_new_project")
+                    } else {
+                        nextBtn.html("Next")
+                        nextBtn.removeClass("add_new_project")
+                    }
+
+                    if(currentStep == 0){
+                        prevBtn.hide()
+                    } else {
+                        prevBtn.show()
+                    }
+                }
+
+                function updateDividerPositions() {
+                    const numSteps = formSteps.length;
+                    const dividerPositions = [];
+
+                    for (let i = 1; i < numSteps; i++) {
+                        dividerPositions.push((i / numSteps) * 100);
+                    }
+
+                    const dividers = $(".steps-divider");
+                    dividers.each(function (index) {
+                        $(this).css(
+                            "left",
+                            `calc(${dividerPositions[index]}% - 5px)`
+                        );
+                    });
+                }
+
+                // Show the first step initially
+                showStep(currentStep);
+
+                openModalBtn.on("click", function () {
+                    modal.show();
+                    updateStepIndicators();
+                    updateButtonVisibility();
+                    updateDividerPositions();
+                });
+
+                closeModalBtn.on("click", function () {
+                    modal.hide();
+                    currentStep = 0;
+                    showStep(currentStep);
+                    updateStepIndicators();
+                    updateButtonVisibility();
+                });
+
+                prevBtn.on("click", handlePrevious);
+                nextBtn.on("click", function(){
+
+                    if (currentStep < formSteps.length - 1) {
+                        currentStep++;
+                        showStep(currentStep);
+                    }
+                });
+
+                stepItems.each(function (index) {
+                    $(this).on("click", function () {
+                        showStep(index);
+                    });
+                });
+
+                formSteps.on("submit", function (event) {
+                    event.preventDefault();
+                    confirm("Are you sure!")
+                    // Handle form submission or validation here
+                });
+
+                // SUbmit form
+                $("body").on("click", ".add_new_project", function(){
+                    var prjct_name = $("#project_name").val()
+                    var company = $('#company').find(":selected").text();
+                    var notes = $("#notes").val()
+                    var users = $('input[name="add_ppl"]:checked').serialize()
+                    var proj_category = $('#proj_category').find(":selected").text();
+
+                    var data = {prjct_name: prjct_name, company: company, notes: notes, users: users, proj_category: proj_category}
+                    console.log(data);
+                })
+
+                // slct_project btn
+                $("body").on("click", ".slct_prjct_btn", function () {
+                    var html = `<div class="selected__check">
+                        <svg width="15" height="15" viewBox="0 0 42 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.307044 24.8107C3.83704 31.7207 7.36704 38.6408 10.897 45.5508C11.907 47.5408 14.877 46.9108 15.467 44.9508C20.097 29.5108 28.6971 15.4407 40.2871 4.25074C42.6071 2.01074 39.067 -1.51924 36.747 0.710761C24.547 12.4908 15.5171 27.3808 10.6371 43.6208L15.207 43.0208C11.677 36.1108 8.14704 29.1907 4.61704 22.2807C3.15704 19.4107 -1.16293 21.9408 0.297065 24.8008H0.307044V24.8107Z" fill="#138848"/>
+                        </svg>
+
+                    </div>`;
+                    $(".slct_prjct_btn").removeClass("active");
+                    $(".selected__check").remove();
+                    $(this).addClass("active");
+                    $(this).prepend(html);
+                });
+
+                // Switch Tabs
+                $("body").on("click", ".tab", function(){
+                    var tabs = $(this).index()
+                    $(".tab").removeClass("active")
+                    $(this).addClass("active")
+                    $(".tab_c").each(function(index){
+                        if(index == tabs){
+                            $(this).show()
+                        } else {
+                            $(this).hide()
+                        }
+                    })
+                })
+
+                // Accrodian
+                $("body").on("click", ".accrodian", function(e){
+                    e.preventDefault()
+
+                    var thi = $(this).toggleClass("active")
+                    var content = $(this).parent().next()
+                    content.slideToggle("0.5")
+
+                })
+            });
+        </script>
+    </body>
+</html>

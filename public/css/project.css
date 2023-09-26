@@ -1,0 +1,662 @@
+/* ... Styles for the button to open the modal ... */
+
+/* Global Styles */
+
+/* Button Styles */
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0 !important;
+    /* left: 280px !important; */
+    width: calc(100%) !important;
+    height: 100% !important;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: auto !important;
+    max-width: 90%; /* Limit the maximum width to 90% of the screen */
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Top Section */
+.top-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    /* border-bottom: 1px solid #ccc; */
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.top-section h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+/* Steps */
+.steps {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    position: relative;
+    gap: 50px;
+    text-align: center;
+}
+
+.step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: normal;
+    cursor: pointer;
+    position: relative;
+    z-index: 1; /* Added to position the dividers below the step content */
+    font-size: 12px;
+    color: #727491;
+}
+
+.step-item.active {
+    color: #3a3a3a;
+    font-weight: 600;
+}
+
+.step-item.active > .step-circle {
+    background-color: #007bff;
+    color: #fff;
+    border: 2px solid #007bff;
+}
+
+.step-circle {
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border: 1px solid #dadada93;
+    color: #3a3a3a;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 7px;
+    font-size: 12px;
+    z-index: 1;
+}
+
+.step-circle:hover {
+    border: 1px solid #007bff;
+}
+
+/* Divider Lines */
+.step-item::before {
+    content: "";
+    position: absolute;
+    top: 32%;
+    width: 190%;
+    height: 1px;
+    background-color: #cccccc71;
+    z-index: 0;
+    transform: translateX(70px);
+}
+
+.step-item:last-child::before {
+    display: none;
+}
+
+/* Divider Lines */
+/* .st */
+
+/* Middle Section */
+.middle-section {
+    padding: 20px 0;
+}
+
+.middle-section h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+/* Footer Section */
+.footer-section {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    /* border-top: 1px solid #ccc; */
+    margin-top: 40px;
+}
+
+.footer-section button {
+    margin-left: 10px;
+}
+
+/* Form Inputs */
+input,
+textarea {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* ... Other Custom CSS Styles ... */
+
+.form-step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-step.slct_proj {
+    display: flex;
+    gap: 30px;
+}
+
+.box_container {
+    width: 150px;
+    height: fit-content;
+    font-size: 15px;
+    text-align: center;
+}
+
+.box_container button {
+    background: transparent;
+    width: 100%;
+    height: 150px;
+    border: 1px solid #dadada;
+    border-radius: 40px;
+    position: relative;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box_container button.active {
+    background: #f7f9fd;
+    width: 100%;
+    height: 150px;
+    border: 1px solid #007bff;
+    border-radius: 40px;
+    position: relative;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box_container button .selected__check {
+    position: absolute;
+    top: -10px;
+    widh: 30px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: 1px solid #007bff;
+    right: 0;
+    background-color: #fff;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    display: flex;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+.w-svg-sprite {
+    display: inline-block;
+    min-width: 1em;
+    max-width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+}
+
+.form-step .contaier {
+    width: 100%;
+    background-color: #efefef;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.ppl {
+    display: flex;
+    gap: -5px;
+    margin-bottom: 20px;
+    margin-left: 0px;
+}
+
+.ppl .p {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: green;
+    /* padding: 10px 15px; */
+    text-align: center;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
+    margin-left: -2px;
+    font-size: 26px;
+    overflow: hidden;
+    padding: 2px 5px;
+    color: #fff;
+}
+
+.search_ppl {
+    position: relative;
+}
+
+input#ppl_search {
+    width: 100%;
+    border-radius: 20px;
+    padding: 7px 10px 7px 30px;
+}
+
+.search_ppl label {
+    position: absolute;
+    left: 9px;
+    top: 5px;
+    color: #afafaf;
+}
+
+.tab_nav {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid #dadada;
+    /* padding-bottom: 7px; */
+    margin-bottom: 15px;
+}
+
+.tab_nav .tab {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    padding-bottom: 7px;
+}
+
+.tab_nav .tab.active {
+    border-bottom: 1px solid #3a3a3a;
+}
+
+.accrodian.active {
+    transform: rotate(180deg);
+}
+
+.count_ppl {
+    width: 20px;
+    height: 20px;
+    background-color: green;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow: hidden;
+}
+
+.tab_c .top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 5px 0;
+}
+
+.tab_c .content {
+    padding: 0 !important;
+    display: block !important;
+}
+
+.tab_c .cont {
+    padding: 0 !important;
+    display: block !important;
+}
+
+.tab_c .top button {
+    background-color: transparent;
+    color: #dadada;
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
+.tab_c .cont label {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+    align-self: center;
+    margin-bottom: 10px;
+}
+
+input.add_ppl {
+    width: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.p {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: green;
+    /* padding: 10px 15px; */
+    text-align: center;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
+    /* margin-left: -20px; */
+    font-size: 17px;
+    overflow: hidden;
+    padding: 2px 5px;
+    color: #fff;
+}
+/* ... Other CSS styles ... */
+
+
+/*---------- Projects  ---------------*/
+
+.all_projects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 100px;
+}
+
+.project {
+    max-width: 300px;
+    background-color: #fff;
+    /* padding: 10px 15px; */
+    border-radius: 5px;
+    height: 400px;
+    /* overflow: hidden; */
+    width: 300px;
+}
+
+.project .tab_content {
+    max-height: 70%;
+    display: flex;
+    height: 100%;
+}
+
+.project .tab_c {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+}
+
+.project .top:first-child {
+    background-color: #fafafa;
+    padding: 10px 15px 0 15px;
+    border-bottom: #eaeaea 1px solid;
+}
+
+.prjct_breif {
+    display: flex;
+    gap: 7px;
+    margin-top: 15px;
+    justify-content: space-between;
+    position: relative;
+}
+
+.project .prjct_breif .p{
+    margin-right: 0 !important;
+    box-shadow: none;
+}
+
+.fvrt{
+    color: #dadada;
+    cursor: pointer;
+}
+
+.fvrt.stared{
+    color: #febe6f;
+    font-size: 13px;
+    flex: 1;
+}
+
+.prjct_name {
+    margin-bottom: 15px;
+    flex: 10;
+}
+
+.prjct_name p {
+    margin: 0;
+}
+
+span.light_font {
+    color: #dadada;
+}
+
+.more_options {
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    top: 22px;
+    display: none;
+    z-index: 2;
+}
+
+.more_options .tab {
+    padding: 15px 20px;
+    font-size: 12px;
+    background-color: #f5f7fa;
+}
+
+.more_options .tab.active {
+    background-color: green;
+    COLOR: #fff;
+    /* border-radius: 5px 0 0 0; */
+    border-bottom: 0;
+}
+
+.more_options .tab_nav {
+    border-radius: 5px 5px 0 0;
+    gap: 0;
+}
+
+.more_options .tab_content {
+    /* padding: 10px 15px; */
+    margin-top: 12px;
+}
+
+.more_options ul li {
+    list-style: none;
+    padding: 5px 15px;
+    width: 100%;
+    color: #4b4b4b;
+    cursor: pointer;
+}
+
+.more_options ul li:hover{
+    background-color: #f9f9f9;
+}
+
+.more_options ul li i {
+    margin-right: 13px;
+    color: #8f96b3;
+}
+
+li.delete {
+    margin-top: 10px;
+    border-top: 1px solid #dadada;
+    padding-top: 10px !important;
+    color: #c20000 !important;
+}
+
+li.delete i{
+    color: #c20000 !important;
+}
+
+.project .tab_c {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.project .top .tab_nav {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.top.tags {
+    background-color: transparent !important;
+    border-bottom: 0 !important;
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+.top.tags p {
+    margin: 0;
+    width: fit-content;
+}
+
+span.tag {
+    background-color: blue;
+    color: #fff;
+    padding: 3px 7px;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.tag img {
+    width: 20px;
+    height: 20px;
+    margin-left: 7px;
+    cursor: pointer;
+}
+
+.project .content {
+    padding: 10px 15px !important;
+    margin-top: 15px !important;
+}
+
+div.updates {
+    color: #dadada;
+    font-size: 12px;
+    font-weight: 300;
+    margin-bottom: 15px;
+}
+
+.project .content p i {
+    color: #dadada;
+}
+
+.project .content p sup {
+    margin-right: 5px;
+}
+
+.project .content p {
+    color: #3a3a3a;
+}
+
+.accesed_users {
+    display: flex;
+    gap: 15px;
+}
+
+
+.project .p {
+    margin-left: 0 !important;
+    margin-right: 5px !important;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+}
+
+.owner {
+    position: relative;
+}
+
+.owner .p {
+    cursor: pointer;
+}
+
+.owner > .p:first-child:hover {
+    height: 32px;
+    width: 32px;
+    transition: all .3s linear;
+}
+
+.owner .options {
+    position: absolute;
+    background: #fff;
+    box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    z-index: 10;
+    width: max-content;
+    top: 38px;
+    display: none;
+}
+
+.owner .options li {
+    list-style: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.owner .options li:hover{
+    background-color: #f9f9f9;
+}
+
+
+li.ass_owner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-weight: 300;
+    font-size: 10px;
+    text-align: center;
+    font-size: 12px !important;
+}
+
+li.ass_owner .p {
+    color: #dadada;
+    font-size: 15px;
+    width: 20px;
+    height: 20px;
+}
+
+.owner .options li i {
+    color: #b1b1b1;
+    margin-right: 10px;
+}
+
+
+.disabled, .disabled:hover{
+    background-color: #efefef !important;
+    -webkit-user-select: none;  /* Chrome, Safari, Opera */
+    -moz-user-select: none;     /* Firefox */
+    -ms-user-select: none;      /* Internet Explorer/Edge */
+    user-select: none;
+    cursor: none !important;
+}

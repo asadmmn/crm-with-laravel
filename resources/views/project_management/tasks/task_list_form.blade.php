@@ -33,7 +33,13 @@ type="text/css"
         </div>
 
         <!-- Middle Section: Form Inputs -->
-        <form id="form">
+     {{$gettask}}
+       
+        <form id="form" method="post" action="{{ route ('tasksubmit')}}">
+
+            @method('post')
+            @csrf
+            <input type="hidden" name="project_id" value="{{$gettask}}"> 
             <div class="middle-section">
                 <div>
                     <div class="input">
@@ -263,5 +269,32 @@ type="text/css"
             ],
         });
 
+// form submission
 
+// document.getElementById('form').addEventListener('submit', function(event) {
+//         event.preventDefault(); // Prevent the default form submission behavior
+
+//         // Get the form data
+//         var formData = new FormData(this);
+
+//         // Get the value for gettask from wherever you're getting it
+//         var gettask = 'some_value'; // Replace with the actual value
+
+//         // Set the action URL dynamically
+//         var actionUrl = "{{ route('tasksubmit') }}?id=" + gettask;
+        
+//         // Send the form data using AJAX
+//         fetch(actionUrl, {
+//             method: 'POST',
+//             body: formData
+//         })
+//         .then(response => response.json()) // Assuming the server returns JSON
+//         .then(data => {
+//             // Handle the response data
+//             console.log(data);
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+//     });
 </script>

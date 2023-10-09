@@ -1,18 +1,76 @@
+{{-- @if($gettask)
+    <p>The value of gettask is: {{ $gettask }}</p>
+@else
+    <p>gettask is empty or not set.</p>
+@endif --}}
 <div class="tasks_container">
     <div class="acrodian side_open">
         <div class="task_list open">
             <div class="tasks_list" style="flex: 1;">
-                <h6 class="tlt"><i class="fa-solid fa-list-ul"></i> Task Lists <span class="add_task_list">+ Add</span></h6>
+                <h4 class="tlt"><i class="fa-solid fa-list-ul"></i> Task Lists <span class="add_task_list">+ Add</span></h4>
                 <div class="task_con">
                     <ul>
-                        <li class="list_btn">All Lists <span class="task_counter">6</span></li>
-                        <li class="list_btn active">List 1 <span class="list_counter">0</span></li>
-                        <li class="list_btn">List 1 <span class="list_counter">0</span></li>
-                        <li class="list_btn">List 1 <span class="list_counter">0</span></li>
+                    @if(isset($task_lists) && !empty($task_lists))
+                    <li class="list_btn">All Lists <span class="task_counter">{{ $task_lists->count() }}</span></li>
+                    
+                        @foreach($task_lists as $tl)
+                             
+                             
+                             <li class="list_btn"><a href="">  @if (!empty($tl->task_list_name))
+                                @php
+                                    $numInitialWords = 1;
+                                    $words = explode(' ', $tl->task_list_name);
+                                    $shortenedText = implode(' ', array_slice($words, 0, $numInitialWords));
+                                    if (count($words) > $numInitialWords) {
+                                        $shortenedText .= '...';
+                                    }
+                                @endphp
+                                {{ $shortenedText }}
+                            @else
+                                No task list name available.
+                            @endif</a> <span class="task_counter">0</span></li>
+                        @endforeach
+                        @endif
                     </ul>
                 </div>
-            </div>
+                <div>
+                    <h4>Completed Task Lists</h4>
+@if(!empty($taskName)){
+                    {{$taskName}}
+                }
+                @endif
+{{-- Totalntasks completed:{{$completedTasks->count()}} --}}
 
+                   
+
+                    {{-- tasklist completed @if(!empty($taskName))
+                    {{ $taskName }}
+                @endif --}}
+                    {{-- @if(isset($completedTasks) && !empty($completedTasks))
+                    <li class="list_btn">All Lists <span class="task_counter">{{ $completedTasks->count() }}</span></li>
+
+                        @foreach($completedTasks as $ct)
+                             
+                             
+                             <li class="list_btn"><a href="">  @if (!empty($ct->subject))
+                                @php
+                                    $numInitialWords = 1;
+                                    $words = explode(' ', $ct->subject);
+                                    $shortenedText = implode(' ', array_slice($words, 0, $numInitialWords));
+                                    if (count($words) > $numInitialWords) {
+                                        $shortenedText .= '...';
+                                    }
+                                @endphp
+                                {{ $shortenedText }}
+                            @else
+                                No task list name available.
+                            @endif</a> <span class="task_counter">0</span></li>
+                        @endforeach
+                        @endif
+                    --}}
+                </div>
+            </div>
+      
             <div class="accr_btn">
 
                 <i class="fa-solid fa-circle-chevron-left accr_btn_ac"></i>
@@ -26,6 +84,7 @@
 </div>
 
 @include('project_management.tasks.task_list_form')
+{{-- @include('project_management.tasks.tasks') --}}
 
 <link rel="stylesheet" href="{{ URL::asset('css/project.css') }}">
 <style>

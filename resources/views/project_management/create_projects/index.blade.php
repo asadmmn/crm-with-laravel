@@ -257,7 +257,8 @@
         $("body").on("click", ".prjct_btn", function(e){
             var id = $(this).data("prjct_id")
             $.ajax({
-                url: '{{ route('taskindex', ':id') }}'+'?gettask=1'.replace(':id', id),
+                url: '{{ route("taskindex", "id") }}'.replace('id', id),
+
                 success: function(res){
                     // loadScript("https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js")
                     $("main.content:first").html(res)

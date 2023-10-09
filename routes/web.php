@@ -3,6 +3,7 @@
 use App\Http\Controllers\clients;
 use App\Http\Controllers\ProjectManagement;
 use App\Http\Controllers\TasksController;
+use App\Http\Controllers\TaskListController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -72,8 +73,24 @@ Route::group(['middleware' => ['LoginCheck']], function(){
     Route::delete('/project/{id}', [ProjectManagement::class, 'destroy'])->name('deleteProject');
 
     // Tasks
-    Route::get('/project/{id}/tasks/li', [TasksController::class, 'index'])->name('taskindex');
-    Route::get('/project/{id}/tasks/list', [TasksController::class, 'rindex']);
+    Route::post('/taskstore/{id}', [TasksController::class, 'store'])->name('task.store');
+    Route::get('/tasklist/{id}/tasks', [TasksController::class, 'getTasks']);
+    Route::put('/tasks/{id}/complete', [TasksController::class, 'completeTask']);
+    Route::get('/tasks/{id}/view', [TasksController::class, 'viewTask']);
+    Route::put('/update/{taskId}', [TasksController::class, 'updateTask'])->name('update.task');
+    //Route::post('/delete/{taskId}',[TasksController::class, 'deleteTask'])->name('delete.task');
+    Route::delete('/delete/{taskId}', [TasksController::class, 'deleteTask'])->name('delete.task');
 
+
+    Route::get('/project/{id}/tasks/create', [TasksController::class, 'create'])->name('project.tasks.create');
+
+
+    //Task_list
+    Route::get('/project/{id}/tasks/li', [TasksController::class, 'index'])->name('taskindex');
+    Route::get('/project/{id}/tasks/list', [TasksController::class, 'rindex'])->name('taskview');
+
+
+    Route::post('/tasksubmit', [TaskListController::class, 'store'])->name('tasksubmit');
+    Route::get('/taskview', [TaskListController::class, 'index']);
 
 });

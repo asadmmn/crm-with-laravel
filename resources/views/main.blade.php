@@ -47,7 +47,12 @@
     <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-    @yield('style')
+
+<!-- CSS only -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-9z0v5z5JQzvJ8yJZz5+J5zJQ5z8z5zJQ5z8z5zJQ5z8z5zJQ5z8z5zJQ5z8z5zJQ" crossorigin="anonymous">
+
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-+zvzvJQzvJ8yJZz5+J5zJQ5z8z5zJQ5z8z5zJQ5z8z5zJQ5z8z5zJQ5z8z5zJQ" crossorigin="anonymous"></script>  @yield('style')
 </head>
 
 <body>

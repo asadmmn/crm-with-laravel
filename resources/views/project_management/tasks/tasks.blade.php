@@ -369,7 +369,7 @@ const editTaskForm = `
     editFormContainer.toggle();
 
     editFormContainer.html(editTaskForm);
-    $("#my-great-dropzone").attr("data-task-id", taskId);
+    $("#my-great-drop").attr("data-task-id", taskId);
 });
 
 
@@ -659,14 +659,14 @@ $(document).ready(function() {
 
 /* .details {
     width: 60%;
-    height: 100%; /* Adjust as needed */
-    background-color: #f2f2f2; /* Add background color for visibility */
+    height: 100%; /* Adjust as needed 
+    background-color: #f2f2f2; /* Add background color for visibility 
 }
-/* 
-.tasks {
-    width: 40%; /* Adjust as needed 
-    background-color: #e6e6e6; /* Add background color for visibility 
-} */ */
+*/
+/* .tasks { */
+    /* width: 100%; /* Adjust as needed  */
+    /* background-color: #e6e6e6; /* Add background color for visibility  */
+} 
 .heading {
     display: flex;
     justify-content: space-between;
@@ -791,9 +791,9 @@ $(document).ready(function() {
 
 .task {
      /* Use 'font-weight' instead of 'font:bold;' */
-    
+    width: 100%;
      margin-left: 5%;
-     width: 500px;
+     /* width: 500px; */
      color:gray;
 }
 .status{

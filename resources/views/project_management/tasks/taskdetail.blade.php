@@ -87,7 +87,7 @@
            
             padding: 10px;
             width: 100%;
-            max-width: 100%;
+            
         }
         .heading {
     display: flex;
@@ -161,7 +161,7 @@
 
     .new_task_list {
         display: flex;
-        max-width: 300px;
+        max-width: 100%;
     }
 
     .new_task_list.open{
@@ -265,6 +265,132 @@
         -moz-transform: rotate(180deg);
         -webkit-transform: rotate(180deg);
         transform: rotate(180deg);
+    }
+    
+/* EDIT TASK FORM  */
+
+
+.task_bar ul {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 0;
+    }
+
+    .task_bar ul li {
+        list-style: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .task_bar ul li.active {
+        background-color: #f2f4fc;
+    }
+
+    .task_content {
+        background-color: #f2f4fc;
+        margin-top: 0;
+        padding: 10px;
+    }
+
+    .task_content .dropzone {
+        border: none;
+    }
+
+    .task_tab {
+        display: none;
+    }
+
+    .task_tab.active {
+        display: block;
+    }
+
+    .dz-default {
+        display: none;
+    }
+
+    label {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .attach_files_cont {
+        background-color: #fff;
+        padding: 10px 25px;
+    }
+
+    .radio {
+        display: flex;
+        gap: 5px;
+        background-color: #fff;
+        width: 100%;
+        padding: 10px 15px;
+    }
+
+    input#priority {
+        padding: 5px 10px;
+        margin-left: 0 !important;
+        width: fit-content;
+    }
+
+    .custom-file-button {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 1px solid #0056b3;
+        color: #0056b3;
+        border-radius: 4px;
+        cursor: pointer !important;
+        transition: background-color 0.3s ease;
+        font-weight: 400;
+        background-color: transparent;
+    }
+
+    .custom-file-button:hover {
+        background-color: #f2f4fc;
+    }
+
+    .custom-file-button span {
+        cursor: pointer !important;
+    }
+
+    .hidden-input {
+        display: none !important;
+    }
+
+    .dragover {
+        border: dashed 2.5px #dadada;
+    }
+
+    .deleteFile {
+        color: #c20000;
+        background-color: transparent;
+        border-radius: 50%;
+        padding: 5px 8px;
+        border: 1px solid #f2f4fc;
+    }
+
+    .deleteFile:hover {
+        border: 1px solid #0056b3;
+        color: #0056b3;
+    }
+
+    .dz-preview {
+        display: none;
+    }
+
+    .attachedFilePrev {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        border: none;
+    }
+
+    span.file_name {
+        padding: 0 7px;
+    }
+
+    span.progress_prct {
+        border-right: 1px solid #dadada;
+        padding: 0 5px;
     }
 </style>
 

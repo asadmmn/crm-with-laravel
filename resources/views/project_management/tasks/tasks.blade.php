@@ -1,6 +1,6 @@
 <h5 class="status">
 
-{{$taskName}} completed </h5> 
+{{$taskName}} complete </h5> 
 
 @foreach($tasks as $task)
 

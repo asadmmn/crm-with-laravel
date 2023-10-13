@@ -27,7 +27,7 @@
                 @endphp
                 <div class="fvrt {{ $star }}"><i class="fa-solid fa-star"></i></div>
                 <div class="prjct_name">
-                {{ $item->id }}
+              
                     <a href="#" class="prjct_btn" data-prjct_id="{{ $item->id }}">{{ $item->project_name }}</a><br>
                     <span class="light_font">{{ $item->company }}</span>
                 </div>

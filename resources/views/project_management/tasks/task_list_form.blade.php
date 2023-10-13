@@ -33,7 +33,7 @@ type="text/css"
         </div>
 
         <!-- Middle Section: Form Inputs -->
-     {{$gettask}}
+   
        
 
             <form action="#" class="task_list_form"  id="tsk_list" data-task-id="{{$gettask}}" enctype="multipart/form-data">

@@ -34,6 +34,30 @@
                                     </button>
                                     <div class="dropdown-content">
                                         <!-- Dropdown content -->
+                                        <ul>
+                                            <li id="edit-tasklist" class="edit-task-list-option"  data-task-id="{{ $tl->id }}">
+                                                <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
+                                                <span class="option_list_text">Edit Task</span>
+                                            </li>
+                                            
+                                       
+                        
+                                            <li class="disabled"><i class="fa-regular fa-copy option_list_icon "></i> <span
+                                                    class="option_list_text">Move or Copy</span></li>
+                                            <li class="disabled"><i class="fa-solid fa-sort option_list_icon"></i> <span
+                                                    class="option_list_text">Reorder Tasks By...</span></li>
+                                            <li class="disabled"><i class="fa-solid fa-file option_list_icon"></i> <span
+                                                    class="option_list_text">Reports</span></li>
+                        {{-- 
+                                                    <li id="delete-task" class="delete-task-option"   data-task-id="{{ $task->id }}>
+                                                        <i class="fa-solid fa-trash option_list_icon"></i>
+                                                        <span class="option_list_text">Delete Task</span>
+                                                    </li> --}}
+                                                    <li class="delete-list-btn" data-task-id="{{ $tl->id }}">
+                                                        
+                                                        <i class="fa-solid fa-trash option_list_icon"></i>Delete Task</li>
+                        
+                                        </ul>
                                     </div>
                                 </div>
                                 <a href="#"><i class="fa-solid fa-plus text-blue trigger-link" data-task-list="{{ $tl->id }}"></i></a>

@@ -35,7 +35,8 @@ type="text/css"
         <!-- Middle Section: Form Inputs -->
      {{$gettask}}
        
-        <form id="form" method="post" action="{{ route ('tasksubmit')}}">
+
+            <form action="#" class="task_list_form"  id="tsk_list" data-task-id="{{$gettask}}" enctype="multipart/form-data">
 
             @method('post')
             @csrf
@@ -74,7 +75,7 @@ type="text/css"
                         <div class="tab_c">
                             <div class="input">
                                 <label for="task_view">Who can view the task list?</label>
-                                <select name="users" id="users" style="max-width: 300px;">
+                                <select name="user" id="user" style="max-width: 300px;">
                                     <option value="1">Mubashir</option>
                                 </select>
                             </div>
@@ -270,31 +271,30 @@ type="text/css"
         });
 
 // form submission
+$(document).ready(function(){
+    $('.task_list_form').on('submit', function(e){
+        e.preventDefault(); // Prevent the form from submitting the traditional way
 
-// document.getElementById('form').addEventListener('submit', function(event) {
-//         event.preventDefault(); // Prevent the default form submission behavior
+        var taskId = $(this).data('task-id'); // Get the taskId from data attribute
 
-//         // Get the form data
-//         var formData = new FormData(this);
+        $.ajax({
+            type: 'POST',
+            url: '/submit/' + taskId,
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success: function(response){
+                alert("added successfully");
+                // Handle the success response here
+                console.log(data);
+            },
+            error: function(error){
+                // Handle any errors here
+                console.log(error);
+            }
+        });
+    });
+});
 
-//         // Get the value for gettask from wherever you're getting it
-//         var gettask = 'some_value'; // Replace with the actual value
 
-//         // Set the action URL dynamically
-//         var actionUrl = "{{ route('tasksubmit') }}?id=" + gettask;
-        
-//         // Send the form data using AJAX
-//         fetch(actionUrl, {
-//             method: 'POST',
-//             body: formData
-//         })
-//         .then(response => response.json()) // Assuming the server returns JSON
-//         .then(data => {
-//             // Handle the response data
-//             console.log(data);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-//     });
 </script>

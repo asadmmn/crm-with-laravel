@@ -36,9 +36,9 @@ class TaskListController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $project_id=$request->project_id;
+    public function store(Request $request,$taskId)
+    {   //dd("hello there");
+        $project_id=$taskId;
         //dd($request->project_id);
         // Validate the request data
         // $request->validate([
@@ -64,8 +64,7 @@ $taskList = TaskList::create([
             'projects_id' => $project_id,
         ]);
 
-        // Optionally, you can redirect to a page after creating the task list
-        // return redirect()->back();
+     
         return redirect()->route('taskview', ['id' => $project_id]);
     }
 

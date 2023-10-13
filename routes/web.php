@@ -89,8 +89,8 @@ Route::group(['middleware' => ['LoginCheck']], function(){
     Route::get('/project/{id}/tasks/li', [TasksController::class, 'index'])->name('taskindex');
     Route::get('/project/{id}/tasks/list', [TasksController::class, 'rindex'])->name('taskview');
 
-
-    Route::post('/tasksubmit', [TaskListController::class, 'store'])->name('tasksubmit');
+    Route::post('/submit/{taskId}', [TaskListController::class, 'store'])->name('submit.tasklist');
+    //Route::post('/tasksubmit', [TaskListController::class, 'store'])->name('tasksubmit');
     Route::get('/taskview', [TaskListController::class, 'index']);
 
 });

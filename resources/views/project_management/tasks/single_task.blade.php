@@ -22,6 +22,7 @@
             <div class="actions">
                 @if (isset($task_lists) && !empty($task_lists))
                     @foreach ($task_lists as $tl)
+                    @if(!empty($tl))
                         <div class="listItem">
                             <div class="listItemContent">
                                 <a href="#">
@@ -64,7 +65,9 @@
                             </div>
                         </div>
 
-                       
+                       @else 
+                       No task list for this project
+                       @endif
                     @endforeach
                 @endif
             </div>
@@ -153,7 +156,9 @@
 
             <div class="add_task">
             <div class="">
-    <input type="hidden" name="pro_id" value="{{ $tl->projects_id }}">
+                @if(!empty($tl->projects_id))
+                <input type="hidden" name="pro_id" value="{{ $tl->projects_id}}">
+@endif
     <input type="text" name="subject" placeholder="what needs to be done?">
              </div>
 

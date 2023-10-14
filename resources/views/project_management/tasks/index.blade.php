@@ -136,12 +136,16 @@
         display: flex;
         padding: 3px 10px;
         cursor: pointer;
+        text-decoration-style: none;
     }
 
     .task_con li.active, .task_con li:hover {
         background-color: #F2F4FC;
         /* border-left: 3px solid blue; */
         box-shadow: inset 5px 0 0 0px #4461d7;
+    
+        text-decoration-style: none;
+    
     }
 
     span.task_counter, .list_counter {

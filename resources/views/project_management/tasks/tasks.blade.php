@@ -7,10 +7,12 @@
 
 <div class="task">
         <!-- Display task details here -->
-        
+        @if($task->status == "completed")
+        <a href="#" class="task-uncomplete-link"><i class="fa-solid fa-circle-check" data-task-id="{{ $task->id }}"></i></a>
+    @else
         <a href="#" class="task-complete-link"><i class="fa-regular fa-circle-check" data-task-id="{{ $task->id }}"></i></a>
-       
-        {{-- {{ $task->id }} --}}
+    @endif
+            {{-- {{ $task->id }} --}}
         {{ $task->subject }}
         @if(!empty($task->start_date))
         {{ ' ' .$task->start_date. ' '}}To{{' ' .$task->due_date. ' ' }} 
@@ -21,7 +23,28 @@
  
         <a href="#" class="task-view-link"><i class="fa-regular fa-eye" data-task-id="{{ $task->id }}"></i></a>
     
-    
+        {{-- <div class="tab_content">
+            <div class="tab_c" data-step="1" style="">
+                <ul data-prjct_id="1">
+                    <li class="edit_prjct"><i class="fa-solid fa-pen"></i> Edit project Details</li>
+                    <li class="disabled"><i class="fa-regular fa-copy"></i> Copy</li>
+                    <li class="disabled"><i class="fa-solid fa-briefcase"></i> Save as Template</li>
+                    <li class="disabled"><i class="fa-solid fa-box-archive"></i> Archive</li>
+                    <li class="disabled"><i class="fa-solid fa-plus"></i> More options</li>
+                    <li class="delete"><i class="fa-solid fa-trash"></i> Delete</li>
+                </ul>
+
+            </div>
+
+            <div class="tab_C" style="display: none;">
+                <ul data-prjct_id="1">
+                    <li class="disabled"><i class="fa-regular fa-square-check"></i> Add task</li>
+                    <li class="disabled"><i class="fa-solid fa-chart-line"></i> Add budget</li>
+                    <li class="add_users"><i class="fa-regular fa-user"></i> Add user</li>
+                    <li class="disabled"><i class="fa-solid fa-envelope"></i> Add message</li>
+                </ul>
+            </div>
+        </div> --}}
         <div class="tdropdown">
             {{-- <button class=" " type="button"> --}}
                 <i class="fa-solid fa-ellipsis tellipsisBtn"  onclick="myFunction(this)" ></i>
@@ -30,25 +53,20 @@
                 <ul>
                     <li id="edit-task" class="edit-task-option"  data-task-id="{{ $task->id }}">
                         <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
-                        <span class="option_list_text">Edit Task</span>
+                        <span class="option_list_text">Edit </span>
                     </li>
                     
-               
+               <br>
 
                     <li class="disabled"><i class="fa-regular fa-copy option_list_icon "></i> <span
-                            class="option_list_text">Move or Copy</span></li>
-                    <li class="disabled"><i class="fa-solid fa-sort option_list_icon"></i> <span
-                            class="option_list_text">Reorder Tasks By...</span></li>
-                    <li class="disabled"><i class="fa-solid fa-file option_list_icon"></i> <span
+                            class="">copy  </span></li>
+                   <br> <li class="disabled"><i class="fa-solid fa-sort option_list_icon"></i> <span
+                            class="option_list_text">Reorder </span></li>
+                    <br><li class="disabled"><i class="fa-solid fa-file option_list_icon"></i> <span
                             class="option_list_text">Reports</span></li>
-{{-- 
-                            <li id="delete-task" class="delete-task-option"   data-task-id="{{ $task->id }}>
-                                <i class="fa-solid fa-trash option_list_icon"></i>
-                                <span class="option_list_text">Delete Task</span>
-                            </li> --}}
-                            <li class="delete-btn" data-task-id="{{ $task->id }}">
+                        <br>    <li class="delete-btn" data-task-id="{{ $task->id }}">
                                 
-                                <i class="fa-solid fa-trash option_list_icon"></i>Delete Task</li>
+                             <i class="fa-solid fa-trash option_list_icon"></i>Delete </li>
 
                 </ul>
             </div>
@@ -136,6 +154,33 @@ $(document).ready(function() {
       success: function(response) {
         // Update the UI to show that the task is complete
         alert('Task Completed');
+        // $('#myElement').removeClass('original-class').addClass('new-class');
+        //$(event.target).addClass('completed');
+      },
+      error: function(xhr) {
+        console.log(xhr.responseText);
+      }
+    });
+  });
+});
+
+
+
+//task Uncompletion trigger 
+$(document).ready(function() {
+  $('.task-uncomplete-link').click(function(event) {
+    event.preventDefault();
+    var taskId = $(this).find('i').data('task-id');
+    
+    $.ajax({
+        
+      url: '/tasks/' + taskId + '/uncomplete',
+      type: 'POST',
+      data: { _token: "{{ csrf_token() }}", _method: "PUT" },
+      success: function(response) {
+        // Update the UI to show that the task is complete
+        alert('Task status set to uncomplete');
+        // $('#myElement').removeClass('original-class').addClass('new-class');
         //$(event.target).addClass('completed');
       },
       error: function(xhr) {
@@ -148,7 +193,7 @@ $(document).ready(function() {
 // edit task form call
 const editTaskForm = `
 
-    <form action="#" class="edit_task_form"  id="my-great-dropzone" data-task-id="" enctype="multipart/form-data">
+    <form action="#" class="edit_task_form"  id="my-great-drop" data-task-id="" enctype="multipart/form-data">
 
 @csrf
 @method('post')
@@ -353,12 +398,12 @@ const editTaskForm = `
 
 
     // task form call
- // task form call
+ // edit task form call
  $("body").on("click", '.edit-task-option', function() {
     var editFormContainer = $(this).closest('.task').find('.edit-form-container');
     var taskId = $(this).data('task-id');
     console.log(taskId);
-
+ 
     // Check if the edit form already exists
     if (editFormContainer.length === 0) {
         editFormContainer = $('<div class="edit-form-container"></div>');
@@ -600,8 +645,8 @@ $(document).ready(function() {
         e.preventDefault();
 
         var formData = new FormData($('.edit_task_form')[0]); // Get form data
-        var taskId = $('#my-great-dropzone').data('task-id'); // Get the data-task-list-id from the form
-
+        var taskId = $('#my-great-drop').data('task-id'); // Get the data-task-list-id from the form
+        console.log(taskId);
         var url = "{{ route('update.task', ['taskId' => ':taskId']) }}";
         url = url.replace(':taskId', taskId);
 
@@ -616,6 +661,7 @@ $(document).ready(function() {
             processData: false,
             success: function(response) {
                 // Update the UI to show that the task is complete
+                $("body .edit_task_form").remove()
                 alert('success');
                 //$(event.target).addClass('completed');
             },
@@ -737,71 +783,97 @@ $(document).ready(function() {
     .dropbtn:focus {
         background-color: #2980B9;
     }
-
-    /* The container <div> - needed to position the dropdown content */
-.tdropdown {
+/* The container <div> - needed to position the dropdown content */
+    .tdropdown {
     position: relative;
     display: inline-block;
-    text-align:left;
+    text-align: left;
+    /* border: 1px solid #ccc; */
+    border-radius: 8px;
+    background-color:white;
+    padding: 0%;
+    /* padding: 10px; */
 }
 
 /* Dropdown Content (Hidden by Default) */
 .tdropdown-content {
+    text-align: left !important;
     display: none;
     position: absolute;
-    background-color: #f0e6e6;
-    text-align: left;
-    min-width: 160px;
-    border-radius: 5px;
+    background-color:white;
+    
+    min-width: 200px;
+    border-radius: 8px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s, transform 0.3s;
 }
 
 /* Links inside the dropdown */
-/* Links inside the dropdown */
 .tdropdown-content a {
-    color: black;
+    color: #333;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    text-align: left !important; /* Added !important */
+    text-align: left !important;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.tdropdown-content ul li {
-    float:left;
-    list-style: none; /* Remove default list style */
-    text-align: left; /* Align text to the left */
-    padding: 5px 0; /* Add some space between items */
-}
 
+.tdropdown-content ul li { 
+    float: none; /* Remove float */
+    width: 100%; /* Remove fixed width */
+    display: inline-block; /* Display as inline-block */
+    list-style: none;
+    text-align: left;
+    padding: 0;
+}
+.tdropdown-content .fa-trash { 
+  color:red;
+}
 /* Add padding to icons */
 .tdropdown-content ul li i {
-    margin-right: 10px; /* Add space between icon and text */
+    /* margin-right: 10px; */
 }
 
 /* Change color of dropdown links on hover */
-.tdropdown-content a:hover {
-    background-color: #ddd;
+.tdropdown-content li:hover {
+    background-color: #f0f0f0;
 }
 
-/* Show the dropdown menu (use JS to add this class to the .tdropdown-content container when the user clicks on the dropdown button) */
+/* Show the dropdown menu with fade-in effect */
 .show {
     display: block;
-}
+    opacity: 1;
+    transform: translateY(0);
+} 
+
 
 .task {
      /* Use 'font-weight' instead of 'font:bold;' */
+     /* text-decoration:none; */
     width: 100%;
      margin-left: 5%;
      /* width: 500px; */
      color:gray;
+     text-decoration-style: none;
 }
 .status{
     margin-left: 5%;
 
 }
+.tasks a:hover {
+  
+    text-decoration: none;
+}
+
 .task:hover {
-    background-color: #f2f4fc; /* Use 'background-color' instead of 'background-coolor' */
+   
+    text-decoration:none;
+    background-color:white; /* Use 'background-color' instead of 'background-coolor' */
+    
 }
 .task .icons {
     display: none; /* Hide the icons by default */

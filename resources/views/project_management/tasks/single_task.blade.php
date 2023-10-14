@@ -25,9 +25,9 @@
                     @if(!empty($tl))
                         <div class="listItem">
                             <div class="listItemContent">
-                                <a href="#">
+                              <li></li>  <a href="#">
                                     <i class="fa-solid fa-angle-right text-blue trigger-arrow" data-task-list-id="{{ $tl->id }}"></i>
-                                </a>
+                                </a></li>
                                 {{ $tl->task_list_name }}
                                 <div class="dropdown">
                                     <button onclick="myFunction(this)" class="text_btn ellipsisBtn" type="button">
@@ -688,7 +688,7 @@ $(document).ready(function() {
     });
 </script>
 <style>
-    .main-content{
+    /* .main-content{
         display:flex;
     }
     
@@ -697,9 +697,18 @@ $(document).ready(function() {
     right: 0;
     
     width: 50%;
-    }
+    } */
     .task{
-        
+        text-decoration: none;
+    }
+    .task:hover{
+        text-decoration: none;
+    }
+    .tasks{
+        text-decoration: none;
+    }
+    .tasks:hover{
+        text-decoration: none;
     }
     .listItem {
         display: flex;
@@ -876,6 +885,9 @@ $(document).ready(function() {
         margin-left: 0 !important;
         width: fit-content;
     }
+    a:hover{
+        text-decoration: none;
+    }
 
     .custom-file-button {
         display: inline-block;
@@ -958,7 +970,15 @@ font-size: large;
 .main-content {
     display: flex;
 }
+.tasks a{
+    text-decoration: none;
+}
+.tasks a{
 
-
+    text-decoration: none;
+}
+.listItem li{
+    text-decoration: none;
+}
 
 </style>

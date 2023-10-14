@@ -78,6 +78,22 @@ public function completeTask($id)
     return response()->json(['message' => 'Task completed successfully']);
 }
 
+
+//task uncompletion   
+public function uncompleteTask($id)
+{
+    //dd("hello");
+    $task = Tasks::findOrFail($id);
+
+    // Assuming you have a column named 'status' in your tasks table
+    $task->status = 'uncomplete'; // Set the new status value
+
+    $task->save(); // Save the updated task
+
+    // Optionally, you can return a response here
+    return response()->json(['message' => 'Task set to uncomplete']);
+}
+
 //task show 
 public function viewTask($id)
 {
@@ -122,12 +138,13 @@ public function updateTask(Request $request, $taskId)
         $task = Tasks::findOrFail($taskId);
 $old_file=$task->file_name;
         $file = $request->file('file');
-        dd($file);
+//        dd($file);
         if ($file) {
             $fileName = $file->store('uploads'); // Adjust the directory as per your needs
         } else {
             $fileName = $old_file;
         }
+        
         // Update the task with the validated data
         $task->update([
             'subject' => $data['subject'],
@@ -224,7 +241,8 @@ public function deleteTask($taskId)
         ]);
     //dd($task);
         $project_id = $request->pro_id;
-        return redirect()->route('taskview', ['id' => $project_id]);
+        return response()->json(['redirect' => route('taskview', ['id' => $project_id])]);
+
     }
     
     /**

@@ -283,15 +283,17 @@ $(document).ready(function(){
             data: new FormData(this),
             processData: false,
             contentType: false,
-            success: function(response){
-                alert("added successfully");
-                // Handle the success response here
-                console.log(data);
-            },
-            error: function(error){
-                // Handle any errors here
-                console.log(error);
-            }
+            success: function(response) {
+                console.log(response); // Check what's being received in the response
+                if (response && response.redirect) {
+                    console.log(response.redirect); // Check the URL being received
+                    window.location.href = response.redirect;
+                } else {
+                    $("body #add_project").remove()
+                    alert("other response ");
+
+                }
+            } // <--- Add this closing parenthesis
         });
     });
 });

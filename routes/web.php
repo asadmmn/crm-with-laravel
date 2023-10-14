@@ -76,6 +76,7 @@ Route::group(['middleware' => ['LoginCheck']], function(){
     Route::post('/taskstore/{id}', [TasksController::class, 'store'])->name('task.store');
     Route::get('/tasklist/{id}/tasks', [TasksController::class, 'getTasks']);
     Route::put('/tasks/{id}/complete', [TasksController::class, 'completeTask']);
+    Route::put('/tasks/{id}/uncomplete', [TasksController::class, 'uncompleteTask']);
     Route::get('/tasks/{id}/view', [TasksController::class, 'viewTask']);
     Route::put('/update/{taskId}', [TasksController::class, 'updateTask'])->name('update.task');
     //Route::post('/delete/{taskId}',[TasksController::class, 'deleteTask'])->name('delete.task');

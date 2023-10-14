@@ -59,11 +59,11 @@
                 <!-- File Section -->
                 <div class="file">
                     <label for="file">File:</label>
-                    @if(!empty($task->{'file-name'}))
+                    @if(!empty($task->{'file_name'}))
                     {{-- $pathToFile = Storage::path('uploads/myfile.jpg'); --}}
             
-                    <a href="{{Storage::url('public/'.$task->{'file-name'}) }}" target="_blank">
-                        {{ str_replace('uploads/', '', $task->{'file-name'}) }}
+                    <a href="{{Storage::url('public/'.$task->{'file_name'}) }}" target="_blank">
+                        {{ str_replace('uploads/', '', $task->{'file_name'}) }}
                     </a>
                 @endif
                 
@@ -93,6 +93,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.task hr {
+    border-color: #ccc; /* Change to your desired gray color */
 }
 
 .buttons {

@@ -16,19 +16,26 @@
                         @foreach($task_lists as $tl)
                              
                              
-                             <li class="list_btn"><a href="">  @if (!empty($tl->task_list_name))
-                                @php
-                                    $numInitialWords = 1;
-                                    $words = explode(' ', $tl->task_list_name);
-                                    $shortenedText = implode(' ', array_slice($words, 0, $numInitialWords));
-                                    if (count($words) > $numInitialWords) {
-                                        $shortenedText .= '...';
-                                    }
-                                @endphp
-                                {{ $shortenedText }}
-                            @else
-                                No task list name available.
-                            @endif</a> <span class="task_counter">0</span></li>
+                           <!-- Inside your Blade template -->
+<li class="list_btn">
+    <a href="#" class="task-list-link" data-list-id="{{ $tl->id }}">
+        @if (!empty($tl->task_list_name))
+            @php
+                $numInitialWords = 1;
+                $words = explode(' ', $tl->task_list_name);
+                $shortenedText = implode(' ', array_slice($words, 0, $numInitialWords));
+                if (count($words) > $numInitialWords) {
+                    $shortenedText .= '...';
+                }
+            @endphp
+            {{ $shortenedText }}
+        @else
+            No task list name available.
+        @endif
+    </a>
+    <span class="task_counter">0</span>
+</li>
+
                         @endforeach
                         @endif
                     </ul>
@@ -39,35 +46,6 @@
                     {{$taskName}}
                 }
                 @endif
-{{-- Totalntasks completed:{{$completedTasks->count()}} --}}
-
-                   
-
-                    {{-- tasklist completed @if(!empty($taskName))
-                    {{ $taskName }}
-                @endif --}}
-                    {{-- @if(isset($completedTasks) && !empty($completedTasks))
-                    <li class="list_btn">All Lists <span class="task_counter">{{ $completedTasks->count() }}</span></li>
-
-                        @foreach($completedTasks as $ct)
-                             
-                             
-                             <li class="list_btn"><a href="">  @if (!empty($ct->subject))
-                                @php
-                                    $numInitialWords = 1;
-                                    $words = explode(' ', $ct->subject);
-                                    $shortenedText = implode(' ', array_slice($words, 0, $numInitialWords));
-                                    if (count($words) > $numInitialWords) {
-                                        $shortenedText .= '...';
-                                    }
-                                @endphp
-                                {{ $shortenedText }}
-                            @else
-                                No task list name available.
-                            @endif</a> <span class="task_counter">0</span></li>
-                        @endforeach
-                        @endif
-                    --}}
                 </div>
             </div>
       
@@ -84,6 +62,7 @@
 </div>
 
 @include('project_management.tasks.task_list_form')
+@include('project_management.tasks.task_list_edit_form')
 {{-- @include('project_management.tasks.tasks') --}}
 
 <link rel="stylesheet" href="{{ URL::asset('css/project.css') }}">
@@ -203,6 +182,13 @@
         font-weight: 400;
         letter-spacing: normal;
     }
+    .actions .add_a_task {
+        border-radius: 20px;
+        padding: 5px 10px;
+        color: #fff;
+        font-weight: 400;
+        letter-spacing: normal;
+    }
 
     .rotateright{
         -ms-transform: rotate(180deg);
@@ -231,4 +217,27 @@
     $(".add_task_list").on("click", function(e){
         $("#add_project").toggle()
     })
+    $(document).ready(function() {
+    // Event listener for task list links
+    $('body').on('click', '.task-list-link', function(e) {
+        e.preventDefault();
+
+        // Get the task list ID from the clicked element's data attribute
+        var taskListId = $(this).data('list-id');
+
+        // Make an AJAX request
+        $.ajax({
+            url: '/tasklist/' + taskListId + '/singletask',
+            type: 'GET',
+            success: function(data) {
+                
+                $("body .tasks-main").html(data);
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+});
+
 </script>

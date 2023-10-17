@@ -14,7 +14,7 @@ class AddFileNameToTasksTable extends Migration
     public function up()
     {
         Schema::table('tasks', function (Blueprint $table) {
-            $table->string('file_name')->default('null'); // Add status column with default value
+            $table->string('file_name')->default('no file'); // Add status column with default value
         });
     }
 

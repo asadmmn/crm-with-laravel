@@ -1,81 +1,87 @@
+<div class="tasks-main">
+    <div class="top mt-0">
+        <div class="top_heading">
+            @if (!empty($taskName))
+                Task named {{ $taskName }} is completed
+            @endif
+            <h3>Tasks</h3>
+        </div>
 
-<div class="top mt-0">
-    <div class="top_heading">
-        @if(!empty($taskName))
-            Task named {{$taskName}} is completed
-        @endif
-        <h3>Tasks</h3>
+        <div class="actions">
+            <label>
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="search" name="search_task" id="search_task" placeholder="Assignee or task name">
+            </label>
+            <button class="add_task_list">+ Add Task List</button>
+        </div>
     </div>
 
-    <div class="actions">
-        <label>
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="search" name="search_task" id="search_task" placeholder="Assignee or task name">
-        </label>
-        <button class="add_task_list">+ Add Task List</button>
-    </div>
-</div>
+    <div class="tasks">
+        <div class="task_con">
+            <div class="task_binding">
+                <div class="actions">
+                    @if (isset($task_lists) && !empty($task_lists))
+                        @foreach ($task_lists as $tl)
+                            @if (!empty($tl))
+                                <div class="listItem">
+                                    <div class="listItemContent">
+                                        <li></li> <a href="#">
+                                            <i class="fa-solid fa-angle-right text-blue trigger-arrow"
+                                                data-task-list-id="{{ $tl->id }}"></i>
+                                        </a></li>
+                                        {{ $tl->task_list_name }}
+                                        <div class="dropdown">
+                                            <button onclick="myFunction(this)" class="text_btn ellipsisBtn"
+                                                type="button">
+                                                <i class="fa-solid fa-ellipsis"></i>
+                                            </button>
+                                            <div class="dropdown-content">
+                                                <!-- Dropdown content -->
+                                                <ul>
+                                                    <li id="edit-tasklist" class="edit-task-list-option"
+                                                        data-toggle="modal"
+                                                        data-target="edit_task_list"data-task-id="{{ $tl->id }}">
+                                                        <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
+                                                        <span class="option_list_text">Edit Task list</span>
+                                                    </li>
 
-<div class="tasks">
-    <div class="task_con">
-        <div class="task_binding">
-            <div class="actions">
-                @if (isset($task_lists) && !empty($task_lists))
-                    @foreach ($task_lists as $tl)
-                    @if(!empty($tl))
-                        <div class="listItem">
-                            <div class="listItemContent">
-                              <li></li>  <a href="#">
-                                    <i class="fa-solid fa-angle-right text-blue trigger-arrow" data-task-list-id="{{ $tl->id }}"></i>
-                                </a></li>
-                                {{ $tl->task_list_name }}
-                                <div class="dropdown">
-                                    <button onclick="myFunction(this)" class="text_btn ellipsisBtn" type="button">
-                                        <i class="fa-solid fa-ellipsis"></i>
-                                    </button>
-                                    <div class="dropdown-content">
-                                        <!-- Dropdown content -->
-                                        <ul>
-                                            <li id="edit-tasklist" class="edit-task-list-option"  data-task-id="{{ $tl->id }}">
-                                                <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
-                                                <span class="option_list_text">Edit Task</span>
-                                            </li>
-                                            
-                                       
-                        
-                                            <li class="disabled"><i class="fa-regular fa-copy option_list_icon "></i> <span
-                                                    class="option_list_text">Move or Copy</span></li>
-                                            <li class="disabled"><i class="fa-solid fa-sort option_list_icon"></i> <span
-                                                    class="option_list_text">Reorder Tasks By...</span></li>
-                                            <li class="disabled"><i class="fa-solid fa-file option_list_icon"></i> <span
-                                                    class="option_list_text">Reports</span></li>
-                        {{-- 
-                                                    <li id="delete-task" class="delete-task-option"   data-task-id="{{ $task->id }}>
-                                                        <i class="fa-solid fa-trash option_list_icon"></i>
-                                                        <span class="option_list_text">Delete Task</span>
-                                                    </li> --}}
-                                                    <li class="delete-list-btn" data-task-id="{{ $tl->id }}">
-                                                        
-                                                        <i class="fa-solid fa-trash option_list_icon"></i>Delete Task</li>
-                        
-                                        </ul>
+
+                                                    <li class="disabled"><i
+                                                            class="fa-regular fa-copy option_list_icon "></i> <span
+                                                            class="option_list_text">Move or Copy</span></li>
+                                                    <li class="disabled"><i
+                                                            class="fa-solid fa-sort option_list_icon"></i> <span
+                                                            class="option_list_text">Reorder Tasks By...</span></li>
+                                                    <li class="disabled"><i
+                                                            class="fa-solid fa-file option_list_icon"></i> <span
+                                                            class="option_list_text">Reports</span></li>
+
+                                                    <li class="delete-task-list-btn"
+                                                        id="dlt-tsk-lst"data-task-id="{{ $tl->id }}">
+
+                                                        <i class="fa-solid fa-trash option_list_icon"></i>Delete Task
+                                                        list
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <a href="#"><i class="fa-solid fa-plus text-blue trigger-link"
+                                                data-task-list="{{ $tl->id }}"></i></a>
                                     </div>
                                 </div>
-                                <a href="#"><i class="fa-solid fa-plus text-blue trigger-link" data-task-list="{{ $tl->id }}"></i></a>
-                            </div>
-                        </div>
-
-                       @else 
-                       No task list for this project
-                       @endif
-                    @endforeach
-                @endif
+                            @else
+                                No task list for this project
+                            @endif
+                        @endforeach
+                    @endif
+                </div>
             </div>
         </div>
     </div>
 </div>
 <br>
-<div class="taskform_container">
+<div id="taskform_container">
 
 </div>
 <div id="calendar" class="hidden">
@@ -84,12 +90,16 @@
 
 
 <script src="{{ URL::asset('js/modal.js') }}"></script>
-    <script src="{{ URL::asset('js/project.js') }}"></script>
+<script src="{{ URL::asset('js/project.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 <!-- CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js"></script>
 
 <!-- JavaScript (bundle includes Popper.js) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -156,8 +166,8 @@
 
             <div class="add_task">
             <div class="">
-                @if(!empty($tl->projects_id))
-                <input type="hidden" name="pro_id" value="{{ $tl->projects_id}}">
+                @if (!empty($tl->projects_id))
+                <input type="hidden" name="pro_id" value="{{ $tl->projects_id }}">
 @endif
     <input type="text" name="subject" placeholder="what needs to be done?">
              </div>
@@ -234,6 +244,9 @@
                                 <div id="attached_files_con">
                                     Drop or paste files here
                                 </div>
+                                <div class="dz-message">
+                Drag and Drop Single/Multiple Files Here<br>
+            </div>
                                 <div>
                                     <label class="custom-file-button">
                                         <input
@@ -250,7 +263,8 @@
                                     >
                                         Select from Existing Files
                                     </button>
-                                </div>
+                                    <div id="dropped_files"></div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -350,129 +364,343 @@
 
 `;
 
+    //drop file uploads
+    // task form call
+    $("body").on("click", '.trigger-link', function() {
+        var taskListId = $(this).data('task-list');
+        console.log($(this).parent().next().next());
 
-// task form call
-$("body").on("click", '.trigger-link', function() {
-    var taskListId = $(this).data('task-list');
-    console.log($(this).parent().next().next());
+        var taskform = $(this).closest('#taskform_container');
 
-    var taskform = $(this).closest('.taskform_container');
+        // Check if the edit form already exists
+        if (taskform.length === 0) {
+            taskform = $('<div id="taskform_container"></div>');
+            $(this).closest('.listItem').after(taskform);
+        }
 
-    // Check if the edit form already exists
-    if (taskform.length === 0) {
-        taskform = $('<div class="taskform_container"></div>');
-        $(this).closest('.listItem').after(taskform);
-    }
+        $("body .task_form").remove();
 
-    $("body .task_form").remove();
-    
-    var combinedHTML = myGreatDropzoneForm;
-    //taskform.toggle();
-    taskform.html(combinedHTML);
-    $("#my-great-dropzone").attr("data-task-list-id", taskListId);
-});
+        var combinedHTML = myGreatDropzoneForm;
+        //taskform.toggle();
+        taskform.html(combinedHTML);
+        $("#my-great-dropzone").attr("data-task-list-id", taskListId);
+    });
 
- // task form call
- $("body").on("click", '.cancel', function() {
+    // task form call
+    $("body").on("click", '.cancel', function() {
 
         $("body .task_form").remove()
-        
 
-});
-document.body.addEventListener('click', function(event) {
-    var element = event.target;
-    if (element.classList.contains('task_form')) {
-        element.classList.remove('task_form');
-    }
-});
 
+    });
+
+    document.body.addEventListener('click', function(event) {
+        var element = event.target;
+        if (element.classList.contains('task_form')) {
+            element.classList.remove('task_form');
+        }
+    });
 
     $("body").on("click", '.trigger-arrow', function() {
         $(this).toggleClass('rotate');
-        
+
         var taskListId = $(this).data('task-list-id');
-    console.log("Task List ID:", taskListId);
-   
-
-    var clickedElement = $(this);
-    //clickedElement.toggle();
-    $.ajax({
-        url: '/tasklist/' + taskListId + '/tasks',
-        type: 'GET',
-        success: function(data) {
-            //console.log("Tasks Data:", data); // Check if tasks data is received
-            $("body .task").remove()
-            clickedElement.parent().next().next().html(data);
-        },
-        error: function(error) {
-            console.error('Error:', error);
-        }
-    });
-});
+        console.log("Task List ID:", taskListId);
 
 
-$(document).ready(function() {
-    $('body').on('click', '.submit-btn', function(e) {
-        e.preventDefault();
-
-        var formData = new FormData($('.task_form')[0]); // Get form data
-        var id = $('#my-great-dropzone').data('task-list-id'); // Get the data-task-list-id from the form
-
-        console.log("Task List ID:", id);
-        var actionRoute = '/taskstore/' + id; // Assuming this is the correct route
-
-        // Additional data for the request body
-        var requestBody = {
-            key1: 'value1',
-            key2: 'value2'
-        };
-
-        formData.append('json_body', JSON.stringify(requestBody)); // Append JSON string to form data
-
+        var clickedElement = $(this);
+        //clickedElement.toggle();
         $.ajax({
-            url: actionRoute,
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
+            url: '/tasklist/' + taskListId + '/tasks',
+            type: 'GET',
             success: function(data) {
-                // Handle the response data (if any)
-                //console.log(data);
-
-                // Optionally, redirect or display a success message
-                alert('Form submitted successfully!');
+                //console.log("Tasks Data:", data); // Check if tasks data is received
+                $("body .task").remove()
+                clickedElement.parent().next().next().html(data);
             },
             error: function(error) {
                 console.error('Error:', error);
-                // Handle errors
             }
         });
     });
-});
-
-//edit task list 
-
-// $("body").on("click", ".edit-tasklist-option", function() {
-//     // Get the container element for the form
-   
-
-//     $(document).ready(function(){
-//             $('#edit-listform-container').html(myGreatDropzoneForm);
-//         });
-//     // Get the task list ID from the clicked element's data attribute
-//     var taskListId = $(this).data("task-list-id");
-//     // Set the form's data attribute "data-task-list-id" to the retrieved task list ID
-//     $("#my-great-dropzone").attr("data-task-list-id", taskListId);
-// });
 
 
- // task form call
- $("body").on("click", '.cancel', function() {
+    $(document).ready(function() {
+        $('body').on('click', '.submit-btn', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData($('.task_form')[0]); // Get form data
+            var id = $('#my-great-dropzone').data(
+                'task-list-id'); // Get the data-task-list-id from the form
+
+            console.log("Task List ID:", id);
+            var actionRoute = '/taskstore/' + id; // Assuming this is the correct route
+
+            // Additional data for the request body
+            var requestBody = {
+                key1: 'value1',
+                key2: 'value2'
+            };
+
+            formData.append('json_body', JSON.stringify(
+                requestBody)); // Append JSON string to form data
+
+            $.ajax({
+                url: actionRoute,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    $("body .task_form").remove()
+                    // Handle the response data (if any)
+                    //console.log(data);
+
+                    // Optionally, redirect or display a success message
+                    alert('added successfully!');
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                    // Handle errors
+                }
+            });
+        });
+    });
+
+
+    var editListForm = `
+<div class="modal" id="edit_task_list">
+    <div class="modal-content" style="width: 40% !important;">
+        <!-- Top Section: Title and Steps -->
+        <div class="top-section">
+            <span class="close-btn" id="closeModalBtn">&times;</span>
+            <h2>Edit Task List</h2>
+        </div>
+
+        <!-- Middle Section: Form Inputs -->
+        <form action="#" class="edit_task_list_form" id="edt_tsk_list" data-task-id="#" enctype="multipart/form-data">
+
+            @method('put')
+            @csrf
+            <input type="hidden" name="project_id" value="{{ $gettask }}">
+            <div class="middle-section">
+                <div>
+                    <div class="input">
+                        <label for="list_name">Give the list a name</label>
+                        <input type="text" name="list_name" required="required" id="list_name" placeholder="e.g. New feature research" style="width: 100%;">
+   </div>
+
+                    <div class="input">
+                        <label for="use_teamplate">Would you Like to use a template?</label>
+                        <select name="use_teamplate" id="use_template" disabled="disabled" style="max-width: 300px; ">
+                            <option value="">Select Template</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="other_info">
+                    <div class="tab_nav">
+                        <div class="tab active">Notes</div>
+                        <div class="tab">Privacy</div>
+                        <div class="tab">Milestone</div>
+                        <div class="tab">Defaults</div>
+                    </div>
+
+                    <div class="tab_content">
+                        <div class="tab_c active" data-step="1">
+                            <div class="textarea" style="width: 100%">
+                                <label for="description">Do you have any notes for list? Enter them here. <span class="light">(optional)</span></label>
+                                <textarea name="notes" id="notes" cols="" rows="5" placeholder="Add a description" style="width: 100%" ></textarea>
+                            </div>
+                        </div>
+
+                        <div class="tab_c">
+                            <div class="input">
+                                <label for="task_view">Who can view the task list?</label>
+                                <select name="user" id="user" style="max-width: 300px;">
+                                    <option value="1">Mubashir</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="tab_c">
+                            <div class="input">
+                                <label for="task_view">Does this list relate to a milestone?</label>
+                                <select name="users" id="users" style="max-width: 300px;">
+                                    <option value="1">Mubashir</option>
+                                </select>
+                            </div>
+                            <button class="text_btn">+ Create a milestone</button>
+                        </div>
+
+                        <div class="tab_c">
+                            <div style="width: 100%; text-align: left;">
+                                <label style="width: 100%;">
+                                    <input style="width: fit-content; margin-right: 7px;" type="checkbox" name="pin_task_list" id="pin_task_list"> Pin this task List <span title="A pinned task list will never close."><i class="fa-solid fa-circle-info"></i></span>
+                                </label>
+                            </div>
+
+                            <div class="input" style="margin-top: 20px;">
+                                <label for="time">Time <span title="Choose the default setting for time logged in this task list. This can be overridden when logging time."><i class="fa-solid fa-circle-info"></i></span></label>
+                                <label>
+                                    <input style="width: fit-content; margin-right: 7px;" type="radio" name="time" id="time" checked> Use project setting: Billable
+                                </label>
+                                <label>
+                                    <input style="width: fit-content; margin-right: 7px;" type="radio" name="time" id="time"> Set task list setting
+                                </label>
+                            </div>
+
+                            <div class="default_table_con">
+                                <label for="defaults" style="margin-bottom: 0; font-size: 13px;">Defaults for new tasks</label><br>
+                                <small style="font-size: 12px; font-weight: 300;">Task created on this list will use the following default values:</small>
+
+                                <div class="default_con">
+                                    <button class="text_btn edit_btn" ><i class="fa-solid fa-pen"></i> Edit</button>
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td>Assigned To</td>
+                                            <td colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Description</td>
+                                            <td colspan="3"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Following changes</td>
+                                            <td colspan="3">Nobody</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Following Comments</td>
+                                            <td colspan="3">Nobody</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Private</td>
+                                            <td>No</td>
+                                            <td>Estimated Time</td>
+                                            <td>0 mins</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Priority</td>
+                                            <td>None</td>
+                                            <td>Due Date</td>
+                                            <td>No Date</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tags</td>
+                                            <td colspan="3">None</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Board Column</td>
+                                            <td colspan="3">None</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Custom Fields</td>
+                                            <td colspan="3">None</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer Section: Buttons -->
+            <div class="footer-section">
+                <input  class="update-btn" type="submit" value="update">
+            OR
+            <button class="cancel" id="form-cancel">cancel</button>
+            </div>
+        </form>
+    </div>
+</div>`;
+
+
+    $("body").on("click", ".edit-task-list-option", function() {
+        $(document.body).append(editListForm); // Append it to the body
+        $('#edit_task_list').show(); // Show the modal
+
+        var taskId = $(this).data('task-id'); // Get the task ID from the clicked element
+
+        console.log(taskId);
+        // Toggle the modal
+
+
+        // Set the task ID as the data-task-id of the form
+        $('#edt_tsk_list').attr('data-task-id', taskId);
+
+    });
+
+
+    // edit task list form submission
+    $(document).ready(function() {
+        $('body').on('click', '.update-btn', function(e) {
+            e.preventDefault();
+            // if ($('#list_name').val() === '') {
+            //     alert("list name field is required" );
+
+            // }
+            var formData = new FormData($('#edt_tsk_list')[0]); // Get form data
+            var taskId = $('#edt_tsk_list').data('task-id'); // Get the data-task-list-id from the form
+            var url = "{{ route('update.tasklist', ['taskId' => ':taskId']) }}";
+            url = url.replace(':taskId', taskId);
+            console.log("helo");
+            // Append the URL to the formData object
+            formData.append('_method', 'PUT'); // Add the PUT method override
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    alert('success');
+                    $("body .modal").remove()
+
+                },
+                error: function(error) {
+                    console.error('Error updating data:', error);
+                }
+            });
+        });
+    });
+
+
+
+    $(document).ready(function() {
+        $('body').on('click', '.delete-task-list-btn', function(e) {
+            e.preventDefault();
+            var taskId = $(this).data('task-id');
+
+            $.ajax({
+                type: 'DELETE',
+                url: '/deletelist/' + taskId,
+                data: {
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    // Handle success
+                    alert('Task list deleted successfully');
+                },
+                error: function(error) {
+                    // Handle error
+                    console.error('Error deleting task:', error);
+                }
+            });
+        });
+    });
+
+
+
+    // task form call
+    $("body").on("click", '.cancel', function() {
 
         $("body .task_form").remove()
-        
 
-});
+
+    });
     // <!-- add task form js  
     $(document).ready(function() {
         $("#notes").summernote({
@@ -542,174 +770,78 @@ $(document).ready(function() {
             });
         });
 
-        Dropzone.autoDiscover = false;
-        // Assuming 'myDropzone' is your existing Dropzone instance
-        var myDropzone = new Dropzone("#my-great-dropzone", {
-            url: "your_upload_url_here", // Set your server upload URL
-            autoProcessQueue: true, // Prevent automatic upload on file drop
-            previewTemplate: document.querySelector("#custom-preview-template").innerHTML,
+
+        $('body').on('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).addClass('dragover');
         });
 
-        // Add a class to the form when a file is dragged over it
-        myDropzone.on("dragenter", function() {
-            $("#my-great-dropzone").addClass("dragover");
+        $('body').on('dragleave drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('dragover');
         });
 
-        // Remove the class when the file is dragged away
-        myDropzone.on("dragleave", function() {
-            $("#my-great-dropzone").removeClass("dragover");
+        $('body').on('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var files = e.originalEvent.dataTransfer.files;
+            $('#attch_file')[0].files = files;
+            $(this).removeClass('dragover');
+            displayDroppedFiles(files);
         });
 
-        // Handle the file when it's added to Dropzone
-        myDropzone.on("addedfile", function(file) {
-            var filetype = file.type;
-            var fileName = file.name;
-            $(".task_tab").hide();
-            $(".task_tab")[1].style = "display: block;";
-            $(".task_bar ul").find(".active").removeClass("active");
-            $(".task_bar ul li")[1].classList = "active";
+        function displayDroppedFiles(files) {
+            var droppedFilesContainer = $('#dropped_files');
+            droppedFilesContainer.empty(); // Clear previous dropped files
 
-            var imgSrc = "";
-            if (filetype.includes("image")) {
-                imgSrc = "/public/images/image.png";
-            } else if (filetype.includes("video")) {
-                imgSrc = "/public/images/Video File.svg";
-            } else if (filetype.includes("pdf")) {
-                imgSrc = "/public/images/pdf file.svg";
-            } else if (filetype.includes("x-zip-compressed")) {
-                imgSrc = "/public/images/Archive Folder.svg";
-            } else if (
-                filetype.includes("sheet") ||
-                filetype.includes("csv")
-            ) {
-                imgSrc = "/public/images/Google Sheets.svg";
-            } else if (
-                filetype.includes("document") ||
-                filetype.includes("plain")
-            ) {
-                imgSrc = "/public/images/Microsoft Word 2019.svg";
-            } else {
-                imgSrc = "/public/images/File.svg";
-            }
-
-            // // Create an image element for the uploaded file
-            var mainDiv = document.createElement("div");
-            mainDiv.classList = "attachedFilePrev";
-
-            var imageElement = document.createElement("img");
-            imageElement.src = imgSrc;
-            imageElement.alt = fileName;
-            imageElement.style = "width: 40px; height: 40px; margin-right: 10px;";
-
-            var fileinfoDiv = document.createElement("div");
-            fileinfoDiv.style = "display: flex; align-items: center;";
-            var fileinfo = document.createElement("div");
-            fileinfo.style = "border: 1px solid #dadada; padding: 0px 0px;";
-            var progress_prctSpan = document.createElement("span")
-            progress_prctSpan.classList = "progress_prct";
-            var fileNameSpan = document.createElement("span");
-            fileNameSpan.classList = "file_name";
-            fileNameSpan.textContent = fileName;
-            fileinfo.append(progress_prctSpan);
-            fileinfo.appendChild(fileNameSpan);
-            fileinfoDiv.appendChild(imageElement);
-
-            fileinfoDiv.append(fileinfo);
-
-            var deleteButton = document.createElement("button");
-            deleteButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
-            deleteButton.classList = "deleteFile";
-            var deletediv = document.createElement("div");
-            deletediv.appendChild(deleteButton);
-
-            mainDiv.appendChild(fileinfoDiv);
-            mainDiv.appendChild(deletediv);
-            deleteButton.addEventListener("click", function() {
-                // Remove the file from Dropzone
-                myDropzone.removeFile(file);
-                // Remove the file preview element
-                mainDiv.remove();
-            });
-
-            // Append the image element to the target div
-            if ($("body #attached_files_con").find(".attachedFilePrev").length > 0) {
-                $("#attached_files_con").append(mainDiv);
-            } else {
-                $("#attached_files_con").html(mainDiv);
-            }
-
-            // Customize the appearance and show progress during processing
-            myDropzone.on("processing", function(file) {
-                // Add a custom CSS class to the file's preview element during processing
-                file.previewElement.classList.add("custom-processing-file");
-
-                // You can define your custom CSS rules for .custom-processing-file in your stylesheets
-            });
-
-            // Update the progress while uploading
-            myDropzone.on("uploadprogress", function(file, progress) {
-                // Update the progress in your custom file element (e.g., a progress bar)
-                // Example: file.previewElement.querySelector(".custom-progress").style.width = progress + "%";
-                progress_prctSpan.textContent = progress + "%"
-            });
-        });
-
-
-
-        // Handle the file upload manually
-        myDropzone.on("success", function(file, response) {
-            // Assuming the server returns the uploaded file's URL in the response
-            var imageUrl = response.imageUrl;
-
-            // Insert the image URL into Summernote
-            $("#notes").summernote("editor.insertImage", imageUrl);
-        });
-
-        // Listen for changes in the file input
-        $("#attch_file").on("change", function(event) {
-            var files = event.target.files;
-
-            // Loop through the selected files
             for (var i = 0; i < files.length; i++) {
                 var file = files[i];
+                var fileName = file.name;
+                var fileType = file.type;
+                var fileIcon = '';
 
-                // Add the file to Dropzone
-                myDropzone.addFile(file);
+                if (fileType.includes('image')) {
+                    fileIcon = '<img src="image_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                } else if (fileType.includes('pdf')) {
+                    fileIcon = '<img src="pdf_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                } else {
+                    fileIcon = '<img src="generic_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                }
 
-                // Display the file in the Dropzone list
-                // myDropzone.emit("addedfile", file);
-
-                // Process the file as needed (e.g., display a preview)
-                // myDropzone.createThumbnailFromUrl(file, myDropzone.options.thumbnailWidth, myDropzone.options.thumbnailHeight, myDropzone.options.thumbnailMethod, true, function(thumbnail) {
-                //     myDropzone.emit("thumbnail", file, thumbnail);
-                // });
+                droppedFilesContainer.append(fileIcon + '<span>' + fileName + '</span><br>');
             }
-        });
+        }
     });
 </script>
 <style>
-    /* .main-content{
-        display:flex;
+    .dropzone {
+        background: #e3e6ff;
+        border-radius: 13px;
+        max-width: 550px;
+        margin-left: auto;
+        margin-right: auto;
+        border: 2px dotted #1833FF;
+        margin-top: 50px;
     }
-    
-    .details{
-        position: absolute;
-    right: 0;
-    
-    width: 50%;
-    } */
-    .task{
+
+    .task {
         text-decoration: none;
     }
-    .task:hover{
+
+    .task:hover {
         text-decoration: none;
     }
-    .tasks{
+
+    .tasks {
         text-decoration: none;
     }
-    .tasks:hover{
+
+    .tasks:hover {
         text-decoration: none;
     }
+
     .listItem {
         display: flex;
         align-items: center;
@@ -755,71 +887,77 @@ $(document).ready(function() {
     }
 
 
-   /* Dropdown Button */
-.dropbtn {
-    background-color: #3498DB;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
+    /* Dropdown Button */
+    .dropbtn {
+        background-color: #3498DB;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
 
-/* Dropdown button on hover & focus */
-.dropbtn:hover, .dropbtn:focus {
-    background-color: #2980B9;
-}
+    /* Dropdown button on hover & focus */
+    .dropbtn:hover,
+    .dropbtn:focus {
+        background-color: #2980B9;
+    }
 
-/* The container <div> - needed to position the dropdown content */
-.dropdown {
-    position: relative;
-    display: inline-block;
-    text-align:left;
-}
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        text-align: left;
+    }
 
-/* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f0e6e6;
-    text-align: left;
-    min-width: 160px;
-    border-radius: 5px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f0e6e6;
+        text-align: left;
+        min-width: 160px;
+        border-radius: 5px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
 
-/* Links inside the dropdown */
-/* Links inside the dropdown */
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left !important; /* Added !important */
-}
+    /* Links inside the dropdown */
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left !important;
+        /* Added !important */
+    }
 
-.dropdown-content ul li {
-    float:left;
-    list-style: none; /* Remove default list style */
-    text-align: left; /* Align text to the left */
-    padding: 5px 0; /* Add some space between items */
-}
+    .dropdown-content ul li {
+        float: left;
+        list-style: none;
+        /* Remove default list style */
+        text-align: left;
+        /* Align text to the left */
+        padding: 5px 0;
+        /* Add some space between items */
+    }
 
-/* Add padding to icons */
-.dropdown-content ul li i {
-    margin-right: 10px; /* Add space between icon and text */
-}
+    /* Add padding to icons */
+    .dropdown-content ul li i {
+        margin-right: 10px;
+        /* Add space between icon and text */
+    }
 
-/* Change color of dropdown links on hover */
-.dropdown-content a:hover {
-    background-color: #ddd;
-}
+    /* Change color of dropdown links on hover */
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
 
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {
-    display: block;
-}
+    /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+    .show {
+        display: block;
+    }
 
 
     /* styling for add task form  */
@@ -885,7 +1023,8 @@ $(document).ready(function() {
         margin-left: 0 !important;
         width: fit-content;
     }
-    a:hover{
+
+    a:hover {
         text-decoration: none;
     }
 
@@ -955,30 +1094,34 @@ $(document).ready(function() {
         width: 20%;
         color: blue;
     }
-    .listItemContent{
-font-size: large;
-        font:bold;
+
+    .listItemContent {
+        font-size: large;
+        font: bold;
     }
 
     .trigger-arrow {
-  transition: transform 0.3s ease-in-out;
-}
+        transition: transform 0.3s ease-in-out;
+    }
 
-.trigger-arrow.rotate {
-  transform: rotate(90deg);
-}
-.main-content {
-    display: flex;
-}
-.tasks a{
-    text-decoration: none;
-}
-.tasks a{
+    .trigger-arrow.rotate {
+        transform: rotate(90deg);
+    }
 
-    text-decoration: none;
-}
-.listItem li{
-    text-decoration: none;
-}
+    .main-content {
+        display: flex;
+    }
 
+    .tasks a {
+        text-decoration: none;
+    }
+
+    .tasks a {
+
+        text-decoration: none;
+    }
+
+    .listItem li {
+        text-decoration: none;
+    }
 </style>

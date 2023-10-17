@@ -42,43 +42,45 @@
         <form id="eidtform">
             <div class="middle-section">
 
-                    <input type="hidden" name="id" value="{{  $data->id ?? '' }}">
-                    @csrf
+                <input type="hidden" name="id" value="{{ $data->id ?? '' }}">
+                @csrf
 
-                    <div class="form-step" data-step="1" style="flex-direction: column">
-                        <div class="input_group" style="width: 100%">
+                <div class="form-step" data-step="1" style="flex-direction: column">
+                    <div class="input_group" style="width: 100%">
+                        <div class="input">
                             <div class="input">
-                                <div class="input">
-                                    <label for="project_name" >Choose a name</label>
-                                    <input type="text" name="project_name" id="project_name" placeholder="Give Your project a name" value="{{  $data->project_name ?? '' }}"/>
-                                </div>
-                            </div>
-
-                            <div class="input">
-                                <label for="company">Choose a company</label >
-                                <select name="company" id="company">
-                                    <option value="Domain Bird"> Domain Bird </option>
-                                </select>
+                                <label for="project_name">Choose a name</label>
+                                <input type="text" name="project_name" id="project_name"
+                                    placeholder="Give Your project a name" value="{{ $data->project_name ?? '' }}" />
                             </div>
                         </div>
 
-                        <div class="textarea" style="width: 100%">
-                            <textarea name="notes" id="notes"  cols=""  rows="5" placeholder="Add a description" style="width: 100%">{{  $data->notes ?? '' }}</textarea>
+                        <div class="input">
+                            <label for="company">Choose a company</label>
+                            <select name="company" id="company">
+                                <option value="Domain Bird"> Domain Bird </option>
+                            </select>
                         </div>
                     </div>
 
-                    <div class="form-step" data-step="2" style="display: none;">
-                        <div class="contaier">
-                            <div class="input" style="width: 100%;">
-                                <label for="project_cat">Add project Category</label>
-                                <select name="proj_category" id="proj_category">
-                                    <option value="No Category">No Category</option>
-                                    <option value="Category 1">Category 1</option>
-                                </select>
-                            </div>
-
-                        </div>
+                    <div class="textarea" style="width: 100%">
+                        <textarea name="notes" id="notes" cols="" rows="5" placeholder="Add a description"
+                            style="width: 100%">{{ $data->notes ?? '' }}</textarea>
                     </div>
+                </div>
+
+                <div class="form-step" data-step="2" style="display: none;">
+                    <div class="contaier">
+                        <div class="input" style="width: 100%;">
+                            <label for="project_cat">Add project Category</label>
+                            <select name="proj_category" id="proj_category">
+                                <option value="No Category">No Category</option>
+                                <option value="Category 1">Category 1</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
 
             </div>
 

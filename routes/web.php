@@ -87,11 +87,14 @@ Route::group(['middleware' => ['LoginCheck']], function(){
 
 
     //Task_list
+    //Route::get('/project/{id}/tasks/li', [TasksController::class, 'prindex'])->name('taskindex');
     Route::get('/project/{id}/tasks/li', [TasksController::class, 'index'])->name('taskindex');
     Route::get('/project/{id}/tasks/list', [TasksController::class, 'rindex'])->name('taskview');
-
-    Route::post('/submit/{taskId}', [TaskListController::class, 'store'])->name('submit.tasklist');
-    //Route::post('/tasksubmit', [TaskListController::class, 'store'])->name('tasksubmit');
+    Route::get('/tasklist/{id}/singletask', [TaskListController::class, 'singleTaskList']);
+        Route::post('/submit/{taskId}', [TaskListController::class, 'store'])->name('submit.tasklist');
+       
+Route::put('/updatelist/{taskId}', [TaskListController::class, 'update'])->name('update.tasklist');
+Route::delete('/deletelist/{taskId}', [TaskListController::class, 'deleteTaskList'])->name('delete.tasklist');
     Route::get('/taskview', [TaskListController::class, 'index']);
 
 });

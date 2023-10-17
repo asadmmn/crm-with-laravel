@@ -1,11 +1,10 @@
-<!-- include libraries(jQuery, bootstrap) -->
+{{-- <!-- Include libraries (jQuery, bootstrap) -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<!-- include summernote css/js -->
+<!-- Include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet" />
-<!-- <link rel="stylesheet" href="../../../../public/css/summernote.css"> -->
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <!-- dropzone -->
@@ -13,31 +12,24 @@
 <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
 
 
-<div class="modal" id="add_project">
+<div class="modal" id="edit_task_list">
     <div class="modal-content" style="width: 40% !important;">
         <!-- Top Section: Title and Steps -->
         <div class="top-section">
             <span class="close-btn" id="closeModalBtn">&times;</span>
-            <h2>Add Task List</h2>
-
+            <h2>Edit Task List</h2>
         </div>
 
         <!-- Middle Section: Form Inputs -->
-
-
-
-        <form action="#" class="task_list_form" id="tsk_list" data-task-id="{{ $gettask }}"
-            enctype="multipart/form-data">
-
+        <form action="#" class="task_list_form" id="tsk_list" data-task-id="#" enctype="multipart/form-data">
             @method('post')
             @csrf
-            <input type="hidden" name="project_id" value="{{ $gettask }}">
+            <input type="hidden" name="project_id" value="{{$gettask}}">
             <div class="middle-section">
                 <div>
                     <div class="input">
                         <label for="list_name">Give the list a name</label>
-                        <input type="text" name="list_name" id="list_name" placeholder="e.g. New feature research"
-                            style="width: 100%;">
+                        <input type="text" name="list_name" id="list_name" placeholder="e.g. New feature research" style="width: 100%;">
                     </div>
 
                     <div class="input">
@@ -59,10 +51,8 @@
                     <div class="tab_content">
                         <div class="tab_c active" data-step="1">
                             <div class="textarea" style="width: 100%">
-                                <label for="description">Do you have any notes for list? Enter them here. <span
-                                        class="light">(optional)</span></label>
-                                <textarea name="notes" id="notes" cols="" rows="5" placeholder="Add a description"
-                                    style="width: 100%"></textarea>
+                                <label for="description">Do you have any notes for list? Enter them here. <span class="light">(optional)</span></label>
+                                <textarea name="notes" id="notes" cols="" rows="5" placeholder="Add a description" style="width: 100%" ></textarea>
                             </div>
                         </div>
 
@@ -73,7 +63,6 @@
                                     <option value="1">Mubashir</option>
                                 </select>
                             </div>
-
                         </div>
 
                         <div class="tab_c">
@@ -89,36 +78,26 @@
                         <div class="tab_c">
                             <div style="width: 100%; text-align: left;">
                                 <label style="width: 100%;">
-                                    <input style="width: fit-content; margin-right: 7px;" type="checkbox"
-                                        name="pin_task_list" id="pin_task_list"> Pin this task List <span
-                                        title="A pinned task list will never close."><i
-                                            class="fa-solid fa-circle-info"></i></span>
+                                    <input style="width: fit-content; margin-right: 7px;" type="checkbox" name="pin_task_list" id="pin_task_list"> Pin this task List <span title="A pinned task list will never close."><i class="fa-solid fa-circle-info"></i></span>
                                 </label>
                             </div>
 
-
                             <div class="input" style="margin-top: 20px;">
-                                <label for="time">Time <span
-                                        title="Choose the default setting for time logged in this task list. This can be overridden when logging time."><i
-                                            class="fa-solid fa-circle-info"></i></span></label>
+                                <label for="time">Time <span title="Choose the default setting for time logged in this task list. This can be overridden when logging time."><i class="fa-solid fa-circle-info"></i></span></label>
                                 <label>
-                                    <input style="width: fit-content; margin-right: 7px;" type="radio" name="time"
-                                        id="time" checked> Use project setting: Billable
+                                    <input style="width: fit-content; margin-right: 7px;" type="radio" name="time" id="time" checked> Use project setting: Billable
                                 </label>
                                 <label>
-                                    <input style="width: fit-content; margin-right: 7px;" type="radio" name="time"
-                                        id="time"> Set task list setting
+                                    <input style="width: fit-content; margin-right: 7px;" type="radio" name="time" id="time"> Set task list setting
                                 </label>
                             </div>
 
                             <div class="default_table_con">
-                                <label for="defaults" style="margin-bottom: 0; font-size: 13px;">Defaults for new
-                                    tasks</label><br>
-                                <small style="font-size: 12px; font-weight: 300;">Task created on this list will use the
-                                    following default values:</small>
+                                <label for="defaults" style="margin-bottom: 0; font-size: 13px;">Defaults for new tasks</label><br>
+                                <small style="font-size: 12px; font-weight: 300;">Task created on this list will use the following default values:</small>
 
                                 <div class="default_con">
-                                    <button class="text_btn edit_btn"><i class="fa-solid fa-pen"></i> Edit</button>
+                                    <button class="text_btn edit_btn" ><i class="fa-solid fa-pen"></i> Edit</button>
                                     <table style="width: 100%;">
                                         <tr>
                                             <td>Assigned To</td>
@@ -171,54 +150,47 @@
 
             <!-- Footer Section: Buttons -->
             <div class="footer-section">
-
-                <button type="button" class="cancel-btn" id="closeModalBtn">
-                    Cancel
-                </button>
-                <button type="submit">
-                    Add Task List
-                </button>
+                <button type="button" class="cancel-btn" id="closeModalBtn">Cancel</button>
+                <button type="submit">Edit Task List</button>
             </div>
         </form>
     </div>
 </div>
 
 <style>
-    .tab_c {
+    .tab_c{
         display: none;
     }
 
-    .tab_c.active {
+    .tab_c.active{
         display: block;
     }
 
-    .input {
+    .input{
         margin-bottom: 10px;
         gap: 0;
     }
 
-    input,
-    select,
-    option {
+    input, select, option{
         padding: 5px 10px;
         font-weight: 300;
     }
 
-    label {
+    label{
         font-weight: 300;
         font-size: 12px;
         margin-bottom: 5px;
     }
 
-    .other_info {
+    .other_info{
         margin-top: 20px;
     }
 
-    .default_table_con {
+    .default_table_con{
         margin-top: 16px;
     }
 
-    .default_con {
+    .default_con{
         margin-top: 10px;
         border: 1px solid #f5f7fa;
         padding: 5px 10px;
@@ -233,16 +205,16 @@
         font-size: 12px;
     }
 
-    tr td:nth-child(odd) {
+    tr td:nth-child(odd){
         color: #999;
         width: 170px;
     }
 
-    tr td:nth-child(even) {
+    tr td:nth-child(even){
         color: #555;
     }
 
-    .edit_btn {
+    .edit_btn{
         position: absolute;
         border: 1px solid #f5f7fa;
         right: 10px;
@@ -252,7 +224,6 @@
     }
 </style>
 
-
 <script>
     $("#notes").summernote({
         placeholder: "Add Your Description here...",
@@ -260,7 +231,6 @@
         height: 100,
         // airMode: true,
         toolbar: [
-            // ['style', ['style']],
             [
                 "font",
                 [
@@ -271,20 +241,20 @@
             ],
             ["para", ["ul", "ol"]],
             ["insert", ["link", "picture", "video"]],
-            ["view", ["undo", "redo"]], // ['fullscreen', 'codeview', 'help']
+            ["view", [ "undo", "redo"]],
         ],
     });
 
     // form submission
-    $(document).ready(function() {
-        $('.task_list_form').on('submit', function(e) {
+    $(document).ready(function(){
+        $('.edit_task_list').on('submit', function(e){
             e.preventDefault(); // Prevent the form from submitting the traditional way
 
             var taskId = $(this).data('task-id'); // Get the taskId from data attribute
 
             $.ajax({
                 type: 'POST',
-                url: '/submit/' + taskId,
+                url: '/update/' + taskId,
                 data: new FormData(this),
                 processData: false,
                 contentType: false,
@@ -294,12 +264,11 @@
                         console.log(response.redirect); // Check the URL being received
                         window.location.href = response.redirect;
                     } else {
-                        $("body #add_project").remove()
+                        $("body #edit_task_list").remove();
                         alert("other response ");
-
                     }
-                } // <--- Add this closing parenthesis
+                }
             });
         });
     });
-</script>
+</script> --}}

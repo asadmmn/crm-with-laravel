@@ -27,8 +27,9 @@
                 @endphp
                 <div class="fvrt {{ $star }}"><i class="fa-solid fa-star"></i></div>
                 <div class="prjct_name">
-              
-                    <a href="#" class="prjct_btn" data-prjct_id="{{ $item->id }}">{{ $item->project_name }}</a><br>
+
+                    <a href="#" class="prjct_btn"
+                        data-prjct_id="{{ $item->id }}">{{ $item->project_name }}</a><br>
                     <span class="light_font">{{ $item->company }}</span>
                 </div>
                 <div class="ppl" style="gap: 15px; margin-left: 0; flex: 1;">
@@ -38,17 +39,20 @@
                     <div class="owner">
                         @php
                             $owner = '<i class="fa-regular fa-circle-user"></i>';
-                            $color = "#dadada";
-                            if ($item->owner > 0)
-                                $owner = $item->owner
-                                // $color = generateRandomColor($item->owner[0])
-
+                            $color = '#dadada';
+                            if ($item->owner > 0) {
+                                $owner = $item->owner;
+                            }
+                            // $color = generateRandomColor($item->owner[0])
                         @endphp
 
                         @if ($item->owner == 0)
-                            <div class="p" style="background-color: transparent; color: #dadada;font-size: 25px;"><i class="fa-regular fa-circle-user"></i></div>
+                            <div class="p" style="background-color: transparent; color: #dadada;font-size: 25px;">
+                                <i class="fa-regular fa-circle-user"></i></div>
                         @else
-                            <div class="p" style="background-color: {{ generateRandomColor($item->ownerName->name[0]) }};">{{ $item->ownerName->name[0] }}</div>
+                            <div class="p"
+                                style="background-color: {{ generateRandomColor($item->ownerName->name[0]) }};">
+                                {{ $item->ownerName->name[0] }}</div>
                         @endif
 
 
@@ -57,16 +61,19 @@
                             <ul data-prjct_id="{{ $item->id }}">
                                 <li class="ass_owner">
                                     @if ($item->owner == 0)
-                                        <div class="p" style="background-color: transparent;"><i class="fa-regular fa-circle-user"></i></div>No Project Owner
+                                        <div class="p" style="background-color: transparent;"><i
+                                                class="fa-regular fa-circle-user"></i></div>No Project Owner
                                     @else
-                                        <div class="p" style="background-color: {{ generateRandomColor($item->ownerName->name[0]) }}; font-size: 11px;">{{ $item->ownerName->name[0] }}</div>{{ $item->ownerName->name }}
+                                        <div class="p"
+                                            style="background-color: {{ generateRandomColor($item->ownerName->name[0]) }}; font-size: 11px;">
+                                            {{ $item->ownerName->name[0] }}</div>{{ $item->ownerName->name }}
                                     @endif
 
                                 </li>
                                 @if ($item->owner == 0)
                                     <li class="update_owner"><i class="fa-solid fa-user"></i> Choose Project Owner</li>
                                 @else
-                                <li class="update_owner"><i class="fa-solid fa-user"></i> Update Project Owner</li>
+                                    <li class="update_owner"><i class="fa-solid fa-user"></i> Update Project Owner</li>
                                 @endif
 
                             </ul>

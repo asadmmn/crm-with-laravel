@@ -1,29 +1,30 @@
 <h5 class="status">
 
-{{$taskName}} complete </h5> 
+    {{ $taskName }} complete </h5>
 
-@foreach($tasks as $task)
-
-
-<div class="task">
+@foreach ($tasks as $task)
+    <div class="task">
         <!-- Display task details here -->
-        @if($task->status == "completed")
-        <a href="#" class="task-uncomplete-link"><i class="fa-solid fa-circle-check" data-task-id="{{ $task->id }}"></i></a>
-    @else
-        <a href="#" class="task-complete-link"><i class="fa-regular fa-circle-check" data-task-id="{{ $task->id }}"></i></a>
-    @endif
-            {{-- {{ $task->id }} --}}
+        @if ($task->status == 'completed')
+            <a href="#" class="task-uncomplete-link"><i class="fa-solid fa-circle-check"
+                    data-task-id="{{ $task->id }}"></i></a>
+        @else
+            <a href="#" class="task-complete-link"><i class="fa-regular fa-circle-check"
+                    data-task-id="{{ $task->id }}"></i></a>
+        @endif
+        {{-- {{ $task->id }} --}}
         {{ $task->subject }}
-        @if(!empty($task->start_date))
-        {{ ' ' .$task->start_date. ' '}}To{{' ' .$task->due_date. ' ' }} 
-        @endif 
+        @if (!empty($task->start_date))
+            {{ ' ' . $task->start_date . ' ' }}To{{ ' ' . $task->due_date . ' ' }}
+        @endif
         <div class="icons">
-        
+
             <i class="fa-regular fa-calendar clndr"></i>
- 
-        <a href="#" class="task-view-link"><i class="fa-regular fa-eye" data-task-id="{{ $task->id }}"></i></a>
-    
-        {{-- <div class="tab_content">
+
+            <a href="#" class="task-view-link"><i class="fa-regular fa-eye"
+                    data-task-id="{{ $task->id }}"></i></a>
+
+            {{-- <div class="tab_content">
             <div class="tab_c" data-step="1" style="">
                 <ul data-prjct_id="1">
                     <li class="edit_prjct"><i class="fa-solid fa-pen"></i> Edit project Details</li>
@@ -45,35 +46,39 @@
                 </ul>
             </div>
         </div> --}}
-        <div class="tdropdown">
-            {{-- <button class=" " type="button"> --}}
-                <i class="fa-solid fa-ellipsis tellipsisBtn"  onclick="myFunction(this)" ></i>
-            {{-- </button> --}}
-            <div class="tdropdown-content">
-                <ul>
-                    <li id="edit-task" class="edit-task-option"  data-task-id="{{ $task->id }}">
-                        <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
-                        <span class="option_list_text">Edit </span>
-                    </li>
-                    
-               <br>
+            <div class="tdropdown">
+                {{-- <button class=" " type="button"> --}}
+                <i class="fa-solid fa-ellipsis tellipsisBtn" onclick="myFunction(this)"></i>
+                {{-- </button> --}}
+                <div class="tdropdown-content">
+                    <ul>
+                        <li id="edit-task" class="edit-task-option" data-task-id="{{ $task->id }}">
+                            <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
+                            <span class="option_list_text">Edit </span>
+                        </li>
 
-                    <li class="disabled"><i class="fa-regular fa-copy option_list_icon "></i> <span
-                            class="">copy  </span></li>
-                   <br> <li class="disabled"><i class="fa-solid fa-sort option_list_icon"></i> <span
-                            class="option_list_text">Reorder </span></li>
-                    <br><li class="disabled"><i class="fa-solid fa-file option_list_icon"></i> <span
-                            class="option_list_text">Reports</span></li>
-                        <br>    <li class="delete-btn" data-task-id="{{ $task->id }}">
-                                
-                             <i class="fa-solid fa-trash option_list_icon"></i>Delete </li>
+                        <br>
 
-                </ul>
+                        <li class="disabled"><i class="fa-regular fa-copy option_list_icon "></i> <span
+                                class="">copy </span></li>
+                        <br>
+                        <li class="disabled"><i class="fa-solid fa-sort option_list_icon"></i> <span
+                                class="option_list_text">Reorder </span></li>
+                        <br>
+                        <li class="disabled"><i class="fa-solid fa-file option_list_icon"></i> <span
+                                class="option_list_text">Reports</span></li>
+                        <br>
+                        <li class="delete-btn" data-task-id="{{ $task->id }}">
+
+                            <i class="fa-solid fa-trash option_list_icon"></i>Delete
+                        </li>
+
+                    </ul>
+                </div>
             </div>
+            <br>
         </div>
-        <br>
     </div>
-</div>  
 @endforeach
 <div class="task-detail-container"></div>
 
@@ -86,12 +91,12 @@
 
 {{-- <a href="#"><i class="fa-solid fa-plus text-blue trigger-link"data-task-list="{{ $task->task_list_id }}"></i>add a task</a> --}}
 <script>
-//menu
-window.onclick = function(event) {
+    //menu
+    window.onclick = function(event) {
         if (!event.target.matches('.tellipsisBtn')) {
-          //  var crntTask = $(this).data('tsk-id');
+            //  var crntTask = $(this).data('tsk-id');
             //console.log("tl",crntTask);
-             var tdropdowns = document.getElementsByClassName("tdropdown-content");
+            var tdropdowns = document.getElementsByClassName("tdropdown-content");
             var i;
             for (i = 0; i < tdropdowns.length; i++) {
                 var opentdropdown = tdropdowns[i];
@@ -103,95 +108,100 @@ window.onclick = function(event) {
         }
     }
 
-//task details
-$(document).ready(function() {
-  $('.task-view-link').click(function(event) {
-    event.preventDefault();
-    var taskId = $(this).find('i').data('task-id');
-     
-    var taskDetailContainer = $(this).closest('.tasks_container');
-   
-   
-    // Check if the edit form already exists
-    if (taskDetailContainer.length === 0) {
-        taskDetailContainer = $('<div class="tasks_container"></div>');
-        // $("body .details").remove()
-        $(this).closest('.tasks_container').append(taskDetailContainer);
-    }
+    //task details
+    $(document).ready(function() {
+        $('.task-view-link').click(function(event) {
+            event.preventDefault();
+            var taskId = $(this).find('i').data('task-id');
+            var taskDetailContainer = $(this).closest('.tasks_container');
 
-  
-    $.ajax({
-        
-      url: '/tasks/' + taskId + '/view',
-      type: 'GET',
-      data: { _token: "{{ csrf_token() }}", _method: "GET" },
-      success: function(data) {
-            //console.log("Tasks Data:", data); // Check if tasks data is received
-            //$("body .details").remove()
-      
-    taskDetailContainer.html(data);
- 
-            //clickedElement.parent().next().next().html(data);
-        },
-      error: function(xhr) {
-        console.log(xhr.responseText);
-      }
+            if (taskDetailContainer.length === 0) {
+                taskDetailContainer = $('<div class="tasks_container"></div>');
+                $(this).closest('.tasks_container').append(taskDetailContainer);
+            }
+
+            $.ajax({
+                url: '/tasks/' + taskId + '/view',
+                type: 'GET',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    _method: "GET"
+                },
+                success: function(data) {
+                    taskDetailContainer.html(data);
+
+                    // Add something to the URL without reloading the page
+                    var newUrl = '/tasks/' + taskId + '/view';
+                    window.history.pushState({
+                        path: newUrl
+                    }, '', newUrl);
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
     });
-  });
-});
 
-//task completion trigger 
-$(document).ready(function() {
-  $('.task-complete-link').click(function(event) {
-    event.preventDefault();
-    var taskId = $(this).find('i').data('task-id');
-    
-    $.ajax({
-        
-      url: '/tasks/' + taskId + '/complete',
-      type: 'POST',
-      data: { _token: "{{ csrf_token() }}", _method: "PUT" },
-      success: function(response) {
-        // Update the UI to show that the task is complete
-        alert('Task Completed');
-        // $('#myElement').removeClass('original-class').addClass('new-class');
-        //$(event.target).addClass('completed');
-      },
-      error: function(xhr) {
-        console.log(xhr.responseText);
-      }
+
+    //task completion trigger 
+    $(document).ready(function() {
+        $('.task-complete-link').click(function(event) {
+            event.preventDefault();
+            var taskId = $(this).find('i').data('task-id');
+
+            $.ajax({
+
+                url: '/tasks/' + taskId + '/complete',
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    _method: "PUT"
+                },
+                success: function(response) {
+                    // Update the UI to show that the task is complete
+                    alert('Task Completed');
+                    // $('#myElement').removeClass('original-class').addClass('new-class');
+                    //$(event.target).addClass('completed');
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
     });
-  });
-});
 
 
 
-//task Uncompletion trigger 
-$(document).ready(function() {
-  $('.task-uncomplete-link').click(function(event) {
-    event.preventDefault();
-    var taskId = $(this).find('i').data('task-id');
-    
-    $.ajax({
-        
-      url: '/tasks/' + taskId + '/uncomplete',
-      type: 'POST',
-      data: { _token: "{{ csrf_token() }}", _method: "PUT" },
-      success: function(response) {
-        // Update the UI to show that the task is complete
-        alert('Task status set to uncomplete');
-        // $('#myElement').removeClass('original-class').addClass('new-class');
-        //$(event.target).addClass('completed');
-      },
-      error: function(xhr) {
-        console.log(xhr.responseText);
-      }
+    //task Uncompletion trigger 
+    $(document).ready(function() {
+        $('.task-uncomplete-link').click(function(event) {
+            event.preventDefault();
+            var taskId = $(this).find('i').data('task-id');
+
+            $.ajax({
+
+                url: '/tasks/' + taskId + '/uncomplete',
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    _method: "PUT"
+                },
+                success: function(response) {
+                    // Update the UI to show that the task is complete
+                    alert('Task status set to uncomplete');
+                    // $('#myElement').removeClass('original-class').addClass('new-class');
+                    //$(event.target).addClass('completed');
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
     });
-  });
-});
 
-// edit task form call
-const editTaskForm = `
+    // edit task form call
+    const editTaskForm = `
 
     <form action="#" class="edit_task_form"  id="my-great-drop" data-task-id="" enctype="multipart/form-data">
 
@@ -292,7 +302,10 @@ const editTaskForm = `
                                     >
                                         Select from Existing Files
                                     </button>
-                                </div>
+                                    <div id="dropped_files"></div>
+                                    </div>
+                                    </div>
+
                             </div>
                         </div>
                     </div>
@@ -398,332 +411,230 @@ const editTaskForm = `
 
 
     // task form call
- // edit task form call
- $("body").on("click", '.edit-task-option', function() {
-    var editFormContainer = $(this).closest('.task').find('.edit-form-container');
-    var taskId = $(this).data('task-id');
-    console.log(taskId);
- 
-    // Check if the edit form already exists
-    if (editFormContainer.length === 0) {
-        editFormContainer = $('<div class="edit-form-container"></div>');
-        $(this).closest('.task').append(editFormContainer);
-    }
+    // edit task form call
+    $("body").on("click", '.edit-task-option', function() {
+        var editFormContainer = $(this).closest('.task').find('.edit-form-container');
+        var taskId = $(this).data('task-id');
+        console.log(taskId);
 
-    // Toggle the visibility of the form
-    editFormContainer.toggle();
+        // Check if the edit form already exists
+        if (editFormContainer.length === 0) {
+            editFormContainer = $('<div class="edit-form-container"></div>');
+            $(this).closest('.task').append(editFormContainer);
+        }
 
-    editFormContainer.html(editTaskForm);
-    $("#my-great-drop").attr("data-task-id", taskId);
-});
+        // Toggle the visibility of the form
+        editFormContainer.toggle();
+
+        editFormContainer.html(editTaskForm);
+        $("#my-great-drop").attr("data-task-id", taskId);
+    });
 
 
- // task form call
- $("body").on("click", '.cancel', function() {
+    // task form call
+    $("body").on("click", '.cancel', function() {
 
         $("body .task_form").remove()
-        
-
-});
-// EDIT FORM JS
-// $(document).ready(function() {
-//         $("#notes").summernote({
-//             placeholder: "Add Your Description here...",
-//             tabsize: 2,
-//             height: 100,
-//             // airMode: true,
-//             toolbar: [
-//                 // ['style', ['style']],
-//                 [
-//                     "font",
-//                     [
-//                         "bold",
-//                         "italic",
-//                         "strikethrough",
-//                     ],
-//                 ],
-//                 ["para", ["ul", "ol"]],
-//                 ["insert", ["link", "picture", "video"]],
-//                 ["view", ["undo", "redo"]], // ['fullscreen', 'codeview', 'help']
-//             ],
-//             // toolbar: [
-//             //     // ['style', ['style']],
-//             //     [
-//             //         "font",
-//             //         [
-//             //             "bold",
-//             //             "underline",
-//             //             "clear",
-//             //             "fontname",
-//             //             "fontsize",
-//             //             "forecolor",
-//             //             "backcolor",
-//             //             "italic",
-//             //             "strikethrough",
-//             //             "superscript",
-//             //             "subscript",
-//             //         ],
-//             //     ],
-//             //     ["color", ["color"]],
-//             //     ["para", ["ul", "ol", "paragraph", "style", "height"]],
-//             //     ["table", ["table"]],
-//             //     ["insert", ["link", "picture", "video"]],
-//             //     ["view", ["codeview", "help", "undo", "redo"]], // ['fullscreen', 'codeview', 'help']
-//             // ],
-
-//         });
-
-//         // Switch Tabs
-//         $("body").on("click", ".task_bar ul li", function() {
-//             var tabs = $(this).index();
-//             $(this).parent().find(".active").removeClass("active");
-//             $(this).addClass("active");
-
-//             // if($(this).parents().eq(1).next().hasClass('task_content')){
-//             //     var tab = $(this).parent().next()
-//             // } else {
-//             var tab = $(this).parents().eq(1).next();
-//             // }
-
-//             tab.find(".task_tab").each(function(index) {
-//                 if (index == tabs) {
-//                     $(this).show();
-//                 } else {
-//                     $(this).hide();
-//                 }
-//             });
-//         });
-
-//         Dropzone.autoDiscover = false;
-//         // Assuming 'myDropzone' is your existing Dropzone instance
-//         var myDropzone = new Dropzone("#my-great-dropzone", {
-//             url: "your_upload_url_here", // Set your server upload URL
-//             autoProcessQueue: true, // Prevent automatic upload on file drop
-//             previewTemplate: document.querySelector("#custom-preview-template").innerHTML,
-//         });
-
-//         // Add a class to the form when a file is dragged over it
-//         myDropzone.on("dragenter", function() {
-//             $("#my-great-dropzone").addClass("dragover");
-//         });
-
-//         // Remove the class when the file is dragged away
-//         myDropzone.on("dragleave", function() {
-//             $("#my-great-dropzone").removeClass("dragover");
-//         });
-
-//         // Handle the file when it's added to Dropzone
-//         myDropzone.on("addedfile", function(file) {
-//             var filetype = file.type;
-//             var fileName = file.name;
-//             $(".task_tab").hide();
-//             $(".task_tab")[1].style = "display: block;";
-//             $(".task_bar ul").find(".active").removeClass("active");
-//             $(".task_bar ul li")[1].classList = "active";
-
-//             var imgSrc = "";
-//             if (filetype.includes("image")) {
-//                 imgSrc = "/public/images/image.png";
-//             } else if (filetype.includes("video")) {
-//                 imgSrc = "/public/images/Video File.svg";
-//             } else if (filetype.includes("pdf")) {
-//                 imgSrc = "/public/images/pdf file.svg";
-//             } else if (filetype.includes("x-zip-compressed")) {
-//                 imgSrc = "/public/images/Archive Folder.svg";
-//             } else if (
-//                 filetype.includes("sheet") ||
-//                 filetype.includes("csv")
-//             ) {
-//                 imgSrc = "/public/images/Google Sheets.svg";
-//             } else if (
-//                 filetype.includes("document") ||
-//                 filetype.includes("plain")
-//             ) {
-//                 imgSrc = "/public/images/Microsoft Word 2019.svg";
-//             } else {
-//                 imgSrc = "/public/images/File.svg";
-//             }
-
-//             // // Create an image element for the uploaded file
-//             var mainDiv = document.createElement("div");
-//             mainDiv.classList = "attachedFilePrev";
-
-//             var imageElement = document.createElement("img");
-//             imageElement.src = imgSrc;
-//             imageElement.alt = fileName;
-//             imageElement.style = "width: 40px; height: 40px; margin-right: 10px;";
-
-//             var fileinfoDiv = document.createElement("div");
-//             fileinfoDiv.style = "display: flex; align-items: center;";
-//             var fileinfo = document.createElement("div");
-//             fileinfo.style = "border: 1px solid #dadada; padding: 0px 0px;";
-//             var progress_prctSpan = document.createElement("span")
-//             progress_prctSpan.classList = "progress_prct";
-//             var fileNameSpan = document.createElement("span");
-//             fileNameSpan.classList = "file_name";
-//             fileNameSpan.textContent = fileName;
-//             fileinfo.append(progress_prctSpan);
-//             fileinfo.appendChild(fileNameSpan);
-//             fileinfoDiv.appendChild(imageElement);
-
-//             fileinfoDiv.append(fileinfo);
-
-//             var deleteButton = document.createElement("button");
-//             deleteButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
-//             deleteButton.classList = "deleteFile";
-//             var deletediv = document.createElement("div");
-//             deletediv.appendChild(deleteButton);
-
-//             mainDiv.appendChild(fileinfoDiv);
-//             mainDiv.appendChild(deletediv);
-//             deleteButton.addEventListener("click", function() {
-//                 // Remove the file from Dropzone
-//                 myDropzone.removeFile(file);
-//                 // Remove the file preview element
-//                 mainDiv.remove();
-//             });
-
-//             // Append the image element to the target div
-//             if ($("body #attached_files_con").find(".attachedFilePrev").length > 0) {
-//                 $("#attached_files_con").append(mainDiv);
-//             } else {
-//                 $("#attached_files_con").html(mainDiv);
-//             }
-
-//             // Customize the appearance and show progress during processing
-//             myDropzone.on("processing", function(file) {
-//                 // Add a custom CSS class to the file's preview element during processing
-//                 file.previewElement.classList.add("custom-processing-file");
-
-//                 // You can define your custom CSS rules for .custom-processing-file in your stylesheets
-//             });
-
-//             // Update the progress while uploading
-//             myDropzone.on("uploadprogress", function(file, progress) {
-//                 // Update the progress in your custom file element (e.g., a progress bar)
-//                 // Example: file.previewElement.querySelector(".custom-progress").style.width = progress + "%";
-//                 progress_prctSpan.textContent = progress + "%"
-//             });
-//         });
 
 
+    }); // <!-- add task form js  
+    $(document).ready(function() {
+        $("#notes").summernote({
+            placeholder: "Add Your Description here...",
+            tabsize: 2,
+            height: 100,
+            // airMode: true,
+            toolbar: [
+                // ['style', ['style']],
+                [
+                    "font",
+                    [
+                        "bold",
+                        "italic",
+                        "strikethrough",
+                    ],
+                ],
+                ["para", ["ul", "ol"]],
+                ["insert", ["link", "picture", "video"]],
+                ["view", ["undo", "redo"]], // ['fullscreen', 'codeview', 'help']
+            ],
+            // toolbar: [
+            //     // ['style', ['style']],
+            //     [
+            //         "font",
+            //         [
+            //             "bold",
+            //             "underline",
+            //             "clear",
+            //             "fontname",
+            //             "fontsize",
+            //             "forecolor",
+            //             "backcolor",
+            //             "italic",
+            //             "strikethrough",
+            //             "superscript",
+            //             "subscript",
+            //         ],
+            //     ],
+            //     ["color", ["color"]],
+            //     ["para", ["ul", "ol", "paragraph", "style", "height"]],
+            //     ["table", ["table"]],
+            //     ["insert", ["link", "picture", "video"]],
+            //     ["view", ["codeview", "help", "undo", "redo"]], // ['fullscreen', 'codeview', 'help']
+            // ],
 
-//         // Handle the file upload manually
-//         myDropzone.on("success", function(file, response) {
-//             // Assuming the server returns the uploaded file's URL in the response
-//             var imageUrl = response.imageUrl;
+        });
 
-//             // Insert the image URL into Summernote
-//             $("#notes").summernote("editor.insertImage", imageUrl);
-//         });
+        // Switch Tabs
+        $("body").on("click", ".task_bar ul li", function() {
+            var tabs = $(this).index();
+            $(this).parent().find(".active").removeClass("active");
+            $(this).addClass("active");
 
-//         // Listen for changes in the file input
-//         $("#attch_file").on("change", function(event) {
-//             var files = event.target.files;
+            // if($(this).parents().eq(1).next().hasClass('task_content')){
+            //     var tab = $(this).parent().next()
+            // } else {
+            var tab = $(this).parents().eq(1).next();
+            // }
 
-//             // Loop through the selected files
-//             for (var i = 0; i < files.length; i++) {
-//                 var file = files[i];
+            tab.find(".task_tab").each(function(index) {
+                if (index == tabs) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
 
-//                 // Add the file to Dropzone
-//                 myDropzone.addFile(file);
 
-//                 // Display the file in the Dropzone list
-//                 // myDropzone.emit("addedfile", file);
+        $('body').on('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).addClass('dragover');
+        });
 
-//                 // Process the file as needed (e.g., display a preview)
-//                 // myDropzone.createThumbnailFromUrl(file, myDropzone.options.thumbnailWidth, myDropzone.options.thumbnailHeight, myDropzone.options.thumbnailMethod, true, function(thumbnail) {
-//                 //     myDropzone.emit("thumbnail", file, thumbnail);
-//                 // });
-//             }
-//         });
-//     });
+        $('body').on('dragleave drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('dragover');
+        });
 
-//edit task form submition
-$(document).ready(function() {
-    $('body').on('click', '.submit-btn', function(e) {
-        e.preventDefault();
+        $('body').on('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var files = e.originalEvent.dataTransfer.files;
+            $('#attch_file')[0].files = files;
+            $(this).removeClass('dragover');
+            displayDroppedFiles(files);
+        });
 
-        var formData = new FormData($('.edit_task_form')[0]); // Get form data
-        var taskId = $('#my-great-drop').data('task-id'); // Get the data-task-list-id from the form
-        console.log(taskId);
-        var url = "{{ route('update.task', ['taskId' => ':taskId']) }}";
-        url = url.replace(':taskId', taskId);
+        function displayDroppedFiles(files) {
+            var droppedFilesContainer = $('#dropped_files');
+            droppedFilesContainer.empty(); // Clear previous dropped files
 
-        // Append the URL to the formData object
-        formData.append('_method', 'PUT'); // Add the PUT method override
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var fileName = file.name;
+                var fileType = file.type;
+                var fileIcon = '';
 
-        $.ajax({
-            type: 'POST',
-            url: url, // Use the constructed URL
-            data: formData, // Use the form data
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                // Update the UI to show that the task is complete
-                $("body .edit_task_form").remove()
-                alert('success');
-                //$(event.target).addClass('completed');
-            },
-            error: function(error) {
-                // Handle error (optional)
-                console.error('Error updating data:', error);
+                if (fileType.includes('image')) {
+                    fileIcon = '<img src="image_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                } else if (fileType.includes('pdf')) {
+                    fileIcon = '<img src="pdf_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                } else {
+                    fileIcon = '<img src="generic_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                }
+
+                droppedFilesContainer.append(fileIcon + '<span>' + fileName + '</span><br>');
             }
+        }
+    });
+    //edit task form submition
+    $(document).ready(function() {
+        $('body').on('click', '.submit-btn', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData($('.edit_task_form')[0]); // Get form data
+            var taskId = $('#my-great-drop').data('task-id'); // Get the data-task-list-id from the form
+            console.log(taskId);
+            var url = "{{ route('update.task', ['taskId' => ':taskId']) }}";
+            url = url.replace(':taskId', taskId);
+
+            // Append the URL to the formData object
+            formData.append('_method', 'PUT'); // Add the PUT method override
+
+            $.ajax({
+                type: 'POST',
+                url: url, // Use the constructed URL
+                data: formData, // Use the form data
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    // Update the UI to show that the task is complete
+                    $("body .edit_task_form").remove()
+                    alert('success');
+                    //$(event.target).addClass('completed');
+                },
+                error: function(error) {
+                    // Handle error (optional)
+                    console.error('Error updating data:', error);
+                }
+            });
         });
     });
-});
 
 
 
-//DELETING TASK
-$(document).ready(function() {
-    $('body').on('click', '.delete-btn', function(e) {
-        e.preventDefault();
-        var taskId = $(this).data('task-id');
+    //DELETING TASK
+    $(document).ready(function() {
+        $('body').on('click', '.delete-btn', function(e) {
+            e.preventDefault();
+            var taskId = $(this).data('task-id');
 
-        $.ajax({
-            type: 'DELETE',
-            url: '/delete/' + taskId,
-            data: {
-                _token: "{{ csrf_token() }}",
-            },
-            success: function(data) {
-                // Handle success
-                alert('Task deleted successfully');
-            },
-            error: function(error) {
-                // Handle error
-                console.error('Error deleting task:', error);
-            }
+            $.ajax({
+                type: 'DELETE',
+                url: '/delete/' + taskId,
+                data: {
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    // Handle success
+                    alert('Task deleted successfully');
+                },
+                error: function(error) {
+                    // Handle error
+                    console.error('Error deleting task:', error);
+                }
+            });
         });
     });
-});
-
 </script>
 
 <style>
-
-/* .details {
+    /* .details {
     width: 60%;
-    height: 100%; /* Adjust as needed 
-    background-color: #f2f2f2; /* Add background color for visibility 
+    height: 100%; /* Adjust as needed
+    background-color: #f2f2f2; /* Add background color for visibility
 }
 */
-/* .tasks { */
+    /* .tasks { */
     /* width: 100%; /* Adjust as needed  */
     /* background-color: #e6e6e6; /* Add background color for visibility  */
-} 
-.heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    }
 
-.buttons {
-    display: flex;
-    align-items: center;
-}
-.listItem {
+    .heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .listItem {
         display: flex;
         align-items: center;
         margin-bottom: 10px;
@@ -783,173 +694,194 @@ $(document).ready(function() {
     .dropbtn:focus {
         background-color: #2980B9;
     }
-/* The container <div> - needed to position the dropdown content */
+
+    /* The container <div> - needed to position the dropdown content */
     .tdropdown {
-    position: relative;
-    display: inline-block;
-    text-align: left;
-    /* border: 1px solid #ccc; */
-    border-radius: 8px;
-    background-color:white;
-    padding: 0%;
-    /* padding: 10px; */
-}
+        position: relative;
+        display: inline-block;
+        text-align: left;
+        /* border: 1px solid #ccc; */
+        border-radius: 8px;
+        background-color: white;
+        padding: 0%;
+        /* padding: 10px; */
+    }
 
-/* Dropdown Content (Hidden by Default) */
-.tdropdown-content {
-    text-align: left !important;
-    display: none;
-    position: absolute;
-    background-color:white;
-    
-    min-width: 200px;
-    border-radius: 8px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s, transform 0.3s;
-}
+    /* Dropdown Content (Hidden by Default) */
+    .tdropdown-content {
+        text-align: left !important;
+        display: none;
+        position: absolute;
+        background-color: white;
 
-/* Links inside the dropdown */
-.tdropdown-content a {
-    color: #333;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left !important;
-    transition: background-color 0.3s, color 0.3s;
-}
+        min-width: 200px;
+        border-radius: 8px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s, transform 0.3s;
+    }
 
-
-.tdropdown-content ul li { 
-    float: none; /* Remove float */
-    width: 100%; /* Remove fixed width */
-    display: inline-block; /* Display as inline-block */
-    list-style: none;
-    text-align: left;
-    padding: 0;
-}
-.tdropdown-content .fa-trash { 
-  color:red;
-}
-/* Add padding to icons */
-.tdropdown-content ul li i {
-    /* margin-right: 10px; */
-}
-
-/* Change color of dropdown links on hover */
-.tdropdown-content li:hover {
-    background-color: #f0f0f0;
-}
-
-/* Show the dropdown menu with fade-in effect */
-.show {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-} 
+    /* Links inside the dropdown */
+    .tdropdown-content a {
+        color: #333;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left !important;
+        transition: background-color 0.3s, color 0.3s;
+    }
 
 
-.task {
-     /* Use 'font-weight' instead of 'font:bold;' */
-     /* text-decoration:none; */
-    width: 100%;
-     margin-left: 5%;
-     /* width: 500px; */
-     color:gray;
-     text-decoration-style: none;
-}
-.status{
-    margin-left: 5%;
+    .tdropdown-content ul li {
+        float: none;
+        /* Remove float */
+        width: 100%;
+        /* Remove fixed width */
+        display: inline-block;
+        /* Display as inline-block */
+        list-style: none;
+        text-align: left;
+        padding: 0;
+    }
 
-}
-.tasks a:hover {
-  
-    text-decoration: none;
-}
+    .tdropdown-content .fa-trash {
+        color: red;
+    }
 
-.task:hover {
-   
-    text-decoration:none;
-    background-color:white; /* Use 'background-color' instead of 'background-coolor' */
-    
-}
-.task .icons {
+    /* Add padding to icons */
+    .tdropdown-content ul li i {
+        /* margin-right: 10px; */
+    }
+
+    /* Change color of dropdown links on hover */
+    .tdropdown-content li:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Show the dropdown menu with fade-in effect */
+    .show {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+
+    .task {
+        /* Use 'font-weight' instead of 'font:bold;' */
+        /* text-decoration:none; */
+        width: 100%;
+        margin-left: 5%;
+        /* width: 500px; */
+        color: gray;
+        text-decoration-style: none;
+    }
+
+    .status {
+        margin-left: 5%;
+
+    }
+
+    .tasks a:hover {
+
+        text-decoration: none;
+    }
+
+    .task:hover {
+
+        text-decoration: none;
+        background-color: white;
+        /* Use 'background-color' instead of 'background-coolor' */
+
+    }
+
+    .task .icons {
+        display: none;
+        /* Hide the icons by default */
+    }
+
+    .task:hover .icons {
+        display: inline-block;
+        /* Show the icons on hover and keep them on the same line */
+        flex: 5;
+    }
+
+    /* .task .special-icon {
     display: none; /* Hide the icons by default */
-}
+    }
 
-.task:hover .icons {
+    /* .task:hover .special-icon {
     display: inline-block; /* Show the icons on hover and keep them on the same line */
-    flex:5;
-}
-/* .task .special-icon {
-    display: none; /* Hide the icons by default */
-}
+    }
 
-/* .task:hover .special-icon {
-    display: inline-block; /* Show the icons on hover and keep them on the same line */
-} */ */
+    */ */ .task {
+        position: relative;
+        left: 2;
+    }
 
-.task {
-    position: relative;
-    left:2;
-}
+    .icons {
+        position: relative;
+    }
 
-.icons {
-    position: relative;
-}
+    .icon {
+        display: none;
+        /* Hide icons by default */
+        /* Add any other styling you need for your icons */
+    }
 
-.icon {
-    display: none; /* Hide icons by default */
-    /* Add any other styling you need for your icons */
-}
+    .special-icon {
+        /* position: absolute; */
+        right: 0;
+        /* Position at the very end of the container */
+        display: inline-block;
+        /* Display the special icon */
+    }
 
-.special-icon {
-    /* position: absolute; */
-    right: 0; /* Position at the very end of the container */
-    display: inline-block; /* Display the special icon */
-}
+    .task:hover .icons .icon {
+        display: inline-block;
+        /* Show icons on hover */
+    }
 
-.task:hover .icons .icon {
-    display: inline-block; /* Show icons on hover */
-}
-
-.add:hover {
-    background-color: #f2f4fc; /* Use 'background-color' instead of 'background-coolor' */
-}
+    .add:hover {
+        background-color: #f2f4fc;
+        /* Use 'background-color' instead of 'background-coolor' */
+    }
 
 
 
 
-/* //hover on eye */
+    /* //hover on eye */
 
 
 
 
-.hover-link {
-    display: none;
-    position: absolute;
-    top: 100%; /* Position below the eye icon */
-    left: 50%; /* Centered relative to the icon container */
-    transform: translateX(-50%); /* Center horizontally */
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    padding: 5px;
-    font-size: 14px;
-    text-decoration: none;
-}
+    .hover-link {
+        display: none;
+        position: absolute;
+        top: 100%;
+        /* Position below the eye icon */
+        left: 50%;
+        /* Centered relative to the icon container */
+        transform: translateX(-50%);
+        /* Center horizontally */
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        padding: 5px;
+        font-size: 14px;
+        text-decoration: none;
+    }
 
-.icons .hover-link {
-    display: inline-block;
-}
+    .icons .hover-link {
+        display: inline-block;
+    }
 
 
-/* EDIT TASK FORM  */
+    /* EDIT TASK FORM  */
 
 
-.task_bar ul {
+    .task_bar ul {
         display: flex;
         gap: 5px;
         margin-bottom: 0;
@@ -1077,8 +1009,9 @@ $(document).ready(function() {
         width: 20%;
         color: blue;
     }
-    .listItemContent{
-font-size: large;
-        font:bold;
+
+    .listItemContent {
+        font-size: large;
+        font: bold;
     }
 </style>

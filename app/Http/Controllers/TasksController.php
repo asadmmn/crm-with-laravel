@@ -24,9 +24,11 @@ class TasksController extends Controller
         $gettask = $id;
        //dd($gettask);
        //dd($task_lists);
+       
         return view('project_management.tasks.index', compact('gettask','task_lists'));
     }
 
+  
     
     public function getTasks($id)
     {
@@ -136,12 +138,14 @@ public function updateTask(Request $request, $taskId)
 
         // Find the task by ID
         $task = Tasks::findOrFail($taskId);
-$old_file=$task->file_name;
+        
+             $old_file=$task->file_name;
+     
         $file = $request->file('file');
 //        dd($file);
         if ($file) {
             $fileName = $file->store('uploads'); // Adjust the directory as per your needs
-        } else {
+        }else{ 
             $fileName = $old_file;
         }
         
@@ -223,7 +227,7 @@ public function deleteTask($taskId)
      if ($file) {
          $fileName = $file->store('uploads'); // Adjust the directory as per your needs
      } else {
-         $fileName = null;
+         $fileName = "no file";
      }
      //dd( $fileName);
         $task = Tasks::create([

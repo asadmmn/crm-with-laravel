@@ -335,6 +335,28 @@
     });
 </script>
 <style>
+     .task {
+        text-decoration: none;
+    }
+    .listItemContent a:hover {
+
+        text-decoration:none;
+    }
+    .listItem:hover {
+        text-decoration: none;
+    }
+
+    .tasks {
+        text-decoration: none;
+    }
+
+    .tasks:hover {
+        text-decoration: none;
+    }
+
+    .listItem li{
+        text-decoration: none;
+    }
     /* .top {
         float: right;
     }

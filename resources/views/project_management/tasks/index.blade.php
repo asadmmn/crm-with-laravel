@@ -67,6 +67,14 @@
 
 <link rel="stylesheet" href="{{ URL::asset('css/project.css') }}">
 <style>
+     .list_btn a {
+        text-decoration: none;
+        width: 100%;
+    }
+    .task_con li{
+        text-decoration: none;
+        width: 100%;
+    }
     .acrodian.side_open {
         display: flex;
         gap: 20px;
@@ -174,7 +182,9 @@
         color: #0B0E1F;
         width: 90%;
     }
-
+li{
+    text-decoration: none;
+}
     .actions .add_task_list {
         border-radius: 20px;
         padding: 5px 10px;

@@ -211,6 +211,7 @@
 
     .new_task_con li.active,
     .new_task_con li:hover {
+        text-decoration: none;
         background-color: #494b50;
         box-shadow: inset 5px 0 0 0px #4461d7;
     }

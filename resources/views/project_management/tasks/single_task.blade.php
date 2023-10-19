@@ -793,26 +793,26 @@
         });
 
         function displayDroppedFiles(files) {
-            var droppedFilesContainer = $('#dropped_files');
-            droppedFilesContainer.empty(); // Clear previous dropped files
+    var droppedFilesContainer = $('#dropped_files');
 
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                var fileName = file.name;
-                var fileType = file.type;
-                var fileIcon = '';
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var fileName = file.name;
+        var fileType = file.type;
+        var fileIcon = '';
 
-                if (fileType.includes('image')) {
-                    fileIcon = '<img src="image_icon_url" alt="' + fileName + '" style="width: 50px;">';
-                } else if (fileType.includes('pdf')) {
-                    fileIcon = '<img src="pdf_icon_url" alt="' + fileName + '" style="width: 50px;">';
-                } else {
-                    fileIcon = '<img src="generic_icon_url" alt="' + fileName + '" style="width: 50px;">';
-                }
-
-                droppedFilesContainer.append(fileIcon + '<span>' + fileName + '</span><br>');
-            }
+        if (fileType.includes('image')) {
+            fileIcon = '<img src="image_icon_url" alt="' + fileName + '" style="width: 50px;">';
+        } else if (fileType.includes('pdf')) {
+            fileIcon = '<img src="pdf_icon_url" alt="' + fileName + '" style="width: 50px;">';
+        } else {
+            fileIcon = '<img src="generic_icon_url" alt="' + fileName + '" style="width: 50px;">';
         }
+
+        droppedFilesContainer.append(fileIcon + '</span><br>');
+    }
+}
+
     });
 </script>
 <style>

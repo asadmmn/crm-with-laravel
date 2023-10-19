@@ -416,4 +416,9 @@
         $(".new_task_list").toggleClass('open')
         $(this).toggleClass('new_rotateright')
     })
+
+    window.addEventListener('popstate', function(event) {
+    location.reload();
+});
+
 </script>

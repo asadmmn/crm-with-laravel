@@ -1,9 +1,10 @@
 <h5 class="status">
 
     {{ $taskName }} complete </h5>
-
+<div class="alltask">
 @foreach ($tasks as $task)
-    <div class="task">
+    <div class="task" >
+        <div class="oneline" style="display: flex;">
         <!-- Display task details here -->
         @if ($task->status == 'completed')
             <a href="#" class="task-uncomplete-link"><i class="fa-solid fa-circle-check"
@@ -12,11 +13,17 @@
             <a href="#" class="task-complete-link"><i class="fa-regular fa-circle-check"
                     data-task-id="{{ $task->id }}"></i></a>
         @endif
+        
         {{-- {{ $task->id }} --}}
-        {{ $task->subject }}
+        <div class="task-subject">
+            {{ $task->subject }}
+        </div>
+        
+         <div>
         @if (!empty($task->start_date))
             {{ ' ' . $task->start_date . ' ' }}To{{ ' ' . $task->due_date . ' ' }}
         @endif
+        </div>
         <div class="icons">
 
             <i class="fa-regular fa-calendar clndr"></i>
@@ -44,15 +51,17 @@
                     <li class="add_users"><i class="fa-regular fa-user"></i> Add user</li>
                     <li class="disabled"><i class="fa-solid fa-envelope"></i> Add message</li>
                 </ul>
-            </div>
-        </div> --}}
+            </div> --}}
+        </div> 
             <div class="tdropdown">
-                {{-- <button class=" " type="button"> --}}
-                <i class="fa-solid fa-ellipsis tellipsisBtn" onclick="myFunction(this)"></i>
-                {{-- </button> --}}
+               
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-three-dots tellipsisBtn" onclick="myFunction(this)" viewBox="0 0 16 16">
+                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                      </svg>               
+                   
                 <div class="tdropdown-content">
                     <ul>
-                        <li id="edit-task" class="edit-task-option" data-task-id="{{ $task->id }}">
+                        <li id="edit-task" class="edit-task-option" data-task-id="{{ $task->id }}" data-task-subject="{{ $task->subject }}" data-task-notes="{{ $task->notes}}" data-task-lid="{{ $task->task_list_id}}">
                             <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
                             <span class="option_list_text">Edit </span>
                         </li>
@@ -76,14 +85,18 @@
                     </ul>
                 </div>
             </div>
-            <br>
+            
         </div>
+        </div>
+       
     </div>
 @endforeach
+<div class="edit-form-container"></div>
+</div>
 <div class="task-detail-container"></div>
 
 
-<div class="edit-form-container"></div>
+
 
 <div id="container">
 
@@ -203,7 +216,7 @@
     // edit task form call
     const editTaskForm = `
 
-    <form action="#" class="edit_task_form"  id="my-great-drop" data-task-id="" enctype="multipart/form-data">
+    <form action="#" class="edit_task_form"  id="my-great-drop" data-task-id="" data-task-lid="" enctype="multipart/form-data">
 
 @csrf
 @method('post')
@@ -211,7 +224,7 @@
             <div class="add_task">
             <div class="">
     <input type="hidden" name="pro_id" value="">
-    <input type="text" name="subject" placeholder="what needs to be done?" required="required">
+    <input type="text" id="sj" name="subject" placeholder="what needs to be done?" required="required" value="">
              </div>
 
                 <div class="task_bar">
@@ -247,6 +260,7 @@
                                     type="date"
                                     name="st_date"
                                     id="st_date"
+                                    placeholder="kuch"
                                 />
                             </div>
 
@@ -272,6 +286,7 @@
                                 rows="5"
                                 placeholder="Add a description"
                                 style="width: 100%"
+                                value=""
                             ></textarea>
                         </div>
                     </div>
@@ -283,9 +298,12 @@
                                 task?</label
                             >
                             <div class="attach_files_cont">
-                                <div id="attached_files_con" >
+                                <div id="attached_files_con">
                                     Drop or paste files here
                                 </div>
+                                <div class="dz-message">
+              
+            </div>
                                 <div>
                                     <label class="custom-file-button">
                                         <input
@@ -304,8 +322,6 @@
                                     </button>
                                     <div id="dropped_files"></div>
                                     </div>
-                                    </div>
-
                             </div>
                         </div>
                     </div>
@@ -415,6 +431,9 @@
     $("body").on("click", '.edit-task-option', function() {
         var editFormContainer = $(this).closest('.task').find('.edit-form-container');
         var taskId = $(this).data('task-id');
+        var taskSj = $(this).data('task-subject');
+        var taskNs = $(this).data('task-notes');
+        var taskLid = $(this).data('task-lid');
         console.log(taskId);
 
         // Check if the edit form already exists
@@ -428,6 +447,9 @@
 
         editFormContainer.html(editTaskForm);
         $("#my-great-drop").attr("data-task-id", taskId);
+        $("#my-great-drop").attr("data-task-lid", taskLid);
+        $("#sj").attr("value", taskSj);
+        $("#notes").attr("value", taskNs);
     });
 
 
@@ -557,6 +579,7 @@
 
             var formData = new FormData($('.edit_task_form')[0]); // Get form data
             var taskId = $('#my-great-drop').data('task-id'); // Get the data-task-list-id from the form
+            var tasklistId = $('#my-great-drop').data('task-lid'); 
             console.log(taskId);
             var url = "{{ route('update.task', ['taskId' => ':taskId']) }}";
             url = url.replace(':taskId', taskId);
@@ -571,11 +594,18 @@
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    // Update the UI to show that the task is complete
-                    $("body .edit_task_form").remove()
-                    alert('success');
-                    //$(event.target).addClass('completed');
-                },
+                    var updatedTask = response.task;
+                    var updatedSubject = updatedTask.subject;
+    // Update the UI to show that the task is complete
+    $("body .edit_task_form").remove();
+    
+    document.querySelector('.task-subject').innerHTML = updatedSubject;
+    //location.reload();
+    // $('[data-task-list-id="' +  tasklistId + '"]').find('.trigger-arrow').click();
+    alert('success');
+     // Fixed the selector here
+    //$(event.target).addClass('completed');
+},
                 error: function(error) {
                     // Handle error (optional)
                     console.error('Error updating data:', error);
@@ -612,6 +642,14 @@
 </script>
 
 <style>
+    .fa-solid.fa-ellipsis::before {
+  content: "";
+  height: 2px;
+  color:black;
+  
+  
+}
+
     /* .details {
     width: 60%;
     height: 100%; /* Adjust as needed
@@ -672,6 +710,13 @@
         border: none;
         cursor: pointer;
     }
+    /* .tellipsisBtn:hover {
+        display:flex-end;
+        float:right;
+        background: white;
+        border: none;
+        cursor: pointer;
+    } */
 
     .listItem:hover .btn_con {
         display: block;
@@ -697,12 +742,13 @@
 
     /* The container <div> - needed to position the dropdown content */
     .tdropdown {
+        float:right;
         position: relative;
         display: inline-block;
         text-align: left;
         /* border: 1px solid #ccc; */
         border-radius: 8px;
-        background-color: white;
+        /* background-color: white; */
         padding: 0%;
         /* padding: 10px; */
     }
@@ -788,6 +834,9 @@
         text-decoration: none;
     }
 
+    .task a{
+        text-decoration: none;
+    }
     .task:hover {
 
         text-decoration: none;

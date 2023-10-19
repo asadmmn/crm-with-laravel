@@ -165,7 +165,7 @@ public function updateTask(Request $request, $taskId)
 
         // Handle file uploads if applicable
  
-        return redirect()->back()->with('success', 'Task updated successfully');
+        return response()->json(['message' => 'Task updated successfully', 'task' => $task]);
     }
 
 

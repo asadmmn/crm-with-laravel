@@ -245,7 +245,7 @@
                                     Drop or paste files here
                                 </div>
                                 <div class="dz-message">
-                Drag and Drop Single/Multiple Files Here<br>
+              
             </div>
                                 <div>
                                     <label class="custom-file-button">

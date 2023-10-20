@@ -169,7 +169,7 @@
                 @if (!empty($tl->projects_id))
                 <input type="hidden" name="pro_id" value="{{ $tl->projects_id }}">
 @endif
-    <input type="text" name="subject" placeholder="what needs to be done?">
+    <input type="text" class="sjt" name="subject" placeholder="what needs to be done?" rows="5">
              </div>
 
                 <div class="task_bar">
@@ -357,9 +357,12 @@
                      
                 </div>
             </div>
-            <input  class="submit-btn" type="submit" value="create">
-            OR
-            <button class="cancel" id="form-cancel">cancel</button>
+          
+            &nbsp <a href="#" class="btn btn-primary btn-lg active submit-btn m-s-auto" type="submit" role="button" aria-pressed="true">Add</a>
+OR
+<a href="#" id="form-cancel" class="btn btn-secondary btn-lg active cancel" role="button" aria-pressed="true">cancel</a>
+
+      
         </form>
 
 `;
@@ -816,6 +819,9 @@
     });
 </script>
 <style>
+    #taskform_container{
+        text-decoration: none;
+    }
     .dropzone {
         background: #e3e6ff;
         border-radius: 13px;
@@ -962,6 +968,9 @@
 
     /* styling for add task form  */
 
+    .sjt{
+        width:100%;
+    }
     .task_bar ul {
         display: flex;
         gap: 5px;

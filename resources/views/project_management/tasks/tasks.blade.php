@@ -1,11 +1,12 @@
 <h5 class="status">
 
     {{ $taskName }} complete </h5>
-<div class="alltask">
+<div class="alltask" style="text-decoration: none;">
 @foreach ($tasks as $task)
-    <div class="task" >
+    <div class="task"  >
         <div class="oneline" style="display: flex;">
         <!-- Display task details here -->
+        &nbsp;   &nbsp;&nbsp;   &nbsp;&nbsp;   &nbsp;
         @if ($task->status == 'completed')
             <a href="#" class="task-uncomplete-link"><i class="fa-solid fa-circle-check"
                     data-task-id="{{ $task->id }}"></i></a>
@@ -21,10 +22,11 @@
         
          <div>
         @if (!empty($task->start_date))
-            {{ ' ' . $task->start_date . ' ' }}To{{ ' ' . $task->due_date . ' ' }}
+            {{ ' ' . $task->start_date . ' ' }}To{{ ' ' . $task->due_date . '    ' }}
         @endif
         </div>
-        <div class="icons">
+        &nbsp;   &nbsp; 
+        <div class="icons" >
 
             <i class="fa-regular fa-calendar clndr"></i>
 
@@ -53,13 +55,46 @@
                 </ul>
             </div> --}}
         </div> 
-            <div class="tdropdown">
-               
+        <div class="btn-group dropleft tdropdown">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-three-dots tellipsisBtn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="myFunction(this)" viewBox="0 0 16 16">
+                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+              </svg>   
+            {{-- <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropleft
+            </button> --}}
+            <div class="dropdown-menu tdropdown-content">
+              <!-- Dropdown menu links -->
+              <ul>
+                <li id="edit-task" class="edit-task-option" data-task-id="{{ $task->id }}" data-task-subject="{{ $task->subject }}" data-task-notes="{{ $task->notes}}" data-task-lid="{{ $task->task_list_id}}">
+                    <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
+                    <span class="option_list_text">Edit </span>
+                </li>
+
+                <br>
+
+                <li class="disabled"><i class="fa-regular fa-copy option_list_icon "></i> <span
+                        class="">copy </span></li>
+                <br>
+                <li class="disabled"><i class="fa-solid fa-sort option_list_icon"></i> <span
+                        class="option_list_text">Reorder </span></li>
+                <br>
+                <li class="disabled"><i class="fa-solid fa-file option_list_icon"></i> <span
+                        class="option_list_text">Reports</span></li>
+                <br>
+                <li class="delete-btn" data-task-id="{{ $task->id }}">
+
+                    <i class="fa-solid fa-trash option_list_icon"></i>Delete
+                </li>
+
+            </ul>
+            </div>
+          </div>
+            {{-- <div class="tdropdown">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-three-dots tellipsisBtn" onclick="myFunction(this)" viewBox="0 0 16 16">
                         <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
                       </svg>               
                    
-                <div class="tdropdown-content">
+                <div class="tdropdown-content" style="left:100%;">
                     <ul>
                         <li id="edit-task" class="edit-task-option" data-task-id="{{ $task->id }}" data-task-subject="{{ $task->subject }}" data-task-notes="{{ $task->notes}}" data-task-lid="{{ $task->task_list_id}}">
                             <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
@@ -84,14 +119,14 @@
 
                     </ul>
                 </div>
-            </div>
+            </div>--}}
             
-        </div>
+        </div> 
         </div>
        
     </div>
 @endforeach
-<div class="edit-form-container"></div>
+{{-- <div class="edit-form-container"></div> --}}
 </div>
 <div class="task-detail-container"></div>
 
@@ -224,7 +259,7 @@
             <div class="add_task">
             <div class="">
     <input type="hidden" name="pro_id" value="">
-    <input type="text" id="sj" name="subject" placeholder="what needs to be done?" required="required" value="">
+    <input type="text" class="sjt" id="sj" name="subject" placeholder="what needs to be done?" required="required" value="">
              </div>
 
                 <div class="task_bar">
@@ -414,9 +449,12 @@
                      
                 </div>
             </div>
-            <input  class="submit-btn" type="submit" value="update">
-            OR
-            <button class="cancel" id="form-cancel">cancel</button>
+         
+            &nbsp <a href="#" class="btn btn-primary btn-lg active submit-btn m-s-auto" type="submit" role="button" aria-pressed="true">update</a>
+OR
+<a href="#" id="form-cancel" class="btn btn-secondary btn-lg active cancel" role="button" aria-pressed="true">cancel</a>
+
+      
         </form>
 
 `;
@@ -429,6 +467,7 @@
     // task form call
     // edit task form call
     $("body").on("click", '.edit-task-option', function() {
+    
         var editFormContainer = $(this).closest('.task').find('.edit-form-container');
         var taskId = $(this).data('task-id');
         var taskSj = $(this).data('task-subject');
@@ -456,7 +495,7 @@
     // task form call
     $("body").on("click", '.cancel', function() {
 
-        $("body .task_form").remove()
+        $("body .edit-form-container").remove()
 
 
     }); // <!-- add task form js  
@@ -748,33 +787,26 @@
     }
 
     /* The container <div> - needed to position the dropdown content */
-    .tdropdown {
-        float:right;
-        position: relative;
-        display: inline-block;
-        text-align: left;
-        /* border: 1px solid #ccc; */
-        border-radius: 8px;
-        /* background-color: white; */
-        padding: 0%;
-        /* padding: 10px; */
-    }
+        .tdropdown {
+    float: right;
+    position: relative;
+    display: inline-block;
+    text-align: left;
+    border-radius: 8px;
+    padding: 0%;
+}
 
-    /* Dropdown Content (Hidden by Default) */
-    .tdropdown-content {
-        text-align: left !important;
-        display: none;
-        position: absolute;
-        background-color: white;
+.tdropdown-content {
 
-        min-width: 200px;
-        border-radius: 8px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-        opacity: 0;
-        transform: translateY(-10px);
-        transition: opacity 0.3s, transform 0.3s;
-    }
+    display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  left: -160px; /* Position it to the left */
+  z-index: 1;
+     /*Adjust this value to position it on the left */
+}
 
     /* Links inside the dropdown */
     .tdropdown-content a {
@@ -815,6 +847,7 @@
 
     /* Show the dropdown menu with fade-in effect */
     .show {
+      
         display: block;
         opacity: 1;
         transform: translateY(0);
@@ -823,10 +856,13 @@
 
     .task {
         /* Use 'font-weight' instead of 'font:bold;' */
-        /* text-decoration:none; */
-        width: 100%;
-        margin-left: 5%;
-        /* width: 500px; */
+        text-decoration:none;
+        /* width: 100%; */
+       
+        align-content: center;
+        
+        /* height:40px; */
+        width: 1010px;
         color: gray;
         text-decoration-style: none;
     }
@@ -836,14 +872,15 @@
 
     }
 
+    .task a{
+        text-decoration: none;
+    }
     .tasks a:hover {
 
         text-decoration: none;
     }
 
-    .task a{
-        text-decoration: none;
-    }
+ 
     .task:hover {
 
         text-decoration: none;
@@ -856,11 +893,20 @@
         display: none;
         /* Hide the icons by default */
     }
+    .task .tellipsisBtn {
+        display: none;
+        /* Hide the icons by default */
+    }
 
+    .task:hover .tellipsisBtn {
+        display: inline-block;
+        
+    }
     .task:hover .icons {
         display: inline-block;
         /* Show the icons on hover and keep them on the same line */
         flex: 5;
+        float:right;
     }
 
     /* .task .special-icon {
@@ -871,13 +917,14 @@
     display: inline-block; /* Show the icons on hover and keep them on the same line */
     }
 
-    */ */ .task {
+    .task {
         position: relative;
         left: 2;
     }
 
     .icons {
-        position: relative;
+        float:right;
+        /* position:; */
     }
 
     .icon {

@@ -2,131 +2,92 @@
 
     {{ $taskName }} complete </h5>
 <div class="alltask" style="text-decoration: none;">
-@foreach ($tasks as $task)
-    <div class="task"  >
-        <div class="oneline" style="display: flex;">
-        <!-- Display task details here -->
-        &nbsp;   &nbsp;&nbsp;   &nbsp;&nbsp;   &nbsp;
-        @if ($task->status == 'completed')
-            <a href="#" class="task-uncomplete-link"><i class="fa-solid fa-circle-check"
-                    data-task-id="{{ $task->id }}"></i></a>
-        @else
-            <a href="#" class="task-complete-link"><i class="fa-regular fa-circle-check"
-                    data-task-id="{{ $task->id }}"></i></a>
-        @endif
-        
-        {{-- {{ $task->id }} --}}
-        <div class="task-subject">
-            {{ $task->subject }}
-        </div>
-        
-         <div>
-        @if (!empty($task->start_date))
-            {{ ' ' . $task->start_date . ' ' }}To{{ ' ' . $task->due_date . '    ' }}
-        @endif
-        </div>
-        &nbsp;   &nbsp; 
-        <div class="icons" >
+    @foreach ($tasks as $task)
+        <div class="task">
+            <div class="oneline" style="display: flex;">
+                <!-- Display task details here -->
+                &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                @if ($task->status == 'completed')
+                    <a href="#" class="task-uncomplete-link"><i class="fa-solid fa-circle-check"
+                            data-task-id="{{ $task->id }}"></i></a>
+                @else
+                    <a href="#" class="task-complete-link"><i class="fa-regular fa-circle-check"
+                            data-task-id="{{ $task->id }}"></i></a>
+                @endif
 
-            <i class="fa-regular fa-calendar clndr"></i>
-
-            <a href="#" class="task-view-link"><i class="fa-regular fa-eye"
-                    data-task-id="{{ $task->id }}"></i></a>
-
-            {{-- <div class="tab_content">
-            <div class="tab_c" data-step="1" style="">
-                <ul data-prjct_id="1">
-                    <li class="edit_prjct"><i class="fa-solid fa-pen"></i> Edit project Details</li>
-                    <li class="disabled"><i class="fa-regular fa-copy"></i> Copy</li>
-                    <li class="disabled"><i class="fa-solid fa-briefcase"></i> Save as Template</li>
-                    <li class="disabled"><i class="fa-solid fa-box-archive"></i> Archive</li>
-                    <li class="disabled"><i class="fa-solid fa-plus"></i> More options</li>
-                    <li class="delete"><i class="fa-solid fa-trash"></i> Delete</li>
-                </ul>
-
-            </div>
-
-            <div class="tab_C" style="display: none;">
-                <ul data-prjct_id="1">
-                    <li class="disabled"><i class="fa-regular fa-square-check"></i> Add task</li>
-                    <li class="disabled"><i class="fa-solid fa-chart-line"></i> Add budget</li>
-                    <li class="add_users"><i class="fa-regular fa-user"></i> Add user</li>
-                    <li class="disabled"><i class="fa-solid fa-envelope"></i> Add message</li>
-                </ul>
-            </div> --}}
-        </div> 
-        <div class="btn-group dropleft tdropdown">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-three-dots tellipsisBtn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="myFunction(this)" viewBox="0 0 16 16">
-                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-              </svg>   
-            {{-- <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropleft
-            </button> --}}
-            <div class="dropdown-menu tdropdown-content">
-              <!-- Dropdown menu links -->
-              <ul>
-                <li id="edit-task" class="edit-task-option" data-task-id="{{ $task->id }}" data-task-subject="{{ $task->subject }}" data-task-notes="{{ $task->notes}}" data-task-lid="{{ $task->task_list_id}}">
-                    <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
-                    <span class="option_list_text">Edit </span>
-                </li>
-
-                <br>
-
-                <li class="disabled"><i class="fa-regular fa-copy option_list_icon "></i> <span
-                        class="">copy </span></li>
-                <br>
-                <li class="disabled"><i class="fa-solid fa-sort option_list_icon"></i> <span
-                        class="option_list_text">Reorder </span></li>
-                <br>
-                <li class="disabled"><i class="fa-solid fa-file option_list_icon"></i> <span
-                        class="option_list_text">Reports</span></li>
-                <br>
-                <li class="delete-btn" data-task-id="{{ $task->id }}">
-
-                    <i class="fa-solid fa-trash option_list_icon"></i>Delete
-                </li>
-
-            </ul>
-            </div>
-          </div>
-            {{-- <div class="tdropdown">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-three-dots tellipsisBtn" onclick="myFunction(this)" viewBox="0 0 16 16">
-                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                      </svg>               
-                   
-                <div class="tdropdown-content" style="left:100%;">
-                    <ul>
-                        <li id="edit-task" class="edit-task-option" data-task-id="{{ $task->id }}" data-task-subject="{{ $task->subject }}" data-task-notes="{{ $task->notes}}" data-task-lid="{{ $task->task_list_id}}">
-                            <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
-                            <span class="option_list_text">Edit </span>
-                        </li>
-
-                        <br>
-
-                        <li class="disabled"><i class="fa-regular fa-copy option_list_icon "></i> <span
-                                class="">copy </span></li>
-                        <br>
-                        <li class="disabled"><i class="fa-solid fa-sort option_list_icon"></i> <span
-                                class="option_list_text">Reorder </span></li>
-                        <br>
-                        <li class="disabled"><i class="fa-solid fa-file option_list_icon"></i> <span
-                                class="option_list_text">Reports</span></li>
-                        <br>
-                        <li class="delete-btn" data-task-id="{{ $task->id }}">
-
-                            <i class="fa-solid fa-trash option_list_icon"></i>Delete
-                        </li>
-
-                    </ul>
+                {{-- {{ $task->id }} --}}
+                <div class="task-subject">
+                    {{ $task->subject }}
                 </div>
-            </div>--}}
+
+                <div>
+                    @if (!empty($task->start_date))
+                        {{ ' ' . $task->start_date . ' ' }}To{{ ' ' . $task->due_date . '    ' }}
+                    @endif
+                </div>
+                &nbsp; &nbsp;
+                <div class="icons">
+
+                    <i class="fa-regular fa-calendar clndr"></i>
+                    &nbsp;
+                    <a href="#" class="task-view-link"><i class="fa-regular fa-eye"
+                            data-task-id="{{ $task->id }}"></i></a>
+
+
+                </div>
+                <div class="btn-group dropleft tdropdown">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"
+                        class="bi bi-three-dots tellipsisBtn dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" viewBox="0 0 16 16">
+                        <path
+                            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                    </svg>
+
+                   
+                    <div class="dropdown-menu tdropdown-content">
+                        <!-- Dropdown menu links -->
+                        <ul>
+                            <li id="edit-task" class="edit-task-option" data-task-id="{{ $task->id }}"
+                                data-task-subject="{{ $task->subject }}" data-task-notes="{{ $task->notes }}"
+                                data-task-lid="{{ $task->task_list_id }}">
+                                <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
+                                <span class="option_list_text">Edit </span>
+                            </li>
+
+                            <br>
+
+                            <li class="disabled"><i class="fa-regular fa-copy option_list_icon "></i> <span
+                                    class="">copy </span></li>
+                            <br>
+                            <li class="disabled"><i class="fa-solid fa-sort option_list_icon"></i> <span
+                                    class="option_list_text">Reorder </span></li>
+                            <br>
+                            <li class="disabled"><i class="fa-solid fa-file option_list_icon"></i> <span
+                                    class="option_list_text">Reports</span></li>
+                            <br>
+                            <li class="delete-btn" data-task-id="{{ $task->id }}">
+
+                                <i class="fa-solid fa-trash option_list_icon"></i>Delete
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+               
+
+
+            </div>
+
+            <hr class="text-dark" style="color: gray; border: 0.2px solid gray; margin: 2px;">
+
             
-        </div> 
         </div>
-       
-    </div>
+
+</div>
 @endforeach
-{{-- <div class="edit-form-container"></div> --}}
+
+
 </div>
 <div class="task-detail-container"></div>
 
@@ -467,7 +428,7 @@ OR
     // task form call
     // edit task form call
     $("body").on("click", '.edit-task-option', function() {
-    
+
         var editFormContainer = $(this).closest('.task').find('.edit-form-container');
         var taskId = $(this).data('task-id');
         var taskSj = $(this).data('task-subject');
@@ -568,54 +529,54 @@ OR
         });
 
 
-//         $(document).ready(function() {
-//     $(document).on('dragover', function(e) {
-//         e.preventDefault();
-//         e.stopPropagation();
-//         $('body').addClass('dragover');
-//     });
+        //         $(document).ready(function() {
+        //     $(document).on('dragover', function(e) {
+        //         e.preventDefault();
+        //         e.stopPropagation();
+        //         $('body').addClass('dragover');
+        //     });
 
-//     $(document).on('dragleave drop', function(e) {
-//         e.preventDefault();
-//         e.stopPropagation();
-//         $('body').removeClass('dragover');
-//     });
+        //     $(document).on('dragleave drop', function(e) {
+        //         e.preventDefault();
+        //         e.stopPropagation();
+        //         $('body').removeClass('dragover');
+        //     });
 
-//     $(document).on('drop', function(e) {
-//         e.preventDefault();
-//         e.stopPropagation();
-//         var files = e.originalEvent.dataTransfer.files;
-//         $('#attch_file')[0].files = files;
-//         $('body').removeClass('dragover');
-//         displayDroppedFiles(files);
-//     });
+        //     $(document).on('drop', function(e) {
+        //         e.preventDefault();
+        //         e.stopPropagation();
+        //         var files = e.originalEvent.dataTransfer.files;
+        //         $('#attch_file')[0].files = files;
+        //         $('body').removeClass('dragover');
+        //         displayDroppedFiles(files);
+        //     });
 
 
 
-//         function displayDroppedFiles(files) {
-//     var droppedFilesContainer = $('#dropped_files');
+        //         function displayDroppedFiles(files) {
+        //     var droppedFilesContainer = $('#dropped_files');
 
-//     for (var i = 0; i < files.length; i++) {
-//         var file = files[i];
-//         var fileName = file.name;
-//         var fileType = file.type;
-//         var fileIcon = '';
+        //     for (var i = 0; i < files.length; i++) {
+        //         var file = files[i];
+        //         var fileName = file.name;
+        //         var fileType = file.type;
+        //         var fileIcon = '';
 
-//         // Check if the file is already displayed
-//         // if (droppedFilesContainer.find('span:contains("' + fileName + '")').length === 0) {
-//         //     if (fileType.includes('image')) {
-//         //         fileIcon = '<img src="image_icon_url" alt="' + fileName + '" style="width: 50px;">';
-//         //     } else if (fileType.includes('pdf')) {
-//         //         fileIcon = '<img src="pdf_icon_url" alt="' + fileName + '" style="width: 50px;">';
-//         //     } else {
-//         //         fileIcon = '<img src="generic_icon_url" alt="' + fileName + '" style="width: 50px;">';
-//         //     }
+        //         // Check if the file is already displayed
+        //         // if (droppedFilesContainer.find('span:contains("' + fileName + '")').length === 0) {
+        //         //     if (fileType.includes('image')) {
+        //         //         fileIcon = '<img src="image_icon_url" alt="' + fileName + '" style="width: 50px;">';
+        //         //     } else if (fileType.includes('pdf')) {
+        //         //         fileIcon = '<img src="pdf_icon_url" alt="' + fileName + '" style="width: 50px;">';
+        //         //     } else {
+        //         //         fileIcon = '<img src="generic_icon_url" alt="' + fileName + '" style="width: 50px;">';
+        //         //     }
 
-//         droppedFilesContainer.append('<i class="far fa-file"></i>' + fileName +  '</span><br>');
+        //         droppedFilesContainer.append('<i class="far fa-file"></i>' + fileName +  '</span><br>');
 
-//         }
-//     }
-// });
+        //         }
+        //     }
+        // });
 
     });
     //edit task form submition
@@ -625,7 +586,7 @@ OR
 
             var formData = new FormData($('.edit_task_form')[0]); // Get form data
             var taskId = $('#my-great-drop').data('task-id'); // Get the data-task-list-id from the form
-            var tasklistId = $('#my-great-drop').data('task-lid'); 
+            var tasklistId = $('#my-great-drop').data('task-lid');
             console.log(taskId);
             var url = "{{ route('update.task', ['taskId' => ':taskId']) }}";
             url = url.replace(':taskId', taskId);
@@ -642,16 +603,16 @@ OR
                 success: function(response) {
                     var updatedTask = response.task;
                     var updatedSubject = updatedTask.subject;
-    // Update the UI to show that the task is complete
-    $("body .edit_task_form").remove();
-    
-    document.querySelector('.task-subject').innerHTML = updatedSubject;
-    //location.reload();
-    // $('[data-task-list-id="' +  tasklistId + '"]').find('.trigger-arrow').click();
-    alert('success');
-     // Fixed the selector here
-    //$(event.target).addClass('completed');
-},
+                    // Update the UI to show that the task is complete
+                    $("body .edit_task_form").remove();
+
+                    document.querySelector('.task-subject').innerHTML = updatedSubject;
+                    //location.reload();
+                    // $('[data-task-list-id="' +  tasklistId + '"]').find('.trigger-arrow').click();
+                    alert('success');
+                    // Fixed the selector here
+                    //$(event.target).addClass('completed');
+                },
                 error: function(error) {
                     // Handle error (optional)
                     console.error('Error updating data:', error);
@@ -689,12 +650,12 @@ OR
 
 <style>
     .fa-solid.fa-ellipsis::before {
-  content: "";
-  height: 2px;
-  color:black;
-  
-  
-}
+        content: "";
+        height: 2px;
+        color: black;
+
+
+    }
 
     /* .details {
     width: 60%;
@@ -756,6 +717,7 @@ OR
         border: none;
         cursor: pointer;
     }
+
     /* .tellipsisBtn:hover {
         display:flex-end;
         float:right;
@@ -787,26 +749,27 @@ OR
     }
 
     /* The container <div> - needed to position the dropdown content */
-        .tdropdown {
-    float: right;
-    position: relative;
-    display: inline-block;
-    text-align: left;
-    border-radius: 8px;
-    padding: 0%;
-}
+    .tdropdown {
+        float: right;
+        position: relative;
+        display: inline-block;
+        text-align: left;
+        border-radius: 8px;
+        padding: 0%;
+    }
 
-.tdropdown-content {
+    .tdropdown-content {
 
-    display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  left: -160px; /* Position it to the left */
-  z-index: 1;
-     /*Adjust this value to position it on the left */
-}
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        left: -160px;
+        /* Position it to the left */
+        z-index: 1;
+        /*Adjust this value to position it on the left */
+    }
 
     /* Links inside the dropdown */
     .tdropdown-content a {
@@ -847,7 +810,7 @@ OR
 
     /* Show the dropdown menu with fade-in effect */
     .show {
-      
+
         display: block;
         opacity: 1;
         transform: translateY(0);
@@ -856,11 +819,11 @@ OR
 
     .task {
         /* Use 'font-weight' instead of 'font:bold;' */
-        text-decoration:none;
+        text-decoration: none;
         /* width: 100%; */
-       
+
         align-content: center;
-        
+
         /* height:40px; */
         width: 1010px;
         color: gray;
@@ -872,15 +835,16 @@ OR
 
     }
 
-    .task a{
+    .task a {
         text-decoration: none;
     }
+
     .tasks a:hover {
 
         text-decoration: none;
     }
 
- 
+
     .task:hover {
 
         text-decoration: none;
@@ -893,6 +857,7 @@ OR
         display: none;
         /* Hide the icons by default */
     }
+
     .task .tellipsisBtn {
         display: none;
         /* Hide the icons by default */
@@ -900,13 +865,14 @@ OR
 
     .task:hover .tellipsisBtn {
         display: inline-block;
-        
+
     }
+
     .task:hover .icons {
         display: inline-block;
         /* Show the icons on hover and keep them on the same line */
         flex: 5;
-        float:right;
+        float: right;
     }
 
     /* .task .special-icon {
@@ -923,7 +889,7 @@ OR
     }
 
     .icons {
-        float:right;
+        float: right;
         /* position:; */
     }
 

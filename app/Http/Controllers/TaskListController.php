@@ -32,8 +32,8 @@ class TaskListController extends Controller
 
     public function update(Request $request, $taskId)
     {
-        // Validate the request data if needed
-        $request->validate([
+        // Validate the request data
+        $data =$request->validate([
             'list_name' => 'required|string|max:255',
             'notes' => 'nullable|string',
             // Add validation rules for other fields if necessary
@@ -49,19 +49,19 @@ class TaskListController extends Controller
     
         // Update task list properties
         $taskList->task_list_name = $request->input('list_name');
-        
+    
         // Check if notes is empty
         if (!empty($request->input('notes'))) {
             $taskList->notes = $request->input('notes');
         } else {
-            $taskList->notes = 'Alternative Text for Empty Notes'; // Set alternative text
+            $taskList->notes = 'No notes available';
         }
     
         // Check if template is empty
         if (!empty($request->input('use_template'))) {
             $taskList->template = $request->input('use_template');
         } else {
-            $taskList->template = 'Alternative Text for Empty Template'; // Set alternative text
+            $taskList->template = 'Default Template';
         }
     
         $taskList->users = $request->input('users');
@@ -70,10 +70,9 @@ class TaskListController extends Controller
         // Save the updated task list
         $taskList->save();
     
-        return response()->json(['message' => 'Task list updated successfully'], 200);
+        return response()->json(['message' => 'Task list updated successfully', 'task' => $data]);
     }
     
-
   
 
 public function deleteTaskList($taskId){

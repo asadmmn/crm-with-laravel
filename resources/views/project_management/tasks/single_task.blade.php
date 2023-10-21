@@ -25,49 +25,53 @@
                             @if (!empty($tl))
                                 <div class="listItem">
                                     <div class="listItemContent">
-                                        <li></li> <a href="#">
-                                            <i class="fa-solid fa-angle-right text-blue trigger-arrow"
-                                                data-task-list-id="{{ $tl->id }}"></i>
-                                        </a></li>
-                                        {{ $tl->task_list_name }}
-                                        <div class="dropdown">
-                                            <button onclick="myFunction(this)" class="text_btn ellipsisBtn"
-                                                type="button">
-                                                <i class="fa-solid fa-ellipsis"></i>
-                                            </button>
-                                            <div class="dropdown-content">
-                                                <!-- Dropdown content -->
-                                                <ul>
-                                                    <li id="edit-tasklist" class="edit-task-list-option"
-                                                        data-toggle="modal"
-                                                        data-target="edit_task_list"data-task-id="{{ $tl->id }}">
-                                                        <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
-                                                        <span class="option_list_text">Edit Task list</span>
-                                                    </li>
-
-
-                                                    <li class="disabled"><i
-                                                            class="fa-regular fa-copy option_list_icon "></i> <span
-                                                            class="option_list_text">Move or Copy</span></li>
-                                                    <li class="disabled"><i
-                                                            class="fa-solid fa-sort option_list_icon"></i> <span
-                                                            class="option_list_text">Reorder Tasks By...</span></li>
-                                                    <li class="disabled"><i
-                                                            class="fa-solid fa-file option_list_icon"></i> <span
-                                                            class="option_list_text">Reports</span></li>
-
-                                                    <li class="delete-task-list-btn"
-                                                        id="dlt-tsk-lst"data-task-id="{{ $tl->id }}">
-
-                                                        <i class="fa-solid fa-trash option_list_icon"></i>Delete Task
-                                                        list
-                                                    </li>
-
-                                                </ul>
-                                            </div>
+                                        <div class="oneline d-flex">
+                                            <div>
+                                            <a class="fa-solid fa-angle-right trigger-arrow" data-task-list-id="{{ $tl->id }}" style="color:blue">
+                                                <i ></i>
+                                            </a>
                                         </div>
-                                        <a href="#"><i class="fa-solid fa-plus text-blue trigger-link"
-                                                data-task-list="{{ $tl->id }}"></i></a>
+                                            <div class="l-name">
+                                                {{ $tl->task_list_name }}
+                                            </div>
+                                            <div class="dropdown">
+                                                <button onclick="myFunction(this)" class="text_btn ellipsisBtn" type="button">
+                                                    <i class="fa-solid fa-ellipsis"></i>
+                                                </button>
+                                                <div class="dropdown-content">
+                                                    <!-- Dropdown content -->
+                                                    <ul>
+                                                        <li id="edit-tasklist" class="edit-task-list-option" data-toggle="modal" data-target="#edit_task_list" data-task-id="{{ $tl->id }}">
+                                                            <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
+                                                            <span class="option_list_text">Edit Task list</span>
+                                                        </li>
+                                                        <li class="disabled">
+                                                            <i class="fa-regular fa-copy option_list_icon"></i>
+                                                            <span class="option_list_text">Move or Copy</span>
+                                                        </li>
+                                                        <li class="disabled">
+                                                            <i class="fa-solid fa-sort option_list_icon"></i>
+                                                            <span class="option_list_text">Reorder Tasks By...</span>
+                                                        </li>
+                                                        <li class="disabled">
+                                                            <i class="fa-solid fa-file option_list_icon"></i>
+                                                            <span class="option_list_text">Reports</span>
+                                                        </li>
+                                                        <li class="delete-task-list-btn" id="dlt-tsk-lst" data-task-id="{{ $tl->id }}">
+                                                            <i class="fa-solid fa-trash option_list_icon"></i>
+                                                            Delete Task list
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa-solid fa-plus text-blue trigger-link" data-task-list="{{ $tl->id }}"></i>
+                                                </a>
+                                            </li>
+                                        </div>
+                                        </div>
                                     </div>
                                 </div>
                             @else
@@ -418,7 +422,8 @@ OR
             type: 'GET',
             success: function(data) {
                 //console.log("Tasks Data:", data); // Check if tasks data is received
-                $("body .task").remove()
+                $("body .status").remove();
+                $("body .task ").remove();
                 clickedElement.parent().next().next().html(data);
             },
             error: function(error) {
@@ -659,10 +664,21 @@ OR
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    alert('success');
+
                     $("body .modal").remove()
 
+                    var updatedTask = response.task;
+                    var updatedSubject = updatedTask.list_name;
+                    // Update the UI to show that the task is complete
+
+                    document.querySelector('.l-name').innerHTML = updatedSubject;
+                    //location.reload();
+                    // $('[data-task-list-id="' +  tasklistId + '"]').find('.trigger-arrow').click();
+                    alert('success');
+                    // Fixed the selector here
+                    //$(event.target).addClass('completed');
                 },
+
                 error: function(error) {
                     console.error('Error updating data:', error);
                 }
@@ -796,32 +812,39 @@ OR
         });
 
         function displayDroppedFiles(files) {
-    var droppedFilesContainer = $('#dropped_files');
+            var droppedFilesContainer = $('#dropped_files');
 
-    for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        var fileName = file.name;
-        var fileType = file.type;
-        var fileIcon = '';
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var fileName = file.name;
+                var fileType = file.type;
+                var fileIcon = '';
 
-        if (fileType.includes('image')) {
-            fileIcon = '<img src="image_icon_url" alt="' + fileName + '" style="width: 50px;">';
-        } else if (fileType.includes('pdf')) {
-            fileIcon = '<img src="pdf_icon_url" alt="' + fileName + '" style="width: 50px;">';
-        } else {
-            fileIcon = '<img src="generic_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                if (fileType.includes('image')) {
+                    fileIcon = '<img src="image_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                } else if (fileType.includes('pdf')) {
+                    fileIcon = '<img src="pdf_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                } else {
+                    fileIcon = '<img src="generic_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                }
+
+                droppedFilesContainer.append(fileIcon + '</span><br>');
+            }
         }
-
-        droppedFilesContainer.append(fileIcon + '</span><br>');
-    }
-}
 
     });
 </script>
 <style>
-    #taskform_container{
+
+
+
+
+
+
+    #taskform_container {
         text-decoration: none;
     }
+
     .dropzone {
         background: #e3e6ff;
         border-radius: 13px;
@@ -968,9 +991,10 @@ OR
 
     /* styling for add task form  */
 
-    .sjt{
-        width:100%;
+    .sjt {
+        width: 100%;
     }
+
     .task_bar ul {
         display: flex;
         gap: 5px;

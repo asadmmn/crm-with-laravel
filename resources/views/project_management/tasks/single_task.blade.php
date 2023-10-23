@@ -27,43 +27,48 @@
                                     <div class="listItemContent">
                                         <div class="oneline d-flex">
                                             <div>
-                                            <a class="fa-solid fa-angle-right trigger-arrow" data-task-list-id="{{ $tl->id }}" style="color:blue">
+                                            <a class="fa-solid fa-angle-right trigger-arrow" data-task-list-id="{{ $tl->id }}" style="color:rgb(80, 80, 169)">
                                                 <i ></i>
                                             </a>
                                         </div>
+                                        &nbsp;
                                             <div class="l-name">
                                                 {{ $tl->task_list_name }}
                                             </div>
+                                           
                                             <div class="dropdown">
-                                                <button onclick="myFunction(this)" class="text_btn ellipsisBtn" type="button">
+                                                <button class="btn btn-link text_btn ellipsisBtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fa-solid fa-ellipsis"></i>
                                                 </button>
-                                                <div class="dropdown-content">
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <!-- Dropdown content -->
-                                                    <ul>
-                                                        <li id="edit-tasklist" class="edit-task-list-option" data-toggle="modal" data-target="#edit_task_list" data-task-id="{{ $tl->id }}">
+                                                    <ul class="list-unstyled">
+                                                        <li class="edit-task-list-option text-left" data-toggle="modal" data-target="#edit_task_list" data-task-id="{{ $tl->id }}">
                                                             <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
                                                             <span class="option_list_text">Edit Task list</span>
                                                         </li>
-                                                        <li class="disabled">
+                                                        <li class="dropdown-divider"></li>
+                                                        <li class="disabled text-left">
                                                             <i class="fa-regular fa-copy option_list_icon"></i>
                                                             <span class="option_list_text">Move or Copy</span>
                                                         </li>
-                                                        <li class="disabled">
+                                                        <li class="disabled text-left">
                                                             <i class="fa-solid fa-sort option_list_icon"></i>
                                                             <span class="option_list_text">Reorder Tasks By...</span>
                                                         </li>
-                                                        <li class="disabled">
+                                                        <li class="disabled text-left">
                                                             <i class="fa-solid fa-file option_list_icon"></i>
                                                             <span class="option_list_text">Reports</span>
                                                         </li>
-                                                        <li class="delete-task-list-btn" id="dlt-tsk-lst" data-task-id="{{ $tl->id }}">
+                                                        <li class="dropdown-divider"></li>
+                                                        <li class="delete-task-list-btn text-left" id="dlt-tsk-lst" data-task-id="{{ $tl->id }}">
                                                             <i class="fa-solid fa-trash option_list_icon"></i>
-                                                            Delete Task list
+                                                            <span class="option_list_text">Delete Task list</span>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
+                                            
                                             <div>
                                             <li>
                                                 <a href="#">
@@ -616,10 +621,11 @@ OR
 
             <!-- Footer Section: Buttons -->
             <div class="footer-section">
-                <input  class="update-btn" type="submit" value="update">
-            OR
-            <button class="cancel" id="form-cancel">cancel</button>
+                <input  class="update-btn btn btn-primary btn-lg active" type="submit" value="update">
+           
+            <button class="cancel btn btn-secondary btn-lg active" id="form-cancel">cancel</button>
             </div>
+      
         </form>
     </div>
 </div>`;
@@ -640,7 +646,12 @@ OR
 
     });
 
+    $("body").on("click", '.cancel', function() {
 
+$("body #edit_task_list").remove()
+location.reload();
+
+}); 
     // edit task list form submission
     $(document).ready(function() {
         $('body').on('click', '.update-btn', function(e) {
@@ -665,18 +676,16 @@ OR
                 processData: false,
                 success: function(response) {
 
-                    $("body .modal").remove()
-
+                    $("body #edit_task_list").remove()
+                    alert('success');
                     var updatedTask = response.task;
                     var updatedSubject = updatedTask.list_name;
                     // Update the UI to show that the task is complete
 
-                    document.querySelector('.l-name').innerHTML = updatedSubject;
-                    //location.reload();
-                    // $('[data-task-list-id="' +  tasklistId + '"]').find('.trigger-arrow').click();
-                    alert('success');
-                    // Fixed the selector here
-                    //$(event.target).addClass('completed');
+                    // document.querySelector('.l-name').innerHTML = updatedSubject;
+                    location.reload();
+                    
+                   
                 },
 
                 error: function(error) {

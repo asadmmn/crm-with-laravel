@@ -20,18 +20,14 @@
 <li class="list_btn">
     <a href="#" class="task-list-link" data-list-id="{{ $tl->id }}">
         @if (!empty($tl->task_list_name))
-            @php
-                $numInitialWords = 1;
-                $words = explode(' ', $tl->task_list_name);
-                $shortenedText = implode(' ', array_slice($words, 0, $numInitialWords));
-                if (count($words) > $numInitialWords) {
-                    $shortenedText .= '...';
-                }
-            @endphp
-            {{ $shortenedText }}
-        @else
-            No task list name available.
-        @endif
+        @php
+            $shortenedText = substr($tl->task_list_name, 0, 4);
+        @endphp
+        {{ $shortenedText }}...
+    @else
+        No task list name available.
+    @endif
+    
     </a>
     <span class="task_counter">0</span>
 </li>

@@ -1,19 +1,31 @@
-<h5 class="status">
+@if ($taskName == 'Not')
+    <h5 class="status" style="color: red;">
+        {{ $taskName }} complete
+    </h5>
+@else
+    <h5 class="status" style="color: green;">
+        {{ $taskName }} Task List is Completed
+    </h5>
+@endif
 
-    {{ $taskName }} complete </h5>
 <div class="alltask" style="text-decoration: none;">
     @foreach ($tasks as $task)
         <div class="task">
             <div class="oneline" style="display: flex;">
                 <!-- Display task details here -->
                 &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                
                 @if ($task->status == 'completed')
-                    <a href="#" class="task-uncomplete-link"><i class="fa-solid fa-circle-check"
-                            data-task-id="{{ $task->id }}"></i></a>
+                    <a href="#" class="task-uncomplete-link" data-status="completed">
+                        <i id="unclt" class="fa-solid fa-circle-check" data-task-id="{{ $task->id }}"></i>
+                    </a>
                 @else
-                    <a href="#" class="task-complete-link"><i class="fa-regular fa-circle-check"
-                            data-task-id="{{ $task->id }}"></i></a>
+                    <a href="#" class="task-complete-link" data-status="incomplete">
+                        <i id="clt" class="fa-regular fa-circle-check" data-task-id="{{ $task->id }}"></i>
+                    </a>
+
                 @endif
+
 
                 {{-- {{ $task->id }} --}}
                 <div class="task-subject">
@@ -43,7 +55,7 @@
                             d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
                     </svg>
 
-                   
+
                     <div class="dropdown-menu tdropdown-content">
                         <!-- Dropdown menu links -->
                         <ul>
@@ -74,14 +86,14 @@
                     </div>
                 </div>
 
-               
+
 
 
             </div>
 
             <hr class="text-dark" style="color: gray; border: 0.2px solid gray; margin: 2px;">
 
-            
+
         </div>
 
 </div>
@@ -158,6 +170,7 @@
         $('.task-complete-link').click(function(event) {
             event.preventDefault();
             var taskId = $(this).find('i').data('task-id');
+            $(this).find('#clt').removeClass('fa-regular').addClass('fa-solid');
 
             $.ajax({
 
@@ -169,8 +182,22 @@
                 },
                 success: function(response) {
                     // Update the UI to show that the task is complete
+                    var updatedTask = response.tsk;
+                 
+                    console.log(updatedTask);
+
                     alert('Task Completed');
-                    // $('#myElement').removeClass('original-class').addClass('new-class');
+                    //$('#clt').removeClass('fa-regular').addClass('fa-solid');
+                    // Update the UI based on the response (if needed)
+                    // if (newStatus == 'completed') {
+                    //     $(e.currentTarget).replaceWith(
+                    //         '<a href="#" class="task-uncomplete-link" data-status="incomplete"><i class="fa-solid fa-circle-check" data-task-id="' +
+                    //         taskId + '"></i></a>');
+                    // } else {
+                    //     $(e.currentTarget).replaceWith(
+                    //         '<a href="#" class="task-complete-link" data-status="completed"><i id="clt" class="fa-regular fa-circle-check" data-task-id="' +
+                    //         taskId + '"></i></a>');
+                    // }
                     //$(event.target).addClass('completed');
                 },
                 error: function(xhr) {
@@ -187,7 +214,7 @@
         $('.task-uncomplete-link').click(function(event) {
             event.preventDefault();
             var taskId = $(this).find('i').data('task-id');
-
+            $(this).find('#unclt').removeClass('fa-solid').addClass('fa-regular');
             $.ajax({
 
                 url: '/tasks/' + taskId + '/uncomplete',
@@ -199,7 +226,7 @@
                 success: function(response) {
                     // Update the UI to show that the task is complete
                     alert('Task status set to uncomplete');
-                    // $('#myElement').removeClass('original-class').addClass('new-class');
+                    $('#unclt').removeClass('fa-solid').addClass('fa-regular');
                     //$(event.target).addClass('completed');
                 },
                 error: function(xhr) {

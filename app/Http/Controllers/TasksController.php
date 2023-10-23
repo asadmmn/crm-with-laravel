@@ -72,12 +72,12 @@ public function completeTask($id)
     $task = Tasks::findOrFail($id);
 
     // Assuming you have a column named 'status' in your tasks table
-    $task->status = 'completed'; // Set the new status value
+    $crntStatus=$task->status = 'completed'; // Set the new status value
 
     $task->save(); // Save the updated task
 
     // Optionally, you can return a response here
-    return response()->json(['message' => 'Task completed successfully']);
+    return response()->json(['message' => 'Task completed successfully','tsk'=>$crntStatus]);
 }
 
 

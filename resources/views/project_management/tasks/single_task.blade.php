@@ -160,245 +160,246 @@
             var remainingTime = calculateRemainingTime();
             $('.datepicker-days .datepicker-switch').text(remainingTime);
         });
-    });
 
-    function myFunction(button) {
-        button.nextElementSibling.classList.toggle("show");
-    }
 
-    window.onclick = function(event) {
-        if (!event.target.matches('.ellipsisBtn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
+        function myFunction(button) {
+            button.nextElementSibling.classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.ellipsisBtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
                 }
             }
         }
-    }
 
-    // task form
-    const myGreatDropzoneForm = `
+       
+    });
+            $(document).ready(function() {
 
-    <form action="#" class="task_form"  id="my-great-dropzone" data-task-list-id="" enctype="multipart/form-data">
+                 // task form
+        const myGreatDropzoneForm = `
 
-@csrf
-@method('post')
+<form action="#" class="task_form"  id="my-great-dropzone" data-task-list-id="" enctype="multipart/form-data">
 
-            <div class="add_task">
-            <div class="">
-                @if (!empty($tl->projects_id))
-                <input type="hidden" name="pro_id" value="{{ $tl->projects_id }}">
-@endif
-    <input type="text" class="sjt" name="subject" placeholder="what needs to be done?" rows="5">
-             </div>
+      @csrf
+ @method('post')
 
-                <div class="task_bar">
-                    <ul>
-                        <li class="active">
-                            <i class="fa-regular fa-square-check"></i> Task
-                            Details
-                        </li>
-                        <li><i class="fa-solid fa-paperclip"></i> Files</li>
-                        <li><i class="fa-regular fa-flag"></i> Priority</li>
-                        <li>
-                            <i class="fa-regular fa-clock"></i> Progress & Time
-                        </li>
-                        <li><i class="fa-regular fa-eye"></i> Followers</li>
-                        <li><i class="fa-solid fa-tag"></i> Tags</li>
-                        <li><i class="fa-solid fa-plus"></i> More</li>
-                    </ul>
-                </div>
+<div class="add_task">
+<div class="">
+@if (!empty($tl->projects_id))
+<input type="hidden" name="pro_id" value="{{ $tl->projects_id }}">
+   @endif
+<input type="text" class="sjt" name="subject" placeholder="what needs to be done?" rows="5">
+</div>
 
-                <div class="task_content">
-                    <div class="task_tab active">
-                        <div class="input_group">
-                            <div class="input">
-                                <label for="doer">Who Should do this?</label>
-                                <select name="doer" id="doer">
-                                    <option value="1">Mubashir Rehman</option>
-                                </select>
-                            </div>
+<div class="task_bar">
+<ul>
+<li class="active">
+    <i class="fa-regular fa-square-check"></i> Task
+    Details
+</li>
+<li><i class="fa-solid fa-paperclip"></i> Files</li>
+<li><i class="fa-regular fa-flag"></i> Priority</li>
+<li>
+    <i class="fa-regular fa-clock"></i> Progress & Time
+</li>
+<li><i class="fa-regular fa-eye"></i> Followers</li>
+<li><i class="fa-solid fa-tag"></i> Tags</li>
+<li><i class="fa-solid fa-plus"></i> More</li>
+</ul>
+</div>
 
-                            <div class="input">
-                                <label for="st_date">Start Date</label>
-                                <input
-                                    type="date"
-                                    name="st_date"
-                                    id="st_date"
-                                />
-                            </div>
+<div class="task_content">
+<div class="task_tab active">
+<div class="input_group">
+    <div class="input">
+        <label for="doer">Who Should do this?</label>
+        <select name="doer" id="doer">
+            <option value="1">Mubashir Rehman</option>
+        </select>
+    </div>
 
-                            <div class="input">
-                                <label for="due_date">Due Date</label>
-                                <input
-                                    type="date"
-                                    name="due_date"
-                                    id="due_date"
-                                />
-                            </div>
-                        </div>
+    <div class="input">
+        <label for="st_date">Start Date</label>
+        <input
+            type="date"
+            name="st_date"
+            id="st_date"
+        />
+    </div>
 
-                        <div class="textarea" style="width: 100%">
-                            <label for="description"
-                                >Provide a detailed description for this task
-                                (optional)</label
-                            >
-                            <textarea
-                                name="notes"
-                                id="notes"
-                                cols=""
-                                rows="5"
-                                placeholder="Add a description"
-                                style="width: 100%"
-                            ></textarea>
-                        </div>
-                    </div>
+    <div class="input">
+        <label for="due_date">Due Date</label>
+        <input
+            type="date"
+            name="due_date"
+            id="due_date"
+        />
+    </div>
+</div>
 
-                    <div class="task_tab">
-                        <div class="input">
-                            <label for="files" style="margin-bottom: 10px"
-                                >Would you like to attach files to this
-                                task?</label
-                            >
-                            <div class="attach_files_cont">
-                                <div id="attached_files_con">
-                                    Drop or paste files here
-                                </div>
-                                <div class="dz-message">
-              
+<div class="textarea" style="width: 100%">
+    <label for="description"
+        >Provide a detailed description for this task
+        (optional)</label
+    >
+    <textarea
+        name="notes"
+        id="notes"
+        cols=""
+        rows="5"
+        placeholder="Add a description"
+        style="width: 100%"
+    ></textarea>
+</div>
+</div>
+
+<div class="task_tab">
+<div class="input">
+    <label for="files" style="margin-bottom: 10px"
+        >Would you like to attach files to this
+        task?</label
+    >
+    <div class="attach_files_cont">
+        <div id="attached_files_con">
+            Drop or paste files here
+        </div>
+        <div class="dz-message">
+
+</div>
+        <div>
+            <label class="custom-file-button">
+                <input
+                    type="file"
+                    id="attch_file" name="file"
+                    class="hidden-input"
+                    multiple
+                />
+                <span>+ Add Files</span>
+            </label>
+            <button
+                type="button"
+                class="existing_files custom-file-button"
+            >
+                Select from Existing Files
+            </button>
+            <div id="dropped_files"></div>
             </div>
-                                <div>
-                                    <label class="custom-file-button">
-                                        <input
-                                            type="file"
-                                            id="attch_file" name="file"
-                                            class="hidden-input"
-                                            multiple
-                                        />
-                                        <span>+ Add Files</span>
-                                    </label>
-                                    <button
-                                        type="button"
-                                        class="existing_files custom-file-button"
-                                    >
-                                        Select from Existing Files
-                                    </button>
-                                    <div id="dropped_files"></div>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
+    </div>
+</div>
+</div>
 
-                    <div class="task_tab">
-                        <div class="input">
-                            <label for="priority"
-                                >Chose the priority of this task</label
-                            >
-                            <div class="radio">
-                                <input
-                                    type="radio"
-                                    name="priority"
-                                    value="None"
-                                    id="priority"
-                                    label="None "
-                                    checked="true"
-                                />
-                                <input
-                                    type="radio"
-                                    name="priority"
-                                    value="Low"
-                                    id="priority"
-                                    label="Low"
-                                />
-                                <input
-                                    type="radio"
-                                    name="priority"
-                                    value="Medium"
-                                    id="priority"
-                                    label="Medium"
-                                />
-                                <input
-                                    type="radio"
-                                    name="priority"
-                                    value="High"
-                                    id="priority"
-                                    label="High"
-                                />
-                            </div>
-                        </div>
-                    </div>
+<div class="task_tab">
+<div class="input">
+    <label for="priority"
+        >Chose the priority of this task</label
+    >
+    <div class="radio">
+        <input
+            type="radio"
+            name="priority"
+            value="None"
+            id="priority"
+            label="None "
+            checked="true"
+        />
+        <input
+            type="radio"
+            name="priority"
+            value="Low"
+            id="priority"
+            label="Low"
+        />
+        <input
+            type="radio"
+            name="priority"
+            value="Medium"
+            id="priority"
+            label="Medium"
+        />
+        <input
+            type="radio"
+            name="priority"
+            value="High"
+            id="priority"
+            label="High"
+        />
+    </div>
+</div>
+</div>
 
-                    <div class="task_tab">
-                        <div class="input_group" style="max-width: 550px">
-                            <div class="input">
-                                <label for="progress"
-                                    >Progress so for (0%)</label
-                                >
-                                <input
-                                    type="range"
-                                    name="progress"
-                                    id="progress"
-                                />
-                            </div>
+<div class="task_tab">
+<div class="input_group" style="max-width: 550px">
+    <div class="input">
+        <label for="progress"
+            >Progress so for (0%)</label
+        >
+        <input
+            type="range"
+            name="progress"
+            id="progress"
+        />
+    </div>
 
-                            <div class="input">
-                                <label for="est_time"
-                                    >Esitmated time to complete</label
-                                >
-                                <div
-                                    style="
-                                        display: flex;
-                                        max-width: 165px;
-                                        gap: 10px;
-                                    "
-                                >
-                                    <label>
-                                        <input
-                                            type="number"
-                                            name="hours"
-                                            id="hours"
-                                            style="padding: 5px"
-                                        />
-                                        h
-                                    </label>
-                                    <label>
-                                        <input
-                                            type="number"
-                                            name="minutes"
-                                            id="minutes"
-                                            style="padding: 5px"
-                                        />
-                                        m
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     
-                </div>
-            </div>
-          
-            &nbsp <a href="#" class="btn btn-primary btn-lg active submit-btn m-s-auto" type="submit" role="button" aria-pressed="true">Add</a>
+    <div class="input">
+        <label for="est_time"
+            >Esitmated time to complete</label
+        >
+        <div
+            style="
+                display: flex;
+                max-width: 165px;
+                gap: 10px;
+            "
+        >
+            <label>
+                <input
+                    type="number"
+                    name="hours"
+                    id="hours"
+                    style="padding: 5px"
+                />
+                h
+            </label>
+            <label>
+                <input
+                    type="number"
+                    name="minutes"
+                    id="minutes"
+                    style="padding: 5px"
+                />
+                m
+            </label>
+        </div>
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+&nbsp <a href="#" class="btn btn-primary btn-lg active submit-btn m-s-auto" type="submit" role="button" aria-pressed="true">Add</a>
 OR
 <a href="#" id="form-cancel" class="btn btn-secondary btn-lg active cancel" role="button" aria-pressed="true">cancel</a>
 
-      
-        </form>
+
+</form>
 
 `;
-
-    //drop file uploads
-    // task form call
+    // Drop file uploads
     $("body").on("click", '.trigger-link', function() {
         var taskListId = $(this).data('task-list');
         console.log($(this).parent().next().next());
 
         var taskform = $(this).closest('#taskform_container');
 
-        // Check if the edit form already exists
         if (taskform.length === 0) {
             taskform = $('<div id="taskform_container"></div>');
             $(this).closest('.listItem').after(taskform);
@@ -407,17 +408,13 @@ OR
         $("body .task_form").remove();
 
         var combinedHTML = myGreatDropzoneForm;
-        //taskform.toggle();
         taskform.html(combinedHTML);
         $("#my-great-dropzone").attr("data-task-list-id", taskListId);
     });
 
-    // task form call
+    // Cancel task form
     $("body").on("click", '.cancel', function() {
-
-        $("body .task_form").remove()
-
-
+        $("body .task_form").remove();
     });
 
     document.body.addEventListener('click', function(event) {
@@ -427,20 +424,19 @@ OR
         }
     });
 
+    // Toggle task list
     $("body").on("click", '.trigger-arrow', function() {
         $(this).toggleClass('rotate');
 
         var taskListId = $(this).data('task-list-id');
         console.log("Task List ID:", taskListId);
 
-
         var clickedElement = $(this);
-        //clickedElement.toggle();
+
         $.ajax({
             url: '/tasklist/' + taskListId + '/tasks',
             type: 'GET',
             success: function(data) {
-                //console.log("Tasks Data:", data); // Check if tasks data is received
                 $("body .status").remove();
                 $("body .task ").remove();
                 clickedElement.parent().next().next().html(data);
@@ -451,60 +447,46 @@ OR
         });
     });
 
+    // Submit task form
+    $('body').on('click', '.submit-btn', function(e) {
+        e.preventDefault();
 
+        var formData = new FormData($('.task_form')[0]);
+        var id = $('#my-great-dropzone').data('task-list-id');
+        var actionRoute = '/taskstore/' + id;
 
-    $(document).ready(function() {
+        var requestBody = {
+            key1: 'value1',
+            key2: 'value2'
+        };
 
-        // function showMessage(type, message) {
-        //     return `<div class="alert alert-${type}"><strong>${message}</strong><button type="button" class="btn-close" ><i class="fa-solid fa-circle-xmark"></i></button></div>`
-        // }
+        formData.append('json_body', JSON.stringify(requestBody));
 
-        $('body').on('click', '.submit-btn', function(e) {
-            e.preventDefault();
-
-            var formData = new FormData($('.task_form')[0]); // Get form data
-            var id = $('#my-great-dropzone').data(
-                'task-list-id'); // Get the data-task-list-id from the form
-
-            console.log("Task List ID:", id);
-            var actionRoute = '/taskstore/' + id; // Assuming this is the correct route
-
-            // Additional data for the request body
-            var requestBody = {
-                key1: 'value1',
-                key2: 'value2'
-            };
-
-            formData.append('json_body', JSON.stringify(
-                requestBody)); // Append JSON string to form data
-
-            $.ajax({
-                url: actionRoute,
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    $("body .task_form").remove()
-                    // Handle the response data (if any)
-                    console.log('response',response.success);
-                    $(".msg").html(showMessage('success', "done"))
-
-                    // Optionally, redirect or display a success message
-                    // alert('added successfully!');
-                },
-                error: function(error) {
-                    console.error('Error:', error);
-                    // Handle errors
-                }
-            });
+        $.ajax({
+            url: actionRoute,
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                $("body .task_form").remove();
+                console.log('response', response.success);
+                $(".msg").html(showMessage('success', "done"));
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
         });
     });
+});
 
+      
 
-    var editListForm = `
-<div class="modal" id="edit_task_list">
-    <div class="modal-content" style="width: 40% !important;">
+           $(document).ready(function() {
+
+            var editListForm = `
+          <div class="modal" id="edit_task_list">
+         <div class="modal-content" style="width: 40% !important;">
         <!-- Top Section: Title and Steps -->
         <div class="top-section">
             <span class="close-btn" id="closeModalBtn">&times;</span>
@@ -522,7 +504,7 @@ OR
                     <div class="input">
                         <label for="list_name">Give the list a name</label>
                         <input type="text" name="list_name" required="required" class="tsklstname" id="list_name" value="" placeholder="e.g. New feature research" style="width: 100%;">
-   </div>
+                      </div>
 
                     <div class="input">
                         <label for="use_teamplate">Would you Like to use a template?</label>
@@ -689,62 +671,36 @@ OR
             </div>
       
         </form>
-    </div>
-</div>`;
+         </div>
+           </div>`;
+        $("body").on("click", ".edit-task-list-option", function() {
+            var taskname = $(this).data('task-name');
+            $(document.body).append(editListForm);
+            $('#edit_task_list').show();
+            var taskId = $(this).data('task-id');
+            $('#edt_tsk_list').attr('data-task-id', taskId);
+            $(".tsklstname").attr("value", taskname);
+            console.log(taskname);
+        });
 
+        $("body").on("click", '.cancel', function() {
+            $("body #edit_task_list").remove();
+            location.reload();
+        });
 
-    $("body").on("click", ".edit-task-list-option", function() {
+        $("body").on("click", '.close-btn', function() {
+            $("body #edit_task_list").remove();
+            location.reload();
+        });
 
-        var taskname = $(this).data('task-name');
-
-        $(document.body).append(editListForm); // Append it to the body
-        $('#edit_task_list').show(); // Show the modal
-
-        var taskId = $(this).data('task-id'); // Get the task ID from the clicked element
-
-
-        // Toggle the modal
-
-
-        // Set the task ID as the data-task-id of the form
-        $('#edt_tsk_list').attr('data-task-id', taskId);
-        $(".tsklstname").attr("value", taskname);
-        console.log(taskname);
-    });
-
-    $("body").on("click", '.cancel', function() {
-
-        $("body #edit_task_list").remove()
-        location.reload();
-
-    });
-    $("body").on("click", '.close-btn', function() {
-
-        $("body #edit_task_list").remove()
-        location.reload();
-
-    });
-
-
-
-
-
-
-    // edit task list form submission
-    $(document).ready(function() {
         $('body').on('click', '.update-btn', function(e) {
             e.preventDefault();
-            // if ($('#list_name').val() === '') {
-            //     alert("list name field is required" );
-
-            // }
-            var formData = new FormData($('#edt_tsk_list')[0]); // Get form data
-            var taskId = $('#edt_tsk_list').data('task-id'); // Get the data-task-list-id from the form
+            var formData = new FormData($('#edt_tsk_list')[0]);
+            var taskId = $('#edt_tsk_list').data('task-id');
             var url = "{{ route('update.tasklist', ['taskId' => ':taskId']) }}";
             url = url.replace(':taskId', taskId);
-            console.log("helo");
-            // Append the URL to the formData object
-            formData.append('_method', 'PUT'); // Add the PUT method override
+            console.log("hello");
+            formData.append('_method', 'PUT');
 
             $.ajax({
                 type: 'POST',
@@ -753,18 +709,11 @@ OR
                 contentType: false,
                 processData: false,
                 success: function(response) {
-
-                    $("body .modal").remove()
-                    $(".msg").html(showMessage('success', `sucess`));
-                    // alert('success');
+                    $("body .modal").remove();
+                    $(".msg").html(showMessage('success', `success`));
                     var updatedTask = response.task;
                     var updatedSubject = updatedTask.list_name;
-                    // Update the UI to show that the task is complete
-
-                    // document.querySelector('.l-name').innerHTML = updatedSubject;
                     location.reload();
-
-
                 },
 
                 error: function(error) {
@@ -772,11 +721,7 @@ OR
                 }
             });
         });
-    });
 
-
-
-    $(document).ready(function() {
         $('body').on('click', '.delete-task-list-btn', function(e) {
             e.preventDefault();
             var taskId = $(this).data('task-id');
@@ -788,53 +733,35 @@ OR
                     _token: "{{ csrf_token() }}",
                 },
                 success: function(data) {
-                    // Handle success
                     alert('Task list deleted successfully');
                 },
                 error: function(error) {
-                    // Handle error
                     console.error('Error deleting task:', error);
                 }
             });
         });
-    });
 
-
-
-    // task form call
-    $("body").on("click", '.cancel', function() {
-
-        $("body .task_form").remove()
-
-
-    });
-    // <!-- add task form js  
-        
-        $(function() {
-            $('#notes').summernote({
-                placeholder: 'Add Your Description here...',
-                tabsize: 2,
-                height: 100,
-                toolbar: [
-                    ['font', ['bold', 'italic', 'strikethrough']],
-                    ['para', ['ul', 'ol']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['undo', 'redo']]
-                ]
-            });
+        $("body").on("click", '.cancel', function() {
+            $("body .task_form").remove();
         });
-    
-        // Switch Tabs
+
+        $('#notes').summernote({
+            placeholder: 'Add Your Description here...',
+            tabsize: 2,
+            height: 100,
+            toolbar: [
+                ['font', ['bold', 'italic', 'strikethrough']],
+                ['para', ['ul', 'ol']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['undo', 'redo']]
+            ]
+        });
+
         $("body").on("click", ".task_bar ul li", function() {
             var tabs = $(this).index();
             $(this).parent().find(".active").removeClass("active");
             $(this).addClass("active");
-
-            // if($(this).parents().eq(1).next().hasClass('task_content')){
-            //     var tab = $(this).parent().next()
-            // } else {
             var tab = $(this).parents().eq(1).next();
-            // }
 
             tab.find(".task_tab").each(function(index) {
                 if (index == tabs) {
@@ -844,7 +771,6 @@ OR
                 }
             });
         });
-
 
         $('body').on('dragover', function(e) {
             e.preventDefault();
@@ -887,7 +813,6 @@ OR
                 droppedFilesContainer.append(fileIcon + '</span><br>');
             }
         }
-
     });
 </script>
 <style>

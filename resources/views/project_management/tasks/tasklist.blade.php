@@ -36,34 +36,30 @@
             </a>
             {{ $taskList->task_list_name }}
             <div class="dropdown">
-                <button onclick="myFunction(this)" class="text_btn ellipsisBtn" type="button">
+                <a class=" " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa-solid fa-ellipsis"></i>
-                </button>
-                <div class="dropdown-content">
-                    <!-- Dropdown content -->
-                    <ul>
-                        <li id="edit-tasklist" class="edit-task-list-option" data-task-id="{{ $taskList->id }}">
-                            <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
-                            <span class="option_list_text">Edit Task</span>
-                        </li>
-
-
-
-                        <li class="disabled"><i class="fa-regular fa-copy option_list_icon "></i> <span
-                                class="option_list_text">Move or Copy</span></li>
-                        <li class="disabled"><i class="fa-solid fa-sort option_list_icon"></i> <span
-                                class="option_list_text">Reorder Tasks By...</span></li>
-                        <li class="disabled"><i class="fa-solid fa-file option_list_icon"></i> <span
-                                class="option_list_text">Reports</span></li>
-
-                        <li class="delete-list-btn" data-task-id="{{ $taskList->id }}">
-
-                            <i class="fa-solid fa-trash option_list_icon"></i>Delete Task
-                        </li>
-
-                    </ul>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item edit-task-list-option" href="#" data-task-id="{{ $taskList->id }}">
+                        <i class="fa-solid fa-pencil option_list_icon edit-task"></i> Edit Task
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <span class="dropdown-item disabled">
+                        <i class="fa-regular fa-copy option_list_icon"></i> Move or Copy
+                    </span>
+                    <span class="dropdown-item disabled">
+                        <i class="fa-solid fa-sort option_list_icon"></i> Reorder Tasks By...
+                    </span>
+                    <span class="dropdown-item disabled">
+                        <i class="fa-solid fa-file option_list_icon"></i> Reports
+                    </span>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item delete-list-btn" href="#" data-task-id="{{ $taskList->id }}">
+                        <i class="fa-solid fa-trash option_list_icon"></i> Delete Task
+                    </a>
                 </div>
             </div>
+            
             <a href="#"><i class="fa-solid fa-plus text-blue trigger-link"
                     data-task-list="{{ $taskList->id }}"></i></a>
         </div>
@@ -300,8 +296,8 @@
     // });
 
 
-    // edit task list form submission
-    $(document).ready(function() {
+ // edit task list form submission
+ $(document).ready(function() {
         $('body').on('click', '.update-btn', function(e) {
             e.preventDefault();
             // if ($('#list_name').val() === '') {
@@ -323,9 +319,9 @@
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    alert('success');
-                    $("body .modal").remove()
-
+                    // alert('success');
+                    $("body #edit_task_list").remove()
+                    $(".msg").html(showMessage('success', `success`));
                 },
                 error: function(error) {
                     console.error('Error updating data:', error);
@@ -333,6 +329,7 @@
             });
         });
     });
+   
 </script>
 <style>
      .task {

@@ -241,6 +241,7 @@ public function deleteTask($taskId)
             'progress' => $data['progress'],
             'est_hours' => $data['hours'],
             'est_minutes' => $data['minutes'],
+            'pro_id' =>$data['pro_id'],
             'task_list_id' => $id,
         ]);
     //dd($task);
@@ -249,6 +250,42 @@ public function deleteTask($taskId)
 
     }
     
+
+
+//quick add tasks 
+public function quickTask(Request $request) {
+    // dd("hello");
+    $project_id = $request->input('project');
+    $list_id = $request->input('list');
+    $assign_to = $request->doer;
+    $start_date = $request->startDate;
+
+    $due_date = $request->dueDate;
+    $who_can_see = $request->input('who_can_see');
+    $tasksText = explode("\n",$request->input('tasksText'));
+ 
+
+
+    foreach ($tasksText as $taskName) {
+        // Create a new task record for each task name
+        Tasks::create([
+            'pro_id' => $project_id,
+            'task_list_id' => $list_id,
+            'file_name'=>"no file attached",
+            'subject' => $taskName,
+          'doer'=>$assign_to,
+            'start_date' => $start_date,
+            'due_date' => $due_date,
+           
+        ]);
+    }
+
+    return response()->json(['success' => "success"]);
+}
+
+
+
+
     /**
      * Display the specified resource.
      *

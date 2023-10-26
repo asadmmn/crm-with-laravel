@@ -59,7 +59,7 @@ function modal(id, btn_val){
         prevBtn.toggleClass("hidden", currentStep === 0);
         nextBtn.toggleClass(
             "hidden",
-            currentStep === formSteps.length - 1
+            currentStep === formSteps.length 
         );
         if([currentStep + 1] == formSteps.length){
             nextBtn.html(btn_val)

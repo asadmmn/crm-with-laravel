@@ -15,13 +15,20 @@ class Tasks extends Model
         'doer',
         'start_date',
         'due_date',
+        'pro_id',
+        'task_list_id', 
         'notes',
         'priority',
         'progress',
         'est_hours',
         'est_minutes',
-        'status',
-        'task_list_id', // Added this line for the foreign key
+        'status',// Added this line for the foreign key
+    ];
+
+    protected $nullable = [
+        
+      
+       
     ];
 
     public function taskList()

@@ -117,8 +117,9 @@ $taskList = TaskList::create([
             'projects_id' => $project_id,
         ]);
 
-     
+        // 'success' => 'success']
         return redirect()->route('taskview', ['id' => $project_id]);
+
     }
 
 

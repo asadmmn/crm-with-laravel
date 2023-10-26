@@ -81,6 +81,7 @@ Route::group(['middleware' => ['LoginCheck']], function(){
     Route::put('/update/{taskId}', [TasksController::class, 'updateTask'])->name('update.task');
     //Route::post('/delete/{taskId}',[TasksController::class, 'deleteTask'])->name('delete.task');
     Route::delete('/delete/{taskId}', [TasksController::class, 'deleteTask'])->name('delete.task');
+    Route::post('/submit-form',  [TasksController::class, 'quickTask'])->name('submit.form');
 
 
     Route::get('/project/{id}/tasks/create', [TasksController::class, 'create'])->name('project.tasks.create');

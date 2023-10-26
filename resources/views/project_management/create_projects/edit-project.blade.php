@@ -64,7 +64,8 @@
                     </div>
 
                     <div class="textarea" style="width: 100%">
-                        <textarea name="notes" id="notes" cols="" rows="5" placeholder="Add a description"
+                        
+                        <textarea name="notes" id="edtnotes" cols="" rows="5" placeholder="Add a description"
                             style="width: 100%">{{ $data->notes ?? '' }}</textarea>
                     </div>
                 </div>
@@ -99,3 +100,22 @@
         </form>
     </div>
 </div>
+
+    
+    <script>
+    $(document).ready(function() {
+     $(function() {
+            $('#edtnotes').summernote({
+                placeholder: 'Add Your Description here...',
+                tabsize: 2,
+                height: 100,
+                toolbar: [
+                    ['font', ['bold', 'italic', 'strikethrough']],
+                    ['para', ['ul', 'ol']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['undo', 'redo']]
+                ]
+            });
+        });
+    });
+</script>

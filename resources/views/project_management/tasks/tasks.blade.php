@@ -1,3 +1,4 @@
+@if(!empty($taskName))
 @if ($taskName == 'Not')
     <h5 class="status" style="color: red;">
         {{ $taskName }} complete
@@ -6,6 +7,7 @@
     <h5 class="status" style="color: green;">
         {{ $taskName }} Task List is Completed
     </h5>
+@endif
 @endif
 
 <div class="alltask" style="text-decoration: none;">
@@ -26,12 +28,12 @@
 
                 @endif
 
-
+                &nbsp;
                 {{-- {{ $task->id }} --}}
                 <div class="task-subject">
                     {{ $task->subject }}
                 </div>
-
+                &nbsp;
                 <div>
                     @if (!empty($task->start_date))
                         {{ ' ' . $task->start_date . ' ' }}To{{ ' ' . $task->due_date . '    ' }}
@@ -99,7 +101,7 @@
 </div>
 @endforeach
 
-
+<div class="edit-form-container"></div>
 </div>
 <div class="task-detail-container"></div>
 
@@ -455,7 +457,7 @@ OR
     // task form call
     // edit task form call
     $("body").on("click", '.edit-task-option', function() {
-
+        //$(this).click();
         var editFormContainer = $(this).closest('.task').find('.edit-form-container');
         var taskId = $(this).data('task-id');
         var taskSj = $(this).data('task-subject');
@@ -469,14 +471,16 @@ OR
             $(this).closest('.task').append(editFormContainer);
         }
 
-        // Toggle the visibility of the form
-        editFormContainer.toggle();
-
+        
         editFormContainer.html(editTaskForm);
         $("#my-great-drop").attr("data-task-id", taskId);
         $("#my-great-drop").attr("data-task-lid", taskLid);
         $("#sj").attr("value", taskSj);
         $("#notes").attr("value", taskNs);
+
+        // Toggle the visibility of the form
+        // editFormContainer.toggle();
+
     });
 
 
@@ -507,30 +511,30 @@ OR
                 ["insert", ["link", "picture", "video"]],
                 ["view", ["undo", "redo"]], // ['fullscreen', 'codeview', 'help']
             ],
-            // toolbar: [
-            //     // ['style', ['style']],
-            //     [
-            //         "font",
-            //         [
-            //             "bold",
-            //             "underline",
-            //             "clear",
-            //             "fontname",
-            //             "fontsize",
-            //             "forecolor",
-            //             "backcolor",
-            //             "italic",
-            //             "strikethrough",
-            //             "superscript",
-            //             "subscript",
-            //         ],
-            //     ],
-            //     ["color", ["color"]],
-            //     ["para", ["ul", "ol", "paragraph", "style", "height"]],
-            //     ["table", ["table"]],
-            //     ["insert", ["link", "picture", "video"]],
-            //     ["view", ["codeview", "help", "undo", "redo"]], // ['fullscreen', 'codeview', 'help']
-            // ],
+            toolbar: [
+                // ['style', ['style']],
+                [
+                    "font",
+                    [
+                        "bold",
+                        "underline",
+                        "clear",
+                        "fontname",
+                        "fontsize",
+                        "forecolor",
+                        "backcolor",
+                        "italic",
+                        "strikethrough",
+                        "superscript",
+                        "subscript",
+                    ],
+                ],
+                ["color", ["color"]],
+                ["para", ["ul", "ol", "paragraph", "style", "height"]],
+                ["table", ["table"]],
+                ["insert", ["link", "picture", "video"]],
+                ["view", ["codeview", "help", "undo", "redo"]], // ['fullscreen', 'codeview', 'help']
+            ],
 
         });
 

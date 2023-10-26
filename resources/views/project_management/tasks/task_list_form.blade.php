@@ -277,29 +277,30 @@
 
     // form submission
     $(document).ready(function() {
-        $('.task_list_form').on('submit', function(e) {
-            e.preventDefault(); // Prevent the form from submitting the traditional way
+    $('.task_list_form').on('submit', function(e) {
+        e.preventDefault(); // Prevent the form from submitting the traditional way
 
-            var taskId = $(this).data('task-id'); // Get the taskId from data attribute
+        var taskId = $(this).data('task-id'); // Get the taskId from data attribute
 
-            $.ajax({
-                type: 'POST',
-                url: '/submit/' + taskId,
-                data: new FormData(this),
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    console.log(response); // Check what's being received in the response
-                    if (response && response.redirect) {
-                        console.log(response.redirect); // Check the URL being received
-                        window.location.href = response.redirect;
-                    } else {
-                        $("body #add_project").remove()
-                        alert("other response ");
+        $.ajax({
+            type: 'POST',
+            url: '/submit/' + taskId,
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log(response);
 
-                    }
-                } // <--- Add this closing parenthesis
-            });
+                if (response && response.redirect) {
+                    console.log(response.redirect); // Check the URL being received
+                    window.location.href = response.redirect;
+                } else {
+                    $("body #add_project").remove();
+                    $(".msg").html(showMessage('success', `success`)); // Use backticks for string interpolation
+                }
+            } // <--- Add this closing parenthesis
         });
     });
+});
+
 </script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projects;
+use App\Models\TaskList;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
@@ -14,12 +15,16 @@ class ProjectManagement extends Controller
     public function index(){
         $data = Projects::where('created_by', '=', session('loggedInUser'))->with('users')->get();
         $team = User::where('user_Type', 'team')->get();
-        return view('project_management.create_projects.index', compact('data', 'team'));
+        // $prId=$data->id;
+        $lists=TaskList::all();
+       
+        return view('project_management.create_projects.index', compact('data', 'team','lists'));
     }
 
     // Get Project rows
     public function projectList(){
         $data = Projects::where('created_by', session('loggedInUser'))->with('ownerName')->get();
+       
         return view('project_management.create_projects.row', compact('data'));
     }
 
@@ -31,6 +36,7 @@ class ProjectManagement extends Controller
 
     // Save Project
     public function saveProject(Request $request){
+        
         $validator = Validator::make($request->all(), [
             'project_name' => 'required|unique:projects,project_name',
         ]);
@@ -45,6 +51,7 @@ class ProjectManagement extends Controller
             // foreach($request)
             $table->created_by  = session('loggedInUser');
             $table->project_name = $request->project_name;
+
             $table->notes = $request->notes;
             $table->project_category = $request->proj_category;
             $table->access_to_users = $request->add_ppl;

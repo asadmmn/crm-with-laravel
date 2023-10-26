@@ -1,5 +1,5 @@
 <div class="tasks-main">
-    <div class="top mt-0">
+    <div class="top">
         <div class="top_heading">
             @if (!empty($taskName))
                 Task named {{ $taskName }} is completed
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="tasks">
+    <div class="tasks mt-5">
         <div class="task_con">
             <div class="task_binding">
                 <div class="actions">
@@ -27,24 +27,32 @@
                                     <div class="listItemContent">
                                         <div class="oneline d-flex">
                                             <div>
-                                            <a class="fa-solid fa-angle-right trigger-arrow" data-task-list-id="{{ $tl->id }}" style="color:rgb(80, 80, 169)">
-                                                <i ></i>
-                                            </a>
-                                        </div>
-                                        &nbsp;
+                                                <a class="fa-solid fa-angle-right trigger-arrow"
+                                                    data-task-list-id="{{ $tl->id }}"
+                                                    style="color:rgb(80, 80, 169)">
+                                                    <i></i>
+                                                </a>
+                                            </div>
+                                            &nbsp;
                                             <div class="l-name">
                                                 {{ $tl->task_list_name }}
                                             </div>
-                                           
+
                                             <div class="dropdown">
-                                                <button class="btn btn-link text_btn ellipsisBtn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <a class=" btn rounded-pill ellipsisBtn" type="button"
+                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
                                                     <i class="fa-solid fa-ellipsis"></i>
-                                                </button>
+                                                </a>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <!-- Dropdown content -->
                                                     <ul class="list-unstyled">
-                                                        <li class="edit-task-list-option text-left" data-toggle="modal" data-target="#edit_task_list" data-task-id="{{ $tl->id }}">
-                                                            <i class="fa-solid fa-pencil option_list_icon edit-task"></i>
+                                                        <li class="edit-task-list-option text-left" data-toggle="modal"
+                                                            data-target="#edit_task_list"
+                                                            data-task-id="{{ $tl->id }}"
+                                                            data-task-name="{{ $tl->task_list_name }}">
+
+                                                            <i
+                                                                class="fa-solid fa-pencil option_list_icon edit-task"></i>
                                                             <span class="option_list_text">Edit Task list</span>
                                                         </li>
                                                         <li class="dropdown-divider"></li>
@@ -61,21 +69,24 @@
                                                             <span class="option_list_text">Reports</span>
                                                         </li>
                                                         <li class="dropdown-divider"></li>
-                                                        <li class="delete-task-list-btn text-left" id="dlt-tsk-lst" data-task-id="{{ $tl->id }}">
+                                                        <li class="delete-task-list-btn text-left" id="dlt-tsk-lst"
+                                                            data-task-id="{{ $tl->id }}">
                                                             <i class="fa-solid fa-trash option_list_icon"></i>
                                                             <span class="option_list_text">Delete Task list</span>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
-                                            
+
+
                                             <div>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa-solid fa-plus text-blue trigger-link" data-task-list="{{ $tl->id }}"></i>
-                                                </a>
-                                            </li>
-                                        </div>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="fa-solid fa-plus text-blue trigger-link"
+                                                            data-task-list="{{ $tl->id }}"></i>
+                                                    </a>
+                                                </li>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -84,15 +95,18 @@
                             @endif
                         @endforeach
                     @endif
+
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 <br>
 <div id="taskform_container">
 
 </div>
+
 <div id="calendar" class="hidden">
     <!-- Calendar content -->
 </div>
@@ -112,7 +126,7 @@
 
 <!-- JavaScript (bundle includes Popper.js) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="{{ URL::asset('js/modal.js') }}"></script>
 <script>
     $(document).ready(function() {
         $('#dueDateInput').focus(function() {
@@ -438,7 +452,13 @@ OR
     });
 
 
+
     $(document).ready(function() {
+
+        // function showMessage(type, message) {
+        //     return `<div class="alert alert-${type}"><strong>${message}</strong><button type="button" class="btn-close" ><i class="fa-solid fa-circle-xmark"></i></button></div>`
+        // }
+
         $('body').on('click', '.submit-btn', function(e) {
             e.preventDefault();
 
@@ -464,13 +484,14 @@ OR
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function(data) {
+                success: function(response) {
                     $("body .task_form").remove()
                     // Handle the response data (if any)
-                    //console.log(data);
+                    console.log('response',response.success);
+                    $(".msg").html(showMessage('success', "done"))
 
                     // Optionally, redirect or display a success message
-                    alert('added successfully!');
+                    // alert('added successfully!');
                 },
                 error: function(error) {
                     console.error('Error:', error);
@@ -500,7 +521,7 @@ OR
                 <div>
                     <div class="input">
                         <label for="list_name">Give the list a name</label>
-                        <input type="text" name="list_name" required="required" id="list_name" placeholder="e.g. New feature research" style="width: 100%;">
+                        <input type="text" name="list_name" required="required" class="tsklstname" id="list_name" value="" placeholder="e.g. New feature research" style="width: 100%;">
    </div>
 
                     <div class="input">
@@ -523,6 +544,47 @@ OR
                         <div class="tab_c active" data-step="1">
                             <div class="textarea" style="width: 100%">
                                 <label for="description">Do you have any notes for list? Enter them here. <span class="light">(optional)</span></label>
+                                <div class="panel-heading note-toolbar" role="toolbar"><div class="note-btn-group btn-group note-font">
+                                    <button type="button" class="note-btn btn btn-default btn-sm note-btn-bold" tabindex="-1" title="" aria-label="Bold (CTRL+B)" data-original-title="Bold (CTRL+B)">
+                                        <i class="note-icon-bold">
+                                            </i>
+                                            </button>
+                                            <button type="button" class="note-btn btn btn-default btn-sm note-btn-italic" tabindex="-1" title="" aria-label="Italic (CTRL+I)" data-original-title="Italic (CTRL+I)">
+                                                <i class="note-icon-italic">
+                                                    </i>
+                                                    </button>
+                                                    <button type="button" class="note-btn btn btn-default btn-sm note-btn-strikethrough" tabindex="-1" title="" aria-label="Strikethrough (CTRL+SHIFT+S)" data-original-title="Strikethrough (CTRL+SHIFT+S)">
+                                                        <i class="note-icon-strikethrough">
+                                                            </i>
+                                                            </button>
+                                                            </div>
+                                                            <div class="note-btn-group btn-group note-para">
+                                                                <button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Unordered list (CTRL+SHIFT+NUM7)" data-original-title="Unordered list (CTRL+SHIFT+NUM7)">
+                                                                    <i class="note-icon-unorderedlist"></i>
+                                                                    </button>
+                                                                    <button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Ordered list (CTRL+SHIFT+NUM8)" data-original-title="Ordered list (CTRL+SHIFT+NUM8)">
+                                                                        <i class="note-icon-orderedlist"></i>
+                                                                        </button>
+                                                                        </div>
+                                                                        <div class="note-btn-group btn-group note-insert">
+                                    <button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Link (CTRL+K)" data-original-title="Link (CTRL+K)">
+                                        <i class="note-icon-link"></i>
+                                        </button>
+                                        <button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Picture" data-original-title="Picture">
+                                            <i class="note-icon-picture"></i>
+                                            </button>
+                                            <button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Video" data-original-title="Video">
+                                                <i class="note-icon-video"></i>
+                                                </button>
+                                                </div>
+                                                <div class="note-btn-group btn-group note-view">
+                                                    <button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Undo (CTRL+Z)" data-original-title="Undo (CTRL+Z)">
+                                                        <i class="note-icon-undo"></i>
+                                                        </button><button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Redo (CTRL+Y)" data-original-title="Redo (CTRL+Y)">
+                                                            <i class="note-icon-redo"></i>
+                                                            </button>
+                                                            </div>
+                                                            </div>
                                 <textarea name="notes" id="notes" cols="" rows="5" placeholder="Add a description" style="width: 100%" ></textarea>
                             </div>
                         </div>
@@ -632,26 +694,42 @@ OR
 
 
     $("body").on("click", ".edit-task-list-option", function() {
+
+        var taskname = $(this).data('task-name');
+
         $(document.body).append(editListForm); // Append it to the body
         $('#edit_task_list').show(); // Show the modal
 
         var taskId = $(this).data('task-id'); // Get the task ID from the clicked element
 
-        console.log(taskId);
+
         // Toggle the modal
 
 
         // Set the task ID as the data-task-id of the form
         $('#edt_tsk_list').attr('data-task-id', taskId);
-
+        $(".tsklstname").attr("value", taskname);
+        console.log(taskname);
     });
 
     $("body").on("click", '.cancel', function() {
 
-$("body #edit_task_list").remove()
-location.reload();
+        $("body #edit_task_list").remove()
+        location.reload();
 
-}); 
+    });
+    $("body").on("click", '.close-btn', function() {
+
+        $("body #edit_task_list").remove()
+        location.reload();
+
+    });
+
+
+
+
+
+
     // edit task list form submission
     $(document).ready(function() {
         $('body').on('click', '.update-btn', function(e) {
@@ -676,16 +754,17 @@ location.reload();
                 processData: false,
                 success: function(response) {
 
-                    $("body #edit_task_list").remove()
-                    alert('success');
+                    $("body .modal").remove()
+                    $(".msg").html(showMessage('success', `sucess`));
+                    // alert('success');
                     var updatedTask = response.task;
                     var updatedSubject = updatedTask.list_name;
                     // Update the UI to show that the task is complete
 
                     // document.querySelector('.l-name').innerHTML = updatedSubject;
                     location.reload();
-                    
-                   
+
+
                 },
 
                 error: function(error) {
@@ -730,53 +809,21 @@ location.reload();
 
     });
     // <!-- add task form js  
-    $(document).ready(function() {
-        $("#notes").summernote({
-            placeholder: "Add Your Description here...",
-            tabsize: 2,
-            height: 100,
-            // airMode: true,
-            toolbar: [
-                // ['style', ['style']],
-                [
-                    "font",
-                    [
-                        "bold",
-                        "italic",
-                        "strikethrough",
-                    ],
-                ],
-                ["para", ["ul", "ol"]],
-                ["insert", ["link", "picture", "video"]],
-                ["view", ["undo", "redo"]], // ['fullscreen', 'codeview', 'help']
-            ],
-            // toolbar: [
-            //     // ['style', ['style']],
-            //     [
-            //         "font",
-            //         [
-            //             "bold",
-            //             "underline",
-            //             "clear",
-            //             "fontname",
-            //             "fontsize",
-            //             "forecolor",
-            //             "backcolor",
-            //             "italic",
-            //             "strikethrough",
-            //             "superscript",
-            //             "subscript",
-            //         ],
-            //     ],
-            //     ["color", ["color"]],
-            //     ["para", ["ul", "ol", "paragraph", "style", "height"]],
-            //     ["table", ["table"]],
-            //     ["insert", ["link", "picture", "video"]],
-            //     ["view", ["codeview", "help", "undo", "redo"]], // ['fullscreen', 'codeview', 'help']
-            // ],
-
+        
+        $(function() {
+            $('#notes').summernote({
+                placeholder: 'Add Your Description here...',
+                tabsize: 2,
+                height: 100,
+                toolbar: [
+                    ['font', ['bold', 'italic', 'strikethrough']],
+                    ['para', ['ul', 'ol']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['undo', 'redo']]
+                ]
+            });
         });
-
+    
         // Switch Tabs
         $("body").on("click", ".task_bar ul li", function() {
             var tabs = $(this).index();
@@ -844,12 +891,6 @@ location.reload();
     });
 </script>
 <style>
-
-
-
-
-
-
     #taskform_container {
         text-decoration: none;
     }

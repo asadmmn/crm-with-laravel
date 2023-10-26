@@ -48,7 +48,7 @@
         </div>
 
         <!-- Middle Section: Form Inputs -->
-        <form id="form">
+        <form id="pro-form">
             <div class="middle-section">
 
                 <div class="form-step slct_proj" data-step="1">
@@ -118,7 +118,7 @@
                         <div class="input">
                             <div class="input">
                                 <label for="project_name">Choose a name</label>
-                                <input type="text" name="project_name" id="project_name"
+                                <input type="text" name="project_name" id="projectName"
                                     placeholder="Give Your project a name" />
                             </div>
                         </div>
@@ -224,11 +224,22 @@
                 <button type="button" class="cancel-btn" id="closeModalBtn">
                     Cancel
                 </button>
+            
             </div>
         </form>
     </div>
 </div>
+{{-- <script>
+    let clickCounter = 0;
 
+document.getElementById('nextBtn').addEventListener('click', function() {
+    clickCounter++;
+
+    if (clickCounter === 3) {
+        document.getElementById('addPro').style.display = 'inline-block';
+    }
+});
+</script> --}}
 {{-- @endsection --}}
 
 {{-- @section('script')

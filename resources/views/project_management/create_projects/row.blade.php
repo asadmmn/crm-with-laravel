@@ -48,7 +48,8 @@
 
                         @if ($item->owner == 0)
                             <div class="p" style="background-color: transparent; color: #dadada;font-size: 25px;">
-                                <i class="fa-regular fa-circle-user"></i></div>
+                                <i class="fa-regular fa-circle-user"></i>
+                            </div>
                         @else
                             <div class="p"
                                 style="background-color: {{ generateRandomColor($item->ownerName->name[0]) }};">
@@ -107,7 +108,7 @@
 
                         <div class="tab_C" style="display: none;">
                             <ul data-prjct_id="{{ $item->id }}">
-                                <li class="disabled"><i class="fa-regular fa-square-check"></i> Add task</li>
+                                <li class="quick-add-task"><i class="fa-regular fa-square-check "></i> Add task</li>
                                 <li class="disabled"><i class="fa-solid fa-chart-line"></i> Add budget</li>
                                 <li class="add_users"><i class="fa-regular fa-user"></i> Add user</li>
                                 <li class="disabled"><i class="fa-solid fa-envelope"></i> Add message</li>
@@ -157,3 +158,529 @@
         </div>
     </div>
 @endforeach
+<div class="success_msg"></div>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+    var quickTaskForm = `
+<div class="modal" id="quick_add_task">
+    <div class="modal-content" style="width: 40% !important; font-size:4px; heightr:70%;border-radius:12px;">
+        <!-- Top Section: Title and Steps -->
+        <div class="container mt-1">
+        <h5 class="text-left mb-4">Quickly Add Tasks</h5>
+        <hr>
+        <form class="quick-add"  enctype="multipart/form-data">
+            @csrf
+@method('post')
+            <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="projectName">Project Name</label>
+
+        
+
+            <select class="form-control select2" name="project" id="projectName" required>
+                <option value="" selected disabled>Select a project</option>
+                @foreach ($data as $project)
+                  
+                                    <option value="{{ $project->id }}">{{ $project->project_name }}</option>
+                               
+                            </optgroup>
+                       
+                @endforeach
+            </select>
+
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="listName">List Name</label>
+            <select class="form-control select2" name="list" id="list" required>
+                <option value="Select a project">Select a Task List</option>
+                @foreach ($lists as $list)
+                  
+                                    <option value="{{ $list->id }}">{{ $list->task_list_name }}</option>
+                               
+                            </optgroup>
+                       
+                @endforeach
+            </select>
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="form-group">
+    <label for="taskNames">Task Name(one Task per line)</label>
+    <textarea rows="8" cols="40" class="text allow-paste form-control hasChanged" name="tasksText" autofocus=""></textarea>
+
+</div>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="assignTo">Assign To</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user text-dark"></i></span>
+                    </div>
+                    <select class="form-control select2" name="doer" id="listName" required>
+                <option value="" selected disabled>Select a List</option>
+                @foreach ($team as $users)
+                  
+                                    <option value="{{ $users->id }}">{{ $users->name }}</option>
+                               
+                            </optgroup>
+                       
+                @endforeach
+            </select>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="startDate">Start Date(optional)</label>
+                <input type="date" class="form-control" name="startDate" required>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="dueDate">Due Date(optional)</label>
+                <input type="date" class="form-control" name="dueDate" required>
+            </div>
+        </div>
+        
+    </div>
+    <hr class="mt-0">
+<div class="col-md-4">
+<div class="form-group">
+                <label for="whoCanSee">Who can see ?</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-lock text-dark"></i></span>
+                    </div>
+                    <input type="text" class="form-control" id="whoCanSee" placeholder="Everybody on the project" required>
+                </div>
+            </div>
+        </div>
+
+    <div class="row">
+        <div class="col text-left">
+            <button type="button" class="btn btn-transparent  close-form">Close</button>
+        </div>
+        <div class="col text-right">
+            <button type="submit" class="btn btn-primary rounded-pill quick-submit">Add Task</button>
+        </div>
+    </div>
+</form>
+
+    </div>
+
+    </div>
+</div>`;
+
+
+
+
+    $("body").on("click", ".quick-add-task", function() {
+        $(document.body).append(quickTaskForm); // Append it to the body
+        $('#quick_add_task').show(); // Show the modal
+        $(".select2").select2();
+        var taskId = $(this).data('task-id'); // Get the task ID from the clicked element
+
+        console.log(taskId);
+        // Toggle the modal
+
+
+        // Set the task ID as the data-task-id of the form
+        $('#edt_tsk_list').attr('data-task-id', taskId);
+
+    });
+
+ 
+    //quick add submition 
+
+
+
+
+
+    $("body").on("click", '.close-form', function() {
+
+        $("body #quick_add_task").remove()
+
+
+    });
+
+    $(document).ready(function() {
+        $('body').on('click', '.quick-submit', function(e) {
+            e.preventDefault();
+
+            var formData = new FormData($('.quick-add')[0]);
+            var id = $('#my-great-dropzone').data('task-list-id');
+            var actionRoute = '/submit-form';
+
+            var requestBody = {
+                key1: 'value1',
+                key2: 'value2'
+            };
+
+            formData.append('json_body', JSON.stringify(requestBody));
+
+            // Send the request
+            $.ajax({
+                url: actionRoute,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    $(".success_msg").html(showMessage('success', response.success))
+                 
+                    // Handle success
+                    $("body #quick_add_task").remove()
+                },   
+                error: function(error) {
+                    // Handle error
+                }
+            });
+        });
+    });
+
+    // <!-- add task form js  
+    $(document).ready(function() {
+       
+       
+        $("#notes").summernote({
+            placeholder: "Add Your Description here...",
+            tabsize: 2,
+            height: 100,
+            // airMode: true,
+            toolbar: [
+                // ['style', ['style']],
+                [
+                    "font",
+                    [
+                        "bold",
+                        "italic",
+                        "strikethrough",
+                    ],
+                ],
+                ["para", ["ul", "ol"]],
+                ["insert", ["link", "picture", "video"]],
+                ["view", ["undo", "redo"]], // ['fullscreen', 'codeview', 'help']
+            ],
+            // toolbar: [
+            //     ['style', ['style']],
+            //     [
+            //         "font",
+            //         [
+            //             "bold",
+            //             "underline",
+            //             "clear",
+            //             "fontname",
+            //             "fontsize",
+            //             "forecolor",
+            //             "backcolor",
+            //             "italic",
+            //             "strikethrough",
+            //             "superscript",
+            //             "subscript",
+            //         ],
+            //     ],
+            //     ["color", ["color"]],
+            //     ["para", ["ul", "ol", "paragraph", "style", "height"]],
+            //     ["table", ["table"]],
+            //     ["insert", ["link", "picture", "video"]],
+            //     ["view", ["codeview", "help", "undo", "redo"]], // ['fullscreen', 'codeview', 'help']
+            // ],
+
+        });
+
+        // Switch Tabs
+        $("body").on("click", ".task_bar ul li", function() {
+            var tabs = $(this).index();
+            $(this).parent().find(".active").removeClass("active");
+            $(this).addClass("active");
+
+            // if($(this).parents().eq(1).next().hasClass('task_content')){
+            //     var tab = $(this).parent().next()
+            // } else {
+            var tab = $(this).parents().eq(1).next();
+            // }
+
+            tab.find(".task_tab").each(function(index) {
+                if (index == tabs) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+
+        $('body').on('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).addClass('dragover');
+        });
+
+        $('body').on('dragleave drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('dragover');
+        });
+
+        $('body').on('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var files = e.originalEvent.dataTransfer.files;
+            $('#attch_file')[0].files = files;
+            $(this).removeClass('dragover');
+            displayDroppedFiles(files);
+        });
+
+        function displayDroppedFiles(files) {
+            var droppedFilesContainer = $('#dropped_files');
+
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var fileName = file.name;
+                var fileType = file.type;
+                var fileIcon = '';
+
+                if (fileType.includes('image')) {
+                    fileIcon = '<img src="image_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                } else if (fileType.includes('pdf')) {
+                    fileIcon = '<img src="pdf_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                } else {
+                    fileIcon = '<img src="generic_icon_url" alt="' + fileName + '" style="width: 50px;">';
+                }
+
+                droppedFilesContainer.append(fileIcon + '</span><br>');
+            }
+        }
+
+    });
+
+
+
+    // document.getElementById('taskNames').addEventListener('keydown', function(e) {
+    //     if (e.keyCode === 13) {
+    //         document.execCommand('insertHTML', false, '<br><br>');
+    //         e.preventDefault();
+    //     }
+    // });
+</script>
+
+<style>
+    textarea {
+        margin-bottom: 8px;
+        resize: vertical;
+        line-height: 25px;
+        width: 100%;
+        height: 100px;
+        padding: 0 3px;
+        background: #fff url(//twa-prod.teamwork.com/tko/public/legacy/images/quickAdd/back_lines.gif);
+    }
+
+    .lined-textarea {
+        height: 20px;
+        border: 1px solid #ccc;
+        min-height: 150px;
+        padding: 5px;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.0em;
+        position: relative;
+    }
+
+    .lined-textarea:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: repeating-linear-gradient(transparent, transparent 19px, #ccc 19px, #ccc 20px);
+        pointer-events: none;
+    }
+
+
+
+    /* styling for add task form  */
+
+    .sjt {
+        width: 100%;
+    }
+
+    .task_bar ul {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 0;
+    }
+
+    .task_bar ul li {
+        list-style: none;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .task_bar ul li.active {
+        background-color: #f2f4fc;
+    }
+
+    .task_content {
+        background-color: #f2f4fc;
+        margin-top: 0;
+        padding: 10px;
+    }
+
+    .task_content .dropzone {
+        border: none;
+    }
+
+    .task_tab {
+        display: none;
+    }
+
+    .task_tab.active {
+        display: block;
+    }
+
+    .dz-default {
+        display: none;
+    }
+
+    label {
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .attach_files_cont {
+        background-color: #fff;
+        padding: 10px 25px;
+    }
+
+    .radio {
+        display: flex;
+        gap: 5px;
+        background-color: #fff;
+        width: 100%;
+        padding: 10px 15px;
+    }
+
+    input#priority {
+        padding: 5px 10px;
+        margin-left: 0 !important;
+        width: fit-content;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    .custom-file-button {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 1px solid #0056b3;
+        color: #0056b3;
+        border-radius: 4px;
+        cursor: pointer !important;
+        transition: background-color 0.3s ease;
+        font-weight: 400;
+        background-color: transparent;
+    }
+
+    .custom-file-button:hover {
+        background-color: #f2f4fc;
+    }
+
+    .custom-file-button span {
+        cursor: pointer !important;
+    }
+
+    .hidden-input {
+        display: none !important;
+    }
+
+    .dragover {
+        border: dashed 2.5px #dadada;
+    }
+
+    .deleteFile {
+        color: #c20000;
+        background-color: transparent;
+        border-radius: 50%;
+        padding: 5px 8px;
+        border: 1px solid #f2f4fc;
+    }
+
+    .deleteFile:hover {
+        border: 1px solid #0056b3;
+        color: #0056b3;
+    }
+
+    .dz-preview {
+        display: none;
+    }
+
+    .attachedFilePrev {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        border: none;
+    }
+
+    span.file_name {
+        padding: 0 7px;
+    }
+
+    span.progress_prct {
+        border-right: 1px solid #dadada;
+        padding: 0 5px;
+    }
+
+    .submit-btn {
+        background-color: blue;
+        width: 20%;
+        color: blue;
+    }
+
+    .listItemContent {
+        font-size: large;
+        font: bold;
+    }
+
+    .trigger-arrow {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .trigger-arrow.rotate {
+        transform: rotate(90deg);
+    }
+
+    .main-content {
+        display: flex;
+    }
+
+    .tasks a {
+        text-decoration: none;
+    }
+
+    .tasks a {
+
+        text-decoration: none;
+    }
+
+    .listItem li {
+        text-decoration: none;
+    }
+</style>

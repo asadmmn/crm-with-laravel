@@ -38,19 +38,25 @@
 
 @section('script')
 
+<strong><script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script></strong>
+{{-- <script>
+    tinymce.init({
+      selector: "#notes"
+    });
+  </script> --}}
     <script src="{{ URL::asset('js/modal.js') }}"></script>
     <script src="{{ URL::asset('js/project.js') }}"></script>
 
     <script>
         // Submit form
-        $("body").on("submit", "#form", function(e) {
+        $("body").on("submit", "#pro-form", function(e) {
             e.preventDefault()
             var btn = $("#nextBtn")
             btn.val("Please wait...")
 
             $.ajax({
                 url: '{{ route('saveProject') }}',
-                data: $("#form").serialize(),
+                data: $("#pro-form").serialize(),
                 method: 'post',
                 // dataType: 'json',
                 headers: {
@@ -63,8 +69,8 @@
                         btn.val("Create New Project")
                     } else if (res.status == 200) {
                         $(".success_msg").html(showMessage('success', res.message))
-                        $("#form")[0].reset()
-                        removeValidtationClasses("#form")
+                        $("#pro-form")[0].reset()
+                        removeValidtationClasses("#pro-form")
                         btn.val("Create New Project")
                         $(".modal").hide()
 
@@ -118,7 +124,8 @@
 
         $("body").on("submit", "#eidtform", function(e) {
             e.preventDefault()
-            var btn = $("#nextBtn")
+            var btn = $(this).find("#nextBtn");
+
             btn.val("Please wait...")
 
             $.ajax({

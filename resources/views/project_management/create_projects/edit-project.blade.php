@@ -18,7 +18,7 @@
     }
 @endphp
 
-<div class="modal edit" id="edit_project" style="display: block;">
+<div class="modal edit w--5" id="edit_project" style="display: block; width:500px;">
     <div class="modal-content">
         <!-- Top Section: Title and Steps -->
         <div class="top-section">
@@ -65,7 +65,7 @@
 
                     <div class="textarea" style="width: 100%">
                         
-                        <textarea name="notes" id="edtnotes" cols="" rows="5" placeholder="Add a description"
+                        <textarea name="notes" id="edtnotes" cols="20" rows="5" placeholder="Add a description"
                             style="width: 100%">{{ $data->notes ?? '' }}</textarea>
                     </div>
                 </div>
@@ -101,14 +101,18 @@
     </div>
 </div>
 
-    
+    <style>
+
+
+            </style>
     <script>
     $(document).ready(function() {
      $(function() {
             $('#edtnotes').summernote({
                 placeholder: 'Add Your Description here...',
-                tabsize: 2,
+                tabsize: 1,
                 height: 100,
+            
                 toolbar: [
                     ['font', ['bold', 'italic', 'strikethrough']],
                     ['para', ['ul', 'ol']],

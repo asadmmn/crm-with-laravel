@@ -13,12 +13,17 @@ use Illuminate\Support\Facades\Validator;
 class ProjectManagement extends Controller
 {
     public function index(){
-        $data = Projects::where('created_by', '=', session('loggedInUser'))->with('users')->get();
+        $data = Projects::where('created_by', '=', session('loggedInUser'))
+        ->where('project_status', '=', 'active')
+        ->with('users')
+        ->get();
+
         $team = User::where('user_Type', 'team')->get();
         // $prId=$data->id;
         $lists=TaskList::all();
-       
-        return view('project_management.create_projects.index', compact('data', 'team','lists'));
+        $archiveData = Projects::where('project_status', '=', 'archive')->with('users')->get();
+
+        return view('project_management.create_projects.index', compact('data', 'team','lists','archiveData'));
     }
 
     // Get Project rows
@@ -27,11 +32,11 @@ class ProjectManagement extends Controller
        
         return view('project_management.create_projects.row', compact('data'));
     }
-
-    // Get Edit project View
+//edit
     public function editProject(Request $request, $id){
         $data = ['data' => DB::table('projects')->where('created_by', session('loggedInUser'))->where('id', $id)->first()];
-        return view('project_management.create_projects.edit-project', $data);
+        $view = view('project_management.create_projects.edit-project', $data)->render();
+        return response()->json(['html' => $view]);
     }
 
     // Save Project
@@ -106,9 +111,26 @@ class ProjectManagement extends Controller
         }
     }
 
+
+    //archive project
+    public function archive($id){
+        // dd("hello");
+        $record = Projects::find($id);
+    
+        if($record){
+            $record->project_status = 'archive';
+            $record->save();
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
+    }
+    
     // Handle Update Form
     public function update(Request $request){
+      
         $id = $request->id;
+        // dd($id);
         $data = Projects::find($id);
 
         $validator = Validator::make($request->all(), [

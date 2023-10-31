@@ -297,6 +297,7 @@
                 } else {
                     $("body #add_project").remove();
                     $(".msg").html(showMessage('success', `success`)); // Use backticks for string interpolation
+                    location.reload()
                 }
             } // <--- Add this closing parenthesis
         });

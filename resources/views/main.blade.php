@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tooltip.js/1.3.1/tooltip.min.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.css"> --}}
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tooltip.js/1.3.1/tooltip.min.css"> --}}
 
     <!-- External Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
@@ -38,19 +38,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{ URL::asset('js/function.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tooltip.js/1.3.1/tooltip.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.js"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tooltip.js/1.3.1/tooltip.min.js"></script> --}}
     <script src="https://kit.fontawesome.com/b554f1d9a7.js" crossorigin="anonymous"></script>
 
-<!-- CSS only -->
-{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-9z0v5z5JQzvJ8yJZz5+J5zJQ5z8z5zJQ5z8z5zJQ5z8z5zJQ5z8z5zJQ5z8z5zJQ" crossorigin="anonymous"> --}}
 
-{{-- <!-- JavaScript Bundle with Popper -->--}}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-+zvzvJQzvJ8yJZz5+J5zJQ5z8z5zJQ5z8z5zJQ5z8z5zJQ5z8z5zJQ5z8z5zJQ" crossorigin="anonymous"></script>  @yield('style') 
-</head>
+  
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script></head>
 
 <body>
-
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
 
     <div class="layout has-sidebar fixed-sidebar fixed-header">
         <!---------------- Header Here  ------------------->

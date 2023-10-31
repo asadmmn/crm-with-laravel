@@ -21,3 +21,11 @@ function showMessage(type, message){
 $("body").on('click', '.btn-close', function(){
     $(this).parent().remove()
 })
+
+
+// loader
+window.addEventListener('load', function() {
+    // Hide the loader once the content has finished loading
+    var loader = document.querySelector('.loader-container');
+    loader.style.display = 'none';
+});

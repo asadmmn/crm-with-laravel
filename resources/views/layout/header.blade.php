@@ -3,7 +3,7 @@
 @section('header') --}}
 
     <aside id="sidebar" class="sidebar break-point-sm has-bg-image">
-        <a id="btn-collapse" class="sidebar-collapser"><i class="ri-arrow-left-s-line"></i></a>
+        <a id="btn-collapse" class="sidebar-collapser"><i class="ri-arrow-left-s-line" style="text-decoration: none;"></i></a>
         <div class="image-wrapper">
             {{-- <img src="assets/images/sidebar-bg.jpg" alt="sidebar background" /> --}}
         </div>
@@ -19,7 +19,7 @@
                     <ul>
                         <li class="menu-header"><span> GENERAL </span></li>
                         <li class="menu-item sub-menu">
-                            <a href="#">
+                            <a href="#" style="text-decoration: none;">
                                 <span class="menu-icon">
                                     <i class="ri-vip-diamond-fill"></i>
                                 </span>
@@ -31,12 +31,12 @@
                             <div class="sub-menu-list">
                                 <ul>
                                     <li class="menu-item">
-                                        <a href="/register-team-member">
+                                        <a href="/register-team-member" style="text-decoration: none;">
                                             <span class="menu-title">Add Team Member</span>
                                         </a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="/team">
+                                        <a href="/team" style="text-decoration: none;">
                                             <span class="menu-title">View Team Member</span>
                                         </a>
                                     </li>
@@ -64,7 +64,7 @@
                             </div>
                         </li>
                         <li class="menu-item sub-menu">
-                            <a href="#">
+                            <a href="#" style="text-decoration: none;">
                                 <span class="menu-icon">
                                     <i class="ri-bar-chart-2-fill"></i>
                                 </span>
@@ -73,12 +73,12 @@
                             <div class="sub-menu-list">
                                 <ul>
                                     <li class="menu-item">
-                                        <a href="/register-client">
+                                        <a href="/register-client" style="text-decoration: none;">
                                             <span class="menu-title">Add Client</span>
                                         </a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="/clients">
+                                        <a href="/clients" style="text-decoration: none;">
                                             <span class="menu-title">View Clients</span>
                                         </a>
                                     </li>
@@ -91,21 +91,21 @@
                             </div>
                         </li>
                         <li class="menu-item sub-menu">
-                            <a href="#">
+                            <a href="#" style="text-decoration: none;">
                                 <span class="menu-icon">
                                     <i class="fa-solid fa-diagram-project"></i>
                                 </span>
                                 <span class="menu-title">Projects</span>
                             </a>
                             <div class="sub-menu-list">
-                                <ul>
+                                <ul >
                                     <li class="menu-item">
-                                        <a href="/project">
+                                        <a href="/project" style="text-decoration: none;">
                                             <span class="menu-title">View Projects</span>
                                         </a>
                                     </li>
                                     <li class="menu-item">
-                                        <a href="/Project">
+                                        <a href="/Project"  style="text-decoration: none;">
                                             <span class="menu-title">Create Project</span>
                                         </a>
                                     </li>

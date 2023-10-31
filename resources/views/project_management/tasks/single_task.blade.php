@@ -114,7 +114,7 @@
 
 <script src="{{ URL::asset('js/modal.js') }}"></script>
 <script src="{{ URL::asset('js/project.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
@@ -232,7 +232,7 @@
             type="date"
             name="st_date"
             id="st_date"
-        />
+        required="required"/>
     </div>
 
     <div class="input">
@@ -241,7 +241,8 @@
             type="date"
             name="due_date"
             id="due_date"
-        />
+            required="required"
+            />
     </div>
 </div>
 
@@ -526,45 +527,7 @@ OR
                         <div class="tab_c active" data-step="1">
                             <div class="textarea" style="width: 100%">
                                 <label for="description">Do you have any notes for list? Enter them here. <span class="light">(optional)</span></label>
-                                <div class="panel-heading note-toolbar" role="toolbar"><div class="note-btn-group btn-group note-font">
-                                    <button type="button" class="note-btn btn btn-default btn-sm note-btn-bold" tabindex="-1" title="" aria-label="Bold (CTRL+B)" data-original-title="Bold (CTRL+B)">
-                                        <i class="note-icon-bold">
-                                            </i>
-                                            </button>
-                                            <button type="button" class="note-btn btn btn-default btn-sm note-btn-italic" tabindex="-1" title="" aria-label="Italic (CTRL+I)" data-original-title="Italic (CTRL+I)">
-                                                <i class="note-icon-italic">
-                                                    </i>
-                                                    </button>
-                                                    <button type="button" class="note-btn btn btn-default btn-sm note-btn-strikethrough" tabindex="-1" title="" aria-label="Strikethrough (CTRL+SHIFT+S)" data-original-title="Strikethrough (CTRL+SHIFT+S)">
-                                                        <i class="note-icon-strikethrough">
-                                                            </i>
-                                                            </button>
-                                                            </div>
-                                                            <div class="note-btn-group btn-group note-para">
-                                                                <button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Unordered list (CTRL+SHIFT+NUM7)" data-original-title="Unordered list (CTRL+SHIFT+NUM7)">
-                                                                    <i class="note-icon-unorderedlist"></i>
-                                                                    </button>
-                                                                    <button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Ordered list (CTRL+SHIFT+NUM8)" data-original-title="Ordered list (CTRL+SHIFT+NUM8)">
-                                                                        <i class="note-icon-orderedlist"></i>
-                                                                        </button>
-                                                                        </div>
-                                                                        <div class="note-btn-group btn-group note-insert">
-                                    <button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Link (CTRL+K)" data-original-title="Link (CTRL+K)">
-                                        <i class="note-icon-link"></i>
-                                        </button>
-                                        <button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Picture" data-original-title="Picture">
-                                            <i class="note-icon-picture"></i>
-                                            </button>
-                                            <button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Video" data-original-title="Video">
-                                                <i class="note-icon-video"></i>
-                                                </button>
-                                                </div>
-                                                <div class="note-btn-group btn-group note-view">
-                                                    <button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Undo (CTRL+Z)" data-original-title="Undo (CTRL+Z)">
-                                                        <i class="note-icon-undo"></i>
-                                                        </button><button type="button" class="note-btn btn btn-default btn-sm" tabindex="-1" title="" aria-label="Redo (CTRL+Y)" data-original-title="Redo (CTRL+Y)">
-                                                            <i class="note-icon-redo"></i>
-                                                            </button>
+                              
                                                             </div>
                                                             </div>
                                 <textarea name="notes" id="notes" cols="" rows="5" placeholder="Add a description" style="width: 100%" ></textarea>

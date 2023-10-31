@@ -18,8 +18,64 @@
     }
 @endphp
 
+{{-- archived --}}
+<!-- Blade Template -->
+<table class="archived" style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif; display:none;">
+    <thead>
+        <tr>
+            <th style="border:1px solid #ccc; padding:12px; background-color:#f2f2f2; text-align:center;">Project Name</th>
+            <th style="border:1px solid #ccc; padding:12px; background-color:#f2f2f2; text-align:center;">Company</th>
+            <th style="border:1px solid #ccc; padding:12px; background-color:#f2f2f2; text-align:center;">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(!empty($archiveData))
+            @foreach ($archiveData as $aitem)
+                <tr class="@if ($aitem->project_status == 'archive') @endif" data-prjct_id="{{ $aitem->id }}">
+                    <td style="border:1px solid #ccc; padding:10px;">
+                        <div style="display:flex; align-items:center;">
+                            @php
+                                $star = $aitem->fvrt == 1 ? 'color:#FFD700;' : '';
+                            @endphp
+                            <i class="fa-solid fa-star {{ $star }}" style="margin-right:5px;"></i>
+                            <a href="#" class="project-link" style="text-decoration:none; color:#333; font-weight:bold; font-size:16px;">{{ $aitem->project_name }}</a>
+                        </div>
+                    </td>
+                    <td style="border:1px solid #ccc; padding:10px; font-style:italic; color:#555; font-size:14px;">{{ $aitem->company }}</td>
+                    <td style="border:1px solid #ccc; padding:10px; font-style:italic; color:#555; font-size:14px; text-align:center;">archived</td>
+                </tr>
+            @endforeach
+        @endif
+    </tbody>
+</table>
+
+<!-- JavaScript to toggle visibility -->
+<script>
+
+document.getElementById('myselect').addEventListener('change', function() {
+  var selectedValue = this.value; // Get the selected value
+
+  if (selectedValue === 'archived') {
+    $(document.body).append('.archived'); // Append it to the body
+       $('.archived').show();
+       $('.activepro').remove();
+    
+   
+  } else {
+   
+  location.reload();
+  }
+});
+
+
+
+</script>
+
+
+
+
 @foreach ($data as $item)
-    <div class="project" data-prjct_id="{{ $item->id }}">
+    <div class="project activepro" data-prjct_id="{{ $item->id }}">
         <div class="top">
             <div class="prjct_breif">
                 @php
@@ -29,7 +85,7 @@
                 <div class="prjct_name">
 
                     <a href="#" class="prjct_btn"
-                        data-prjct_id="{{ $item->id }}">{{ $item->project_name }}</a><br>
+                        data-prjct_id="{{ $item->id }}" style="text-decoration: none;">{{ $item->project_name }}</a><br>
                     <span class="light_font">{{ $item->company }}</span>
                 </div>
                 <div class="ppl" style="gap: 15px; margin-left: 0; flex: 1;">
@@ -66,7 +122,8 @@
                                                 class="fa-regular fa-circle-user"></i></div>No Project Owner
                                     @else
                                         <div class="p"
-                                            style="background-color: {{ generateRandomColor($item->ownerName->name[0]) }}; font-size: 11px;">
+                                            style="background-color: {{ generateRandomColor($item->ownerName->name[0]) }};
+                                            font-size: 11px;">
                                             {{ $item->ownerName->name[0] }}</div>{{ $item->ownerName->name }}
                                     @endif
 
@@ -99,7 +156,7 @@
                                 <li class="edit_prjct"><i class="fa-solid fa-pen"></i> Edit project Details</li>
                                 <li class="disabled"><i class="fa-regular fa-copy"></i> Copy</li>
                                 <li class="disabled"><i class="fa-solid fa-briefcase"></i> Save as Template</li>
-                                <li class="disabled"><i class="fa-solid fa-box-archive"></i> Archive</li>
+                                <li class="archive_prjct"><i class="fa-solid fa-box-archive"></i> Archive</li>
                                 <li class="disabled"><i class="fa-solid fa-plus"></i> More options</li>
                                 <li class="delete"><i class="fa-solid fa-trash"></i> Delete</li>
                             </ul>
@@ -162,10 +219,25 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<!-- include summernote css/js -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+
+
+<script src="{{ URL::asset('js/modal.js') }}"></script>
+    {{-- <script src="{{ URL::asset('js/project.js') }}"></script> --}}
+
+
 <script>
     var quickTaskForm = `
-<div class="modal" id="quick_add_task">
-    <div class="modal-content" style="width: 40% !important; font-size:4px; heightr:70%;border-radius:12px;">
+  
+<div class="modal" id="quick_add_task" style="z-index:1; ">
+    <div class="modal-content" style="width: 35% !important; font-size:4px; border-radius:12px; left:50%; ">
         <!-- Top Section: Title and Steps -->
         <div class="container mt-1">
         <h5 class="text-left mb-4">Quickly Add Tasks</h5>
@@ -178,7 +250,7 @@
         <div class="form-group">
             <label for="projectName">Project Name</label>
 
-        
+        <br>
 
             <select class="form-control select2" name="project" id="projectName" required>
                 <option value="" selected disabled>Select a project</option>
@@ -225,19 +297,15 @@
                 <label for="assignTo">Assign To</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user text-dark"></i></span>
+                        <span class="input-group-text h-5" style="height: 35px;"><i class="fas fa-user text-dark"></i></span>
                     </div>
-                    <select class="form-control select2" name="doer" id="listName" required>
-                <option value="" selected disabled>Select a List</option>
-                @foreach ($team as $users)
-                  
-                                    <option value="{{ $users->id }}">{{ $users->name }}</option>
-                               
-                            </optgroup>
-                       
-                @endforeach
-            </select>
-                  
+                    <select class="select2" name="doer" id="doer" required style="font-size: 16px;">
+    <option value="" selected>Select a List</option>
+    @foreach ($team as $users)
+        <option value="{{ $users->id }}">{{ $users->name }}</option>
+    @endforeach
+</select>
+
                 </div>
             </div>
         </div>
@@ -257,25 +325,35 @@
     </div>
     <hr class="mt-0">
 <div class="col-md-4">
-<div class="form-group">
-                <label for="whoCanSee">Who can see ?</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-lock text-dark"></i></span>
-                    </div>
-                    <input type="text" class="form-control" id="whoCanSee" placeholder="Everybody on the project" required>
+    <div class="form-group">
+        <label for="whoCanSee">Who can see?</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="height: 35px;"><i class="fa fa-lock text-dark"></i></span>
+            </div>
+            <input type="text" class="form-control" id="whoCanSee" placeholder="Everybody on the project" required>
+        </div>
+    </div>
+</div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="row">
+                <div class="col text-left">
+                    <button type="button" class="btn btn-transparent close-form">Close</button>
+                </div>
+                <div class="col text-right">
+                    <button type="submit" class="btn btn-primary rounded-pill quick-submit">Add Task</button>
                 </div>
             </div>
         </div>
-
-    <div class="row">
-        <div class="col text-left">
-            <button type="button" class="btn btn-transparent  close-form">Close</button>
-        </div>
-        <div class="col text-right">
-            <button type="submit" class="btn btn-primary rounded-pill quick-submit">Add Task</button>
-        </div>
     </div>
+</div>
+               
+
 </form>
 
     </div>
@@ -286,22 +364,34 @@
 
 
 
-    $("body").on("click", ".quick-add-task", function() {
-        $(document.body).append(quickTaskForm); // Append it to the body
-        $('#quick_add_task').show(); // Show the modal
-        $(".select2").select2();
-        var taskId = $(this).data('task-id'); // Get the task ID from the clicked element
+$("body").on("click", ".quick-add-task", function() {
+    $('body .more_options').hide();
+    $('body .all_projects').append(quickTaskForm); // Append it to the body
 
-        console.log(taskId);
-        // Toggle the modal
+    // Set the z-index and position of the form
+//     $('#quick_add_task').css({
+//     'z-index': '1',
+//     'position': '',
+//     'top': '50%',
+//     'left': '50%',
+//     'transform': 'translate(-50%)'
+// });
 
 
-        // Set the task ID as the data-task-id of the form
-        $('#edt_tsk_list').attr('data-task-id', taskId);
 
-    });
+    $('#quick_add_task').show(); // Show the modal
+    $(".select2").select2();
+    var taskId = $(this).data('task-id'); // Get the task ID from the clicked element
 
- 
+    console.log(taskId);
+
+    // Set the task ID as the data-task-id of the form
+    $('#edt_tsk_list').attr('data-task-id', taskId);
+
+});
+
+
+
     //quick add submition 
 
 
@@ -311,7 +401,7 @@
     $("body").on("click", '.close-form', function() {
 
         $("body #quick_add_task").remove()
-
+location.reload()
 
     });
 
@@ -339,10 +429,10 @@
                 processData: false,
                 success: function(response) {
                     $(".success_msg").html(showMessage('success', response.success))
-                 
+
                     // Handle success
                     $("body #quick_add_task").remove()
-                },   
+                },
                 error: function(error) {
                     // Handle error
                 }
@@ -352,27 +442,34 @@
 
     // <!-- add task form js  
     $(document).ready(function() {
+
+
+        $("#notes").summernote(
+            {
        
-       
-        $("#notes").summernote({
-            placeholder: "Add Your Description here...",
-            tabsize: 2,
-            height: 100,
-            // airMode: true,
-            toolbar: [
-                // ['style', ['style']],
-                [
-                    "font",
-                    [
-                        "bold",
-                        "italic",
-                        "strikethrough",
-                    ],
+                height:90,
+                toolbar: [
+                    ['font', ['bold', 'italic', 'strikethrough']],
+                    ['para', ['ul', 'ol']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['undo', 'redo']]
                 ],
-                ["para", ["ul", "ol"]],
-                ["insert", ["link", "picture", "video"]],
-                ["view", ["undo", "redo"]], // ['fullscreen', 'codeview', 'help']
-            ],
+           
+       
+            //  [
+            //     // ['style', ['style']],
+            //     [
+            //         "font",
+            //         [
+            //             "bold",
+            //             "italic",
+            //             "strikethrough",
+            //         ],
+            //     ],
+            //     ["para", ["ul", "ol"]],
+            //     ["insert", ["link", "picture", "video"]],
+            //     ["view", ["undo", "redo"]], // ['fullscreen', 'codeview', 'help']
+            // ],
             // toolbar: [
             //     ['style', ['style']],
             //     [
@@ -398,7 +495,8 @@
             //     ["view", ["codeview", "help", "undo", "redo"]], // ['fullscreen', 'codeview', 'help']
             // ],
 
-        });
+        }
+        );
 
         // Switch Tabs
         $("body").on("click", ".task_bar ul li", function() {
@@ -474,9 +572,34 @@
     //         e.preventDefault();
     //     }
     // });
+    
+ 
+     $(document).ready(function() {
+    $(".edit_prjct").on("click", function(e) {
+        $('body .more_options').hide();
+        var projectId = $(this).closest('ul').data('prjct_id');
+        $.ajax({
+            url: '/project/' + projectId,
+            type: 'GET',
+            success: function(response) {
+                var emodal = response.html;
+                $('body .all_projects').append(emodal);
+                
+            },
+            error: function(error) {
+                console.log(error);
+            } 
+        });
+    });
+});
+
 </script>
 
 <style>
+      .select2-container .select2-selection--single {
+        font-size: 12px;
+        height: 35px;
+    }
     textarea {
         margin-bottom: 8px;
         resize: vertical;

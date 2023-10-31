@@ -70,6 +70,7 @@ Route::group(['middleware' => ['LoginCheck']], function(){
     Route::post('/save-project', [ProjectManagement::class, 'saveProject'])->name('saveProject');
     Route::post('/fvrt-project', [ProjectManagement::class, 'fvrtProject'])->name('fvrtProject');
     Route::post('/update-project', [ProjectManagement::class, 'update'])->name('updateProject');
+    Route::post('/archive/{id}', [ProjectManagement::class, 'archive'])->name('archiveProject');
     Route::delete('/project/{id}', [ProjectManagement::class, 'destroy'])->name('deleteProject');
 
     // Tasks

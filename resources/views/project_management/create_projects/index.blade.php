@@ -2,20 +2,31 @@
 @section('title', 'Project Management')
 
 
+
 @section('content')
-    <div class="page_top">
+
+        <div class="page_top">
+
         <div class="content">
             <div>
                 <h2><i class="fa-solid fa-user-group" style="margin-right: 15px;"></i> All Projects </h2>
                 <div class="back_link">
-                    <a href="/" style="margin-right: 10px;"><i class="fa-solid fa-chevron-left"></i></a>
-                    <a href="/">Home</a>/<a href="#">Projects</a>
+                    <a href="/" style="margin-right: 10px;"><i class="fa-solid fa-chevron-left" style="text-decoration: none;"></i></a>
+                    <a href="/" style="text-decoration: none;">Home</a>/<a href="#" style="text-decoration: none;">Projects</a>
                 </div>
 
             </div>
 
             <div>
-                <a id="openModalBtn" href="#" class="button">Add Project</a>
+                <select name="" id="myselect" class="button text-white"
+                    style="color:black;     background: transparent;  border: 1px solid #555;b border-radius: 5px; padding: 5px;">
+                    <option class="disabeled" value="select value">select category</option>
+                    <option value="archived">Archived</option>
+                    <option value="active">Active</option>
+                </select>
+
+                {{-- <a id="archiveBtn" href="#" class="button" style="border:2px solid black;background-color:blueviolet;">Archived</a> --}}
+                <a id="openModalBtn" href="#" class="button" style="text-decoration: none;">Add Project</a>
             </div>
         </div>
     </div>
@@ -30,7 +41,7 @@
     </div>
 
     @include('project_management.create_projects.add-project')
-
+   
 @endsection
 
 <link rel="stylesheet" href="{{ URL::asset('css/project.css') }}">
@@ -38,12 +49,7 @@
 
 @section('script')
 
-<strong><script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script></strong>
-{{-- <script>
-    tinymce.init({
-      selector: "#notes"
-    });
-  </script> --}}
+   
     <script src="{{ URL::asset('js/modal.js') }}"></script>
     <script src="{{ URL::asset('js/project.js') }}"></script>
 
@@ -83,6 +89,39 @@
             })
         })
 
+        $("body").on("submit", "#eidtform", function(e) {
+            e.preventDefault()
+            var btn = $("#nextBtn")
+            btn.val("Please wait...")
+
+            $.ajax({
+                url: '{{ route('updateProject') }}',
+                data: $("#eidtform").serialize(),
+                method: 'post',
+                // dataType: 'json',
+                headers: {
+                    // 'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(res) {
+                    if (res.status == 400) {
+                        showError('prjct_name', res.message.prjct_name)
+                        btn.val("update Project")
+                    } else if (res.status == 200) {
+                        $(".success_msg").html(showMessage('success', res.message))
+                        $("#pro-form")[0].reset()
+                        removeValidtationClasses("#eidtform")
+                        btn.val("Create New Project")
+                        $(".modal").hide()
+
+                        reloadProjects()
+                    } else {
+                        $(".success_msg").html(showMessage('fail', "Some Thing went wrong!"))
+                        btn.val("update Project")
+                    }
+                }
+            })
+        })
         $("body").on('click', ".fvrt", function() {
             $(this).toggleClass('stared')
             var prjct_id = $(this).parents().eq(2).data('prjct_id')
@@ -104,52 +143,29 @@
             })
         })
 
-        $("body").on('click', ".edit_prjct", function(e) {
-            var id = $(this).parent().data('prjct_id')
+      
+        //archive
+
+        $("body").on("click", ".archive_prjct", function(e) {
+            e.preventDefault();
+            var id = $(this).parent().data("prjct_id");
             $.ajax({
-                url: `{{ route('getEditProject', ':id') }}`.replace(':id', id),
-                method: 'get',
-                success: function(data) {
-                    $("main.content:first").append(data)
-
-                    // $.getScript('{{ URL::asset('js/modal.js') }}', function() {
-                    // After script is loaded or reloaded, initialize events
-                    modal("edit_project", "Update")
-                    // });
-                }
-            })
-
-
-        })
-
-        $("body").on("submit", "#eidtform", function(e) {
-            e.preventDefault()
-            var btn = $(this).find("#nextBtn");
-
-            btn.val("Please wait...")
-
-            $.ajax({
-                url: '{{ route('updateProject') }}',
-                dataType: 'json',
+                url: '{{ route('archiveProject', ':id') }}'.replace(':id', id),
                 method: 'post',
-                data: $(this).serialize(),
-                success: function(res) {
-
-                    if (res.status == 400) {
-                        showError('prjct_name', res.message.prjct_name)
-                        btn.val("Update")
-                    } else if (res.status == 200) {
-                        $(".success_msg").html(showMessage('success', res.message))
-                        $("#edit_project").remove()
-
-                        reloadProjects()
-                    } else {
-                        $(".success_msg").html(showMessage('fail', "Some Thing went wrong!"))
-                        btn.val("Update")
-                    }
+                headers: {
+                    // 'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function() {
+                    $(".success_msg").html(showMessage('success', "Success"));
+                    location.reload();
+                },
+                error: function() {
+                    $(".success_msg").html(showMessage('fail', "Something went wrong!"));
                 }
-            })
-        })
+            });
+        });
+
 
         // Delete reocrd
         $("body").on("click", ".delete", function() {
@@ -285,3 +301,33 @@
         })
     </script>
 @endsection
+<style>
+  /* textarea{
+    height:70px;
+  } */
+  #notes{
+    height:70px;
+  }
+    .note-toolbar {
+        background-color: #f8f8f8;
+        /* Change toolbar background color */
+        border: 1px solid #ccc;
+        /* Add a border around the toolbar */
+        color: #333;
+       
+  }
+        /* Change text color */
+    }
+
+    .note-btn {
+        background-color: #fff;
+        /* Change button background color */
+        color: #333;
+        /* Change button text color */
+    }
+
+    .note-btn-group .note-btn {
+        border: 1px solid #ccc;
+        /* Add a border around buttons in a group */
+    }
+</style>

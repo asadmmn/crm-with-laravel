@@ -229,26 +229,3 @@
         </form>
     </div>
 </div>
-{{-- <script>
-    let clickCounter = 0;
-
-document.getElementById('nextBtn').addEventListener('click', function() {
-    clickCounter++;
-
-    if (clickCounter === 3) {
-        document.getElementById('addPro').style.display = 'inline-block';
-    }
-});
-</script> --}}
-{{-- @endsection --}}
-
-{{-- @section('script')
-<script>
-
-</script>
-@endsection
-
-@section('style')
-
-
-@endsection --}}

@@ -37,13 +37,16 @@ $(".project").on("mouseleave", ".owner", function(){
 })
 
 
+
 // $(document).ready(function () {
     modal("add_project", "Create Project")
+    
 
 
     // Close Modal
     $("body").on("click", ".close-btn", function(){
         $(this).parents().eq(2).hide()
+        
     })
 
     // Remove modal box

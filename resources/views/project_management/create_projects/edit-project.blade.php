@@ -101,25 +101,21 @@
     </div>
 </div>
 
-    <style>
-
-
-            </style>
     <script>
     $(document).ready(function() {
      $(function() {
             $('#edtnotes').summernote({
-                placeholder: 'Add Your Description here...',
-                tabsize: 1,
-                height: 100,
+                height:90,
             
                 toolbar: [
-                    ['font', ['bold', 'italic', 'strikethrough']],
-                    ['para', ['ul', 'ol']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['undo', 'redo']]
-                ]
+                ['font', ['bold', 'italic', 'strikethrough']],
+                ['para', ['ul', 'ol']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['undo', 'redo']]
+            ]
             });
         });
+
+        modal("edit_project", "Update Project")
     });
 </script>

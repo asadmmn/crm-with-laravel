@@ -23,6 +23,7 @@ class Projects extends Migration
             $table->json('access_to_users')->nullable();
             $table->binary('fvrt')->default(0);
             $table->unsignedBigInteger('owner')->nullable();
+        
             $table->timestamps();
 
             $table->foreign('owner')->references('id')->on('users');

@@ -112,8 +112,8 @@
 </div>
 
 
-<script src="{{ URL::asset('js/modal.js') }}"></script>
-<script src="{{ URL::asset('js/project.js') }}"></script>
+{{-- <script src="{{ URL::asset('js/modal.js') }}"></script>
+<script src="{{ URL::asset('js/project.js') }}"></script> --}}
 {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet"
@@ -185,7 +185,9 @@
 
                  // task form
         const myGreatDropzoneForm = `
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+55
 <form action="#" class="task_form"  id="my-great-dropzone" data-task-list-id="" enctype="multipart/form-data">
 
       @csrf
@@ -486,6 +488,10 @@ OR
            $(document).ready(function() {
 
             var editListForm = `
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+
           <div class="modal" id="edit_task_list">
          <div class="modal-content" style="width: 40% !important;">
         <!-- Top Section: Title and Steps -->
@@ -622,18 +628,19 @@ OR
                             </div>
                         </div>
                     </div>
-                </div>
-
-            </div>
+              
+          
 
             <!-- Footer Section: Buttons -->
             <div class="footer-section">
-                <input  class="update-btn btn btn-primary btn-lg active" type="submit" value="update">
+                
+                <input  class="update-btn btn btn-primary btn-lg active button" type="submit" value="update task">
            
-            <button class="cancel btn btn-secondary btn-lg active" id="form-cancel">cancel</button>
+            <button class="cancel btn btn-secondary btn-lg active" id="form-cancel">cancel form</button>
             </div>
-      
-        </form>
+        </div>  </div>
+
+        </form>  
          </div>
            </div>`;
         $("body").on("click", ".edit-task-list-option", function() {

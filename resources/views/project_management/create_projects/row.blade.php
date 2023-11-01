@@ -224,6 +224,10 @@ document.getElementById('myselect').addEventListener('change', function() {
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+
 
 <script src="{{ URL::asset('js/modal.js') }}"></script>
     {{-- <script src="{{ URL::asset('js/project.js') }}"></script> --}}
@@ -233,7 +237,7 @@ document.getElementById('myselect').addEventListener('change', function() {
     var quickTaskForm = `
   
 <div class="modal" id="quick_add_task" style="z-index:1; ">
-    <div class="modal-content" style="width: 35% !important; font-size:4px; border-radius:12px; left:50%; ">
+    <div class="modal-content" style="width: 40% !important; font-size:4px; border-radius:12px; left:50%; ">
         <!-- Top Section: Title and Steps -->
         <div class="container mt-1">
         <h5 class="text-left mb-4">Quickly Add Tasks</h5>
@@ -288,30 +292,30 @@ document.getElementById('myselect').addEventListener('change', function() {
 
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5 mb-3">
             <div class="form-group">
                 <label for="assignTo">Assign To</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text h-5" style="height: 35px;"><i class="fas fa-user text-dark"></i></span>
                     </div>
-                    <select class="select2" name="doer" id="doer" required style="font-size: 16px;">
-    <option value="" selected>Select a List</option>
-    @foreach ($team as $users)
-        <option value="{{ $users->id }}">{{ $users->name }}</option>
-    @endforeach
-</select>
+                      <select class="select2" name="doer" id="doer" required style="font-size: 16px;">
+                       <option value="" selected>Select a List</option>
+                       @foreach ($team as $users)
+                          <option value="{{ $users->id }}">{{ $users->name }}</option>
+                       @endforeach
+                       </select>
 
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-3">
             <div class="form-group">
                 <label for="startDate">Start Date(optional)</label>
                 <input type="date" class="form-control" name="startDate" required>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3 mb-3">
             <div class="form-group">
                 <label for="dueDate">Due Date(optional)</label>
                 <input type="date" class="form-control" name="dueDate" required>
@@ -320,6 +324,7 @@ document.getElementById('myselect').addEventListener('change', function() {
         
     </div>
     <hr class="mt-0">
+    <div class="row">
 <div class="col-md-4">
     <div class="form-group">
         <label for="whoCanSee">Who can see?</label>

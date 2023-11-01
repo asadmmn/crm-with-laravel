@@ -49,7 +49,7 @@
 
 
                 </div>
-                <div class="btn-group dropleft tdropdown">
+                <div class="btn-group dropleft tdropdown"style="">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"
                         class="bi bi-three-dots tellipsisBtn dropdown-toggle" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" viewBox="0 0 16 16">
@@ -58,7 +58,7 @@
                     </svg>
 
 
-                    <div class="dropdown-menu tdropdown-content">
+                    <div class="dropdown-menu tdropdown-content" style="margin-right:20%;">
                         <!-- Dropdown menu links -->
                         <ul>
                             <li id="edit-task" class="edit-task-option" data-task-id="{{ $task->id }}"
@@ -68,17 +68,16 @@
                                 <span class="option_list_text">Edit </span>
                             </li>
 
-                            <br>
 
                             <li class="disabled"><i class="fa-regular fa-copy option_list_icon "></i> <span
                                     class="">copy </span></li>
-                            <br>
+                            
                             <li class="disabled"><i class="fa-solid fa-sort option_list_icon"></i> <span
                                     class="option_list_text">Reorder </span></li>
-                            <br>
+                            
                             <li class="disabled"><i class="fa-solid fa-file option_list_icon"></i> <span
                                     class="option_list_text">Reports</span></li>
-                            <br>
+                           
                             <li class="delete-btn" data-task-id="{{ $task->id }}">
 
                                 <i class="fa-solid fa-trash option_list_icon"></i>Delete
@@ -113,6 +112,7 @@
 </div>
 
 {{-- <a href="#"><i class="fa-solid fa-plus text-blue trigger-link"data-task-list="{{ $task->task_list_id }}"></i>add a task</a> --}}
+
 <script>
     //menu
     window.onclick = function(event) {
@@ -680,13 +680,13 @@ OR
 </script>
 
 <style>
-    .fa-solid.fa-ellipsis::before {
+    /* .fa-solid.fa-ellipsis::before {
         content: "";
         height: 2px;
         color: black;
 
 
-    }
+    } */
 
     /* .details {
     width: 60%;
@@ -781,8 +781,9 @@ OR
 
     /* The container <div> - needed to position the dropdown content */
     .tdropdown {
-        float: right;
-        position: relative;
+       
+        /* float: right; */
+        position: fixed;
         display: inline-block;
         text-align: left;
         border-radius: 8px;
@@ -790,13 +791,14 @@ OR
     }
 
     .tdropdown-content {
-
+        overflow-y: hidden;
         display: none;
-        position: absolute;
+        position: fixed;
+    right: 0;
         background-color: #f9f9f9;
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        left: -160px;
+        /* left: -160px; */
         /* Position it to the left */
         z-index: 1;
         /*Adjust this value to position it on the left */
@@ -813,7 +815,24 @@ OR
     }
 
 
+    .tdropdown-content ul {
+  list-style: none; /* Remove default list styles */
+   padding: 0; 
+   margin-bottom: 0;
+  margin: 0; /* Remove default margin */
+  overflow-y: auto; /* Enable vertical scrollbar when necessary */
+}
+
+.tdropdown-content ul li {
+  padding: 10px; /* Adjust padding as needed */
+}
+
+.tdropdown-content ul:hover {
+  overflow-y: hidden; /* Hide the scrollbar when hovered */
+}
+
     .tdropdown-content ul li {
+        overflow-y: auto; 
         float: none;
         /* Remove float */
         width: 100%;
@@ -822,22 +841,25 @@ OR
         /* Display as inline-block */
         list-style: none;
         text-align: left;
-        padding: 0;
+        padding-left: 10px];
+        margin:0;
     }
 
     .tdropdown-content .fa-trash {
         color: red;
     }
 
-    /* Add padding to icons */
-    .tdropdown-content ul li i {
-        /* margin-right: 10px; */
-    }
-
     /* Change color of dropdown links on hover */
-    .tdropdown-content li:hover {
-        background-color: #f0f0f0;
-    }
+    .tdropdown-content ul  {
+        overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+  
+}
+
+.tdropdown-content > ul li:hover {
+  overflow-y: hidden; /* Hide the scrollbar when hovered */
+  overflow-x: hidden;
+}
 
     /* Show the dropdown menu with fade-in effect */
     .show {
@@ -856,7 +878,7 @@ OR
         align-content: center;
 
         /* height:40px; */
-        width: 1010px;
+        width: 800px;
         color: gray;
         text-decoration-style: none;
     }
@@ -870,13 +892,13 @@ OR
         text-decoration: none;
     }
 
-    .tasks a:hover {
+    .tasks  a:hover {
 
         text-decoration: none;
     }
 
 
-    .task:hover {
+    .task>:hover{
 
         text-decoration: none;
         background-color: white;
@@ -885,12 +907,14 @@ OR
     }
 
     .task .icons {
-        display: none;
-        /* Hide the icons by default */
+        visibility: hidden;
+        flex: 5;
+        float: right;
     }
 
-    .task .tellipsisBtn {
+    .task >.tellipsisBtn {
         display: none;
+       
         /* Hide the icons by default */
     }
 
@@ -900,6 +924,7 @@ OR
     }
 
     .task:hover .icons {
+        visibility: visible;
         display: inline-block;
         /* Show the icons on hover and keep them on the same line */
         flex: 5;

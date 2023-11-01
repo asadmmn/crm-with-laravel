@@ -14,7 +14,16 @@ function removeValidtationClasses(form){
 
 
 function showMessage(type, message){
-    return `<div class="alert alert-${type}"><strong>${message}</strong><button type="button" class="btn-close" ><i class="fa-solid fa-circle-xmark"></i></button></div>`
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type}`;
+    alertDiv.innerHTML = `<strong>${message}</strong><button type="button" class="btn-close"><i class="fa-solid fa-circle-xmark"></i></button>`;
+    
+    setTimeout(() => {
+        // alertDiv.remove();
+        $('body .btn-close').click();
+    }, 3000); // Adjust this number (5000 milliseconds = 5 seconds)
+    
+    return alertDiv;
 }
 
 

@@ -41,7 +41,7 @@
                                             <div class="dropdown">
                                                 <a class=" btn rounded-pill ellipsisBtn" type="button"
                                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
+                                                    >
                                                     <i class="fa-solid fa-ellipsis"></i>
                                                 </a>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

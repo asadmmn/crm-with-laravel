@@ -5,20 +5,22 @@
 
 @section('content')
 
-        <div class="page_top">
+    <div class="page_top">
 
         <div class="content">
             <div>
                 <h2><i class="fa-solid fa-user-group" style="margin-right: 15px;"></i> All Projects </h2>
                 <div class="back_link">
-                    <a href="/" style="margin-right: 10px;"><i class="fa-solid fa-chevron-left" style="text-decoration: none;"></i></a>
-                    <a href="/" style="text-decoration: none;">Home</a>/<a href="#" style="text-decoration: none;">Projects</a>
+                    <a href="/" style="margin-right: 10px;"><i class="fa-solid fa-chevron-left"
+                            style="text-decoration: none;"></i></a>
+                    <a href="/" style="text-decoration: none;">Home</a>/<a href="#"
+                        style="text-decoration: none;">Projects</a>
                 </div>
 
             </div>
 
             <div>
-                <select name="" id="myselect" class="button text-white"
+                <select name="" id="myselect" class="button text-dark"
                     style="color:black;     background: transparent;  border: 1px solid #555;b border-radius: 5px; padding: 5px;">
                     <option class="disabeled" value="select value">select category</option>
                     <option value="archived">Archived</option>
@@ -41,7 +43,7 @@
     </div>
 
     @include('project_management.create_projects.add-project')
-   
+
 @endsection
 
 <link rel="stylesheet" href="{{ URL::asset('css/project.css') }}">
@@ -49,7 +51,7 @@
 
 @section('script')
 
-   
+
     <script src="{{ URL::asset('js/modal.js') }}"></script>
     <script src="{{ URL::asset('js/project.js') }}"></script>
 
@@ -143,7 +145,7 @@
             })
         })
 
-      
+
         //archive
 
         $("body").on("click", ".archive_prjct", function(e) {
@@ -302,21 +304,23 @@
     </script>
 @endsection
 <style>
-  /* textarea{
+    /* textarea{
     height:70px;
   } */
-  #notes{
-    height:70px;
-  }
+    #notes {
+        height: 70px;
+    }
+
     .note-toolbar {
         background-color: #f8f8f8;
         /* Change toolbar background color */
         border: 1px solid #ccc;
         /* Add a border around the toolbar */
         color: #333;
-       
-  }
-        /* Change text color */
+
+    }
+
+    /* Change text color */
     }
 
     .note-btn {
